@@ -8,3 +8,5 @@ In order to start deploying your with CAF landing zones, you need an Azure subsc
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Docker Desktop](https://docs.docker.com/docker-for-windows/install/).
 - [Git](https://git-scm.com/downloads)
+
+Once installed, open **Visual Studio Code** and install "**Remote Development**" extension
