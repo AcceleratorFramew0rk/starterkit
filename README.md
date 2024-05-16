@@ -18,4 +18,4 @@ You can find more information on the [platform starter repository](https://githu
 Clone the repository using the following command:
 
 ```bash
-git clone https://github.com/Azure/caf-terraform-landingzones-platform-starter.git
+git clone [https://github.com/AcceleratorFramew0rk/starterkit.git]
