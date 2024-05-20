@@ -18,3 +18,19 @@ Clone the repository using the following command:
 
 ```bash
 git clone https://github.com/AcceleratorFramew0rk/starterkit.git
+```
+
+# Deploy the starter kit
+## Login to Azure
+```bash
+az login --tenant xxxxxxxx-xxxxxx-xxxx-xxxx-xxxxxxxxxxxx # azure tenant id
+
+az account set --subscription xxxxxxxx-xxxxxx-xxxx-xxxx-xxxxxxxxxxxx # subscription id
+
+az account show # to show the current login account
+```
+
+## To continue, goto README.md file /tf/avm/gcc_starter_kit/README.md
+```bash
+cd /tf/avm/gcc_starter_kit
+```
