@@ -18,3 +18,9 @@ Clone the repository using the following command:
 
 ```bash
 git clone https://github.com/AcceleratorFramew0rk/starterkit.git
+```
+
+# To start, goto gcc_starter_kit working directory
+```bash
+cd /tf/avm/gcc_starter_kit
+```
