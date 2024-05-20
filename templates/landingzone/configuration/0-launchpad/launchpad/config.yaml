@@ -1,0 +1,109 @@
+prefix: "aoaidev"
+location: "southeastasia"
+environment: "sandpit"
+# subnets cidr configuration
+subnets:
+  # IMPORTANT ** comment off the below any project subnets if it is not used
+  project:
+    WebSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: ["100.64.0.0/27"]          
+    AppSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: ["100.64.0.32/27"]
+      delegations: [ 
+        {
+          name: "appservice",
+          service_delegation: {
+            name: "Microsoft.Web/serverFarms", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ]         
+    DbSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: ["100.64.0.64/27"]
+    ServiceSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: ["100.64.0.96/27"]
+    FunctionAppSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: ["100.64.0.128/27"]
+      delegations: [
+        {
+          name: "functionapp",
+          service_delegation: {
+            name: "Microsoft.Web/serverFarms", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ]                  
+    ApiSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: ["100.64.0.160/27"]
+    SystemNodePoolSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: ["100.64.0.192/27"]
+    UserNodePoolSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: ["100.64.0.224/27"]
+    AiSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: ["100.64.1.0/27"]   
+    LogicAppSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: ["100.64.1.32/27"]   
+      delegations: [
+        {
+          name: "logicapp",
+          service_delegation: {
+            name: "Microsoft.Web/serverFarms", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ]  
+    CiSubnet: # DO NOT CHANGE subnet name 
+      address_prefixes: ["100.64.1.64/27"]   
+      delegations: [
+        {
+          name: "ci",
+          service_delegation: {
+            name: "Microsoft.ContainerInstance/containerGroups", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ]  
+    ServiceBusSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: ["100.64.1.96/27"]                      
+# ** IMPORTANT - DO NOT CHANGE BELOW
+  hub_internet_ingress: 
+    AzureFirewallSubnet: 
+      address_prefixes: ["100.127.0.0/26"]
+    AgwSubnet: 
+      address_prefixes: ["100.127.0.64/26"]  
+  hub_internet_egress:
+    AzureFirewallSubnet:  
+      address_prefixes: ["100.127.1.0/26"]
+    AzureFirewallManagementSubnet:  
+      address_prefixes: ["100.127.1.64/26"]  
+  hub_intranet_ingress:
+    AzureFirewallSubnet:  
+      address_prefixes: ["10.20.0.0/26"]
+    AgwSubnet:  
+      address_prefixes: ["10.20.0.64/26"]
+  hub_intranet_egress:
+    AzureFirewallSubnet:   
+      address_prefixes: ["10.20.1.0/26"]
+    AzureFirewallManagementSubnet:   
+      address_prefixes: ["10.20.1.64/26"]  
+  devops:
+    RunnerSubnet:    
+      address_prefixes: ["100.127.4.0/25"]
+      delegations: [
+        {
+          name: "runner",
+          service_delegation: {
+            name: "Microsoft.ContainerInstance/containerGroups", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ]
+    VpnSubnet:    
+      address_prefixes: ["100.127.4.128/25"]  
+  management:
+    InfraSubnet:     
+      address_prefixes: ["100.127.3.0/26"]
+    SecuritySubnet:     
+      address_prefixes: ["100.127.3.64/26"]
+    AzureBastionSubnet:     
+      address_prefixes: ["100.127.3.128/26"]  
