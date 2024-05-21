@@ -18,7 +18,9 @@ terraform apply -auto-approve
 
 ### config.yaml
 
-edit /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad/config.yaml from vs code, check and modify project subnets detail if required.
+Please use VS Code to edit the config.yaml file located at /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad/. 
+Review and, if necessary, modify the details of the project subnets and cidr ranges.
+
 
 ### import gcci tfstate and create launchpad storage account and containers
 ```bash
