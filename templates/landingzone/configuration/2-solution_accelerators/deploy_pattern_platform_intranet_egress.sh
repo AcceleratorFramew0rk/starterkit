@@ -1,5 +1,5 @@
 # intranet egress firewall
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/hub_intranet/firewall_egress
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/hub_intranet_egress/firewall_egress
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name={{resource_group_name}}" \
