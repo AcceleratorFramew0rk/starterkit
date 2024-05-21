@@ -27,7 +27,7 @@ module "private_dns_zones" {
 
 locals {
   elastic_pools = {
-    sample_pool = {
+    elasticpool1 = {
       sku = {
         name     = "StandardPool"
         capacity = 50
@@ -45,7 +45,7 @@ locals {
   }
 
   databases = {
-    sample_database = {
+    database1 = {
       create_mode     = "Default"
       collation       = "SQL_Latin1_General_CP1_CI_AS"
       elastic_pool_id = module.sql_server.resource_elasticpools["sample_pool"].id
@@ -70,6 +70,7 @@ module "sql_server" {
   enable_telemetry             = var.enable_telemetry
   name                         = "${module.naming.mssql_server.name}${random_string.this.result}" # module.naming.sql_server.name_unique
   resource_group_name          = azurerm_resource_group.this.name
+  location                     = azurerm_resource_group.this.location
   administrator_login          = "sqladminuser"
   administrator_login_password = random_password.admin_password.result
 
@@ -90,7 +91,9 @@ module "sql_server" {
     zone = "project"
     tier = "db"           
   }  
-
+  depends_on = [
+    module.azurerm_resource_group.this
+  ]
 }
 
 

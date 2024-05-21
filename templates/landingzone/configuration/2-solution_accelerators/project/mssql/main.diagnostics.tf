@@ -2,7 +2,7 @@ module "diagnosticsetting1" {
   source = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-mssql-database"
-  target_resource_id = module.sql_server.resource_databases.id
+  target_resource_id = module.sql_server.resource_databases.database1.id
   log_analytics_workspace_id = local.remote.log_analytics_workspace.id
   diagnostics = {
     categories = {
@@ -34,7 +34,7 @@ module "diagnosticsetting2" {
   source = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-electic-pool"
-  target_resource_id = module.sql_server.resource_elasticpools.id
+  target_resource_id = module.sql_server.resource_elasticpools.elasticpool1.id
   log_analytics_workspace_id = local.remote.log_analytics_workspace.id
   diagnostics = {
     categories = {

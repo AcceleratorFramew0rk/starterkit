@@ -3,7 +3,7 @@ resource "azurerm_mssql_elasticpool" "this" {
 
   name                = each.key
   resource_group_name = var.resource_group_name
-  location            = coalesce(var.location, data.azurerm_resource_group.parent[0].location)
+  location            = try(data.azurerm_resource_group.parent[0].location, var.location) # coalesce(var.location, data.azurerm_resource_group.parent[0].location)
   server_name         = try(data.azurerm_mssql_server.this[0].name, azurerm_mssql_server.this[0].name)
 
   license_type                   = each.value.license_type
