@@ -1,9 +1,3 @@
-# resource "random_password" "admin_password" {
-#   length           = 16 # 128
-#   special          = true
-#   override_special = "!#$%&*()-_=+[]{}<>:?"
-# }
-
 module "private_dns_zones" {
   source                = "Azure/avm-res-network-privatednszone/azurerm"  
 
@@ -70,7 +64,7 @@ module "sql_server" {
   resource_group_name          = azurerm_resource_group.this.name
   location                     = azurerm_resource_group.this.location
   administrator_login          = "sqladminuser"
-  administrator_login_password = random_password.sql_admin.result # random_password.admin_password.result
+  administrator_login_password = random_password.sql_admin.result 
 
   databases     = local.databases
   elastic_pools = local.elastic_pools

@@ -5,7 +5,7 @@ module "keyvault" {
 
   enable_telemetry              = var.enable_telemetry
   location                        = azurerm_resource_group.this.location
-  name                            = "${module.naming.key_vault.name}-${random_string.this.result}-${random_string.this.result}" # module.naming.key_vault.name_unique
+  name                            = "${module.naming.key_vault.name}-${random_string.this.result}" 
   resource_group_name             = azurerm_resource_group.this.name
   sku_name                        = "standard"  
   tenant_id                     = data.azurerm_client_config.current.tenant_id
