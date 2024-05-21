@@ -19,7 +19,11 @@ Clone the repository using the following command:
 ```bash
 git clone https://github.com/AcceleratorFramew0rk/starterkit.git
 ```
-
+* Open working folder with Visual Studio Code (Note: Reopen in container when prompt in VS Code)
+  * (if required) Install VS Code Extension - Dev Containers
+* Add a zsh terminal from VS Code
+* Follow the steps in README.md file
+  
 # Deploy the starter kit
 ## Login to Azure
 ```bash
@@ -34,3 +38,4 @@ az account show # to show the current login account
 ```bash
 cd /tf/avm/gcc_starter_kit
 ```
+* Follow the steps in README.md file
