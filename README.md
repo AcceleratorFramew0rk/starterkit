@@ -38,3 +38,4 @@ az account show # to show the current login account
 ```bash
 cd /tf/avm/gcc_starter_kit
 ```
+* Follow the steps in README.md file
