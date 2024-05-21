@@ -251,7 +251,7 @@ timestamp
 echo "-----------------------------------------------------------------------------"
 
 # goto nsg configuration folder
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/nsg
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/yaml_nsg_config
 
 # create nsg yaml file from nsg csv files
 python3 csv_to_yaml.py 

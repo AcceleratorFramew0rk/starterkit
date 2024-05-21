@@ -54,8 +54,8 @@ else
 
 
     MSYS_NO_PATHCONV=1 terraform init  -reconfigure \
-    -backend-config="resource_group_name=ttsdev-rg-launchpad" \
-    -backend-config="storage_account_name=ttsdevstgtfstategof" \
+    -backend-config="resource_group_name=${RG_NAME}" \
+    -backend-config="storage_account_name=${STG_NAME}" \
     -backend-config="container_name=0-launchpad" \
     -backend-config="key=gcci-platform.tfstate"
 
@@ -63,27 +63,6 @@ else
     MSYS_NO_PATHCONV=1 terraform state rm azurerm_log_analytics_workspace.gcci_agency_workspace
 
     MSYS_NO_PATHCONV=1 terraform import "azurerm_log_analytics_workspace.gcci_agency_workspace" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-agency-law/providers/Microsoft.OperationalInsights/workspaces/gcci-agency-workspace" 
-
-
-
-    echo "-----------------------------------------------------------------------------"  
-    echo "Start creating NSG yaml configuration file"  
-    timestamp
-    echo "-----------------------------------------------------------------------------"
-
-    # goto nsg configuration folder
-    cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/nsg
-
-    # create nsg yaml file from nsg csv files
-    python3 csv_to_yaml.py 
-
-    # replace subnet cidr range from config.yaml file in launchpad
-    ./replace.sh
-
-    echo "-----------------------------------------------------------------------------"  
-    echo "End creating NSG yaml configuration file"  
-    timestamp
-    echo "-----------------------------------------------------------------------------"
 
     read -p "Press enter to continue..."
 
