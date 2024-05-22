@@ -38,6 +38,7 @@ locals {
     use_slug = true
     # subnets cidr
     subnets = local.config.subnets
+    private_dns_zones = local.config.private_dns_zones
   }
 } 
 
