@@ -17,7 +17,7 @@ module "firewall" {
   location            = azurerm_resource_group.this.location
   resource_group_name = local.remote.resource_group.name # firewall must be in the same resource group as virtual network and subnets
   firewall_sku_tier   = "Premium" # "Basic"  # "Standard"
-  firewall_policy_id  = module.firewall_policy.id.id # bug in avm module which output resource to id or name variable
+  firewall_policy_id  = module.firewall_policy.resource.id # bug in avm module which output resource to id or name variable
   firewall_sku_name   = "AZFW_VNet"
   firewall_zones      = ["1", "2", "3"]
   firewall_ip_configuration = [
