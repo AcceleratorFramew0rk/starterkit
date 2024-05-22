@@ -3,7 +3,7 @@ module "private_dns_zones" {
 
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
-  domain_name           = "sandpitlabs.com"
+  domain_name           = local.global_settings.private_dns_zones.intranet_ingress_domain_name # "sandpitlabs.com"
   dns_zone_tags         = {
       env = local.global_settings.environment 
     }
