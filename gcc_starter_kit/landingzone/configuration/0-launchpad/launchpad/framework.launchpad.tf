@@ -38,6 +38,7 @@ locals {
     use_slug = true
     # subnets cidr
     subnets = local.config.subnets
+    app_config = local.config.app_config
   }
 } 
 

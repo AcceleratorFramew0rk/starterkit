@@ -1,9 +1,10 @@
 prefix: "aoaidev"
 location: "southeastasia"
 environment: "sandpit"
-private_dns_zones: # to replace with your application domain name
-  internet_ingress_domain_name: internet.sandpitlabs.com 
-  intranet_ingress_domain_name: intranet.sandpitlabs.com 
+app_config:
+  private_dns_zones: # to replace with your application domain name
+    internet_ingress_domain_name: internet.sandpitlabs.com 
+    intranet_ingress_domain_name: intranet.sandpitlabs.com 
 # subnets cidr configuration
 subnets:
   # IMPORTANT ** comment off the below any project subnets if it is not used
