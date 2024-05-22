@@ -42,13 +42,13 @@ module "cosmos_db" {
     }
   }
 
-  tags = { 
-    purpose = "azure open ai service" 
-    project_code = local.global_settings.prefix 
-    env = local.global_settings.environment 
-    zone = "project"
-    tier = "ai"           
-  } 
+  # tags = { 
+  #   purpose = "azure open ai service" 
+  #   project_code = local.global_settings.prefix 
+  #   env = local.global_settings.environment 
+  #   zone = "project"
+  #   tier = "ai"           
+  # } 
   
   depends_on = [
     azurerm_resource_group.this,
