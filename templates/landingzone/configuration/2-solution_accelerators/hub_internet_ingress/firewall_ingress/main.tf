@@ -10,7 +10,7 @@ module "public_ip_firewall1" {
 
 module "firewall" {
   source  = "Azure/avm-res-network-azurefirewall/azurerm"
-  version = "0.1.2"
+  version = "0.1.4"
   
   name                = "${module.naming.firewall.name}-ingress-internet"
   enable_telemetry    = var.enable_telemetry
