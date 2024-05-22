@@ -1,7 +1,7 @@
 output "firewall_resource" {
   value       = {
-    id = module.firewall.id
-    name = module.firewall.name
+    id = module.firewall.resource.id
+    name = module.firewall.resource.name
   } 
   description = "The Azure firewall resource"
 }

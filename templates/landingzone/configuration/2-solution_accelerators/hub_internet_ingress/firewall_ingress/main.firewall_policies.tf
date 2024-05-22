@@ -12,7 +12,7 @@ module "firewall_policy" {
 resource "azurerm_firewall_nat_rule_collection" "natcollection" {
 
   name                = module.naming.firewall_nat_rule_collection.name_unique
-  azure_firewall_name = module.firewall.firewall_resource.name 
+  azure_firewall_name = module.firewall.resource.name 
   resource_group_name = azurerm_resource_group.this.name 
   priority            = 100
   action              = "Dnat"

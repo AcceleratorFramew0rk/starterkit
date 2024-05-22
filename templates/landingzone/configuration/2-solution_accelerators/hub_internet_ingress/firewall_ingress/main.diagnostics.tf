@@ -1,8 +1,8 @@
 module "diagnosticsetting" {
   source = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"  
 
-  name                = "${module.naming.monitor_diagnostic_setting.name_unique}-vnet"
-  target_resource_id = module.firewall.id.id # bug in avm module which output id or name the resource object
+  name                = "${module.naming.monitor_diagnostic_setting.name_unique}-firewall"
+  target_resource_id = module.firewall.resource.id # bug in avm module which output id or name the resource object
   log_analytics_workspace_id = local.remote.log_analytics_workspace.id
   diagnostics = {
     categories = {
