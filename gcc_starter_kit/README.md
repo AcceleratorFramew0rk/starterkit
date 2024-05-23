@@ -66,11 +66,11 @@ goto solution accelerators folder
 ```bash
 ./deploy_pattern_devops_runner.sh
 ```
-### deploy aks architype - acr + aks + sql server, keyvaule, storage account
+### deploy aks architype - acr + aks + sql server, keyvault, storage account
 ```bash
 ./deploy_pattern_aks_architype.sh
 ```
-### deploy app service architype - app service + sql server, keyvaule, storage account
+### deploy app service architype - app service + sql server, keyvault, storage account
 ```bash
 ./deploy_pattern_appservice_architype.sh
 ```
