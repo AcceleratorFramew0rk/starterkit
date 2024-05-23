@@ -1,85 +1,4 @@
 # add your solution accelerator terraform here.
-# terraform {
-#   required_version = "~> 1.5"
-
-#   required_providers {
-#     azurerm = {
-#       source  = "hashicorp/azurerm"
-#       version = "~> 3.71"
-#     }
-
-#     random = {
-#       source  = "hashicorp/random"
-#       version = "~> 3.6"
-#     }
-#   }
-# }
-
-# provider "azurerm" {
-#   features {
-#     resource_group {
-#       prevent_deletion_if_contains_resources = false
-#     }
-#   }
-# }
-
-# data "azurerm_client_config" "current" {}
-
-# locals {
-#   prefix = "pe"
-# }
-
-# module "regions" {
-#   source  = "Azure/regions/azurerm"
-#   version = ">= 0.3.0"
-
-#   recommended_regions_only = true
-# }
-
-# resource "random_integer" "region_index" {
-#   max = length(module.regions.regions) - 1
-#   min = 0
-# }
-
-# module "naming" {
-#   source  = "Azure/naming/azurerm"
-#   version = ">= 0.3.0"
-# }
-
-# resource "azurerm_resource_group" "example" {
-#   name     = "${module.naming.resource_group.name_unique}-${local.prefix}"
-#   location = module.regions.regions[random_integer.region_index.result].name
-# }
-
-# resource "azurerm_virtual_network" "example" {
-#   name = "${module.naming.virtual_network.name_unique}-${local.prefix}"
-
-#   address_space       = ["10.0.0.0/16"]
-#   resource_group_name = azurerm_resource_group.example.name
-#   location            = azurerm_resource_group.example.location
-# }
-
-# resource "azurerm_subnet" "example" {
-#   name = module.naming.subnet.name_unique
-
-#   address_prefixes     = ["10.0.0.0/24"]
-#   resource_group_name  = azurerm_resource_group.example.name
-#   virtual_network_name = azurerm_virtual_network.example.name
-# }
-
-# resource "azurerm_private_dns_zone" "example" {
-#   name                = "privatelink.servicebus.core.windows.net"
-#   resource_group_name = azurerm_resource_group.example.name
-# }
-
-# resource "azurerm_private_dns_zone_virtual_network_link" "private_links" {
-#   name = "vnet-link"
-
-#   resource_group_name   = azurerm_resource_group.example.name
-#   virtual_network_id    = azurerm_virtual_network.example.id
-#   private_dns_zone_name = azurerm_private_dns_zone.example.name
-# }
-
 module "private_dns_zones" {
   source                = "Azure/avm-res-network-privatednszone/azurerm"  
 
@@ -102,11 +21,11 @@ module "private_dns_zones" {
 }
 
 
-resource "azurerm_application_security_group" "example" {
+resource "azurerm_application_security_group" "this" {
   name = "tf-appsecuritygroup-pe" # ${local.prefix}"
 
-  resource_group_name = azurerm_resource_group.example.name
-  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.this.name
+  location            = azurerm_resource_group.this.location
 }
 
 module "servicebus" {
@@ -146,7 +65,7 @@ module "servicebus" {
       }
 
       application_security_group_associations = {
-        asg1 = azurerm_application_security_group.example.id
+        asg1 = azurerm_application_security_group.this.id
       }
     }
 
@@ -177,64 +96,4 @@ module "servicebus" {
     }
   }
 }
-
-
-
-# # below is an example of container_registry
-# module "private_dns_zones" {
-#   source                = "Azure/avm-res-network-privatednszone/azurerm"  
-
-#   enable_telemetry      = true
-#   resource_group_name   = azurerm_resource_group.this.name
-#   domain_name           = "privatelink.azurecr.io"
-#   dns_zone_tags         = {
-#       env = local.global_settings.environment 
-#     }
-#   virtual_network_links = {
-#       vnetlink1 = {
-#         vnetlinkname     = "vnetlink1"
-#         vnetid           = local.remote.networking.virtual_networks.spoke_project.virtual_network.id  
-#         autoregistration = false # true
-#         tags = {
-#           env = local.global_settings.environment 
-#         }
-#       }
-#     }
-# }
-
-# module "container_registry" {
-#   source = "./../../../../../../modules/compute/terraform-azurerm-containerregistry"
-
-#   name                         = "${module.naming.container_registry.name}${random_string.this.result}" # alpha numeric characters only are allowed in "name var.name_prefix == null ? "${random_string.prefix.result}${var.acr_name}" : "${var.name_prefix}${var.acr_name}"
-#   resource_group_name          = azurerm_resource_group.this.name
-#   location                     = azurerm_resource_group.this.location
-#   sku                          = "Premium" # ["Basic", "Standard", "Premium"]
-#   admin_enabled                = true 
-#   log_analytics_workspace_id   = local.remote.log_analytics_workspace.id 
-#   log_analytics_retention_days = 7 
-#   tags = { 
-#     purpose = "container registry" 
-#     project_code = local.global_settings.prefix 
-#     env = local.global_settings.environment 
-#     zone = "project"
-#     tier = "service"           
-#   }     
-# }
-
-# module "private_endpoint" {
-#   source = "./../../../../../../modules/networking/terraform-azurerm-privateendpoint"
-  
-#   name                           = "${module.container_registry.name}PrivateEndpoint"
-#   location                       = azurerm_resource_group.this.location
-#   resource_group_name            = azurerm_resource_group.this.name
-#   subnet_id                      = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceSubnet"].id 
-#   tags                           = {
-#       environment = "dev"
-#     }
-#   private_connection_resource_id = module.container_registry.id
-#   is_manual_connection           = false
-#   subresource_name               = "registry"
-#   private_dns_zone_group_name    = "default"
-#   private_dns_zone_group_ids     = [module.private_dns_zones.private_dnz_zone_output.id] 
-# }
 
