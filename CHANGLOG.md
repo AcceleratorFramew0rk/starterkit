@@ -6,13 +6,13 @@
 
 ## FEATURES:
 * modules:
- * api management
+  * api management
 * solution accelerators:
- * api management (apim) 
+  * api management (apim) 
 
 ## ENHANCEMENTS:
 * update freamework.landingzone source to use registry.terraform.io "AcceleratorFramew0rk/aaf/azurerm"
-* 
+
 ## BUG FIXES:
 
 
