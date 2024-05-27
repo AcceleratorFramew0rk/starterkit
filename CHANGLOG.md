@@ -12,6 +12,8 @@
 
 ## ENHANCEMENTS:
 * update freamework.landingzone source to use registry.terraform.io "AcceleratorFramew0rk/aaf/azurerm"
+* update virtual network avm to 0.1.4
+* setup gcc dev env - convert to using config.yaml for vnet name and cidr 
 
 ## BUG FIXES:
 
