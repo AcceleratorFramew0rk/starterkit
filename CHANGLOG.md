@@ -11,14 +11,13 @@
   * api management (apim) 
 
 ## ENHANCEMENTS:
-* update freamework.landingzone source to use registry.terraform.io "AcceleratorFramew0rk/aaf/azurerm"
-* update virtual network avm to 0.1.4
+* update freamework.landingzone source to use registry.terraform.io "AcceleratorFramew0rk/aaf/azurerm" version 0.0.1
+* update avm "Azure/avm-res-network-virtualnetwork/azurerm" to version 0.1.4
+* update avm "Azure/avm-res-network-networksecuritygroup/azurerm" to version 0.2.0
 * setup gcc dev env - convert to using config.yaml for vnet name and cidr
-* update "Azure/avm-res-network-networksecuritygroup/azurerm" to version 0.2.0
 
 ## BUG FIXES:
 * fixed networksecuritygroup output "resource" and "security_rules" invalid attributes error
-
 
 # 0.0.1 (May 23, 2024)
 ## COMPATIBLE WITH:
