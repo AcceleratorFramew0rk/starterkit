@@ -10,9 +10,9 @@ subnets:
   # IMPORTANT ** comment off the below any project subnets if it is not used
   project:
     WebSubnet: # DO NOT CHANGE subnet name
-      address_prefixes: ["100.64.0.0/27"]
+      address_prefixes: ["100.64.0.0/27"]          
     AppSubnet: # DO NOT CHANGE subnet name
-      address_prefixes: ["100.64.0.32/27"]    
+      address_prefixes: ["100.64.0.32/27"]
       delegations: [ 
         {
           name: "appservice",
@@ -44,9 +44,9 @@ subnets:
     UserNodePoolSubnet: # DO NOT CHANGE subnet name
       address_prefixes: ["100.64.0.224/27"]
     AiSubnet: # DO NOT CHANGE subnet name
-      address_prefixes: ["100.64.1.0/27"]
+      address_prefixes: ["100.64.1.0/27"]   
     LogicAppSubnet: # DO NOT CHANGE subnet name
-      address_prefixes: ["100.64.1.32/27"]
+      address_prefixes: ["100.64.1.32/27"]   
       delegations: [
         {
           name: "logicapp",
@@ -57,7 +57,7 @@ subnets:
         }
       ]  
     CiSubnet: # DO NOT CHANGE subnet name 
-      address_prefixes: ["100.64.1.64/27"]
+      address_prefixes: ["100.64.1.64/27"]   
       delegations: [
         {
           name: "ci",
@@ -66,20 +66,20 @@ subnets:
             actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
             }
         }
-      ]     
+      ]  
     ServiceBusSubnet: # DO NOT CHANGE subnet name
-      address_prefixes: ["100.64.1.96/27"]                 
+      address_prefixes: ["100.64.1.96/27"]                      
 # ** IMPORTANT - DO NOT CHANGE BELOW
   hub_internet_ingress: 
     AzureFirewallSubnet: 
       address_prefixes: ["100.127.0.0/26"]
     AgwSubnet: 
-      address_prefixes: ["100.127.0.64/26"]    
+      address_prefixes: ["100.127.0.64/26"]  
   hub_internet_egress:
     AzureFirewallSubnet:  
       address_prefixes: ["100.127.1.0/26"]
     AzureFirewallManagementSubnet:  
-      address_prefixes: ["100.127.1.64/26"]
+      address_prefixes: ["100.127.1.64/26"]  
   hub_intranet_ingress:
     AzureFirewallSubnet:  
       address_prefixes: ["10.20.0.0/26"]

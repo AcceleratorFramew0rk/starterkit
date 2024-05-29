@@ -5,7 +5,8 @@ cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad
 
 ./import.sh
 
-## to perform update of the config.yaml configuration, execute the update script below.
+## NOTE: to perform update of the config.yaml configuration, execute the update script below.
 ## ./import_update.sh
+## when prompt, enter the storage_account_name
 
 # to continue, goto README.md under the folder /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones
