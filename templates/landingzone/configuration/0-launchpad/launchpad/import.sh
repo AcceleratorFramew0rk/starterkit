@@ -250,8 +250,29 @@ echo "Start creating NSG yaml configuration file"
 timestamp
 echo "-----------------------------------------------------------------------------"
 
+# begin rename gcc_starter_kit to folder name
+
+# goto starter kit parent folder
+cd ./../../../../
+
+# Get the folder name
+FOLDER_NAME=$(basename "$(pwd)")
+echo "Folder Name: ${FOLDER_NAME}"
+
+# Escape slashes in the search variable
+search="{{gcc_starter_kit}}"
+replace="${FOLDER_NAME}"
+
+echo $search
+echo $replace
+# Perform replace
+find . -name '*.md' -exec sed -i -e "s/$search/$replace/g" {} +
+find . -name '*.sh' -exec sed -i -e "s/$search/$replace/g" {} +
+
+# end rename gcc_starter_kit to folder name
+
 # goto nsg configuration folder
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/yaml_nsg_config
+cd /tf/avm/${replace}/landingzone/configuration/1-landingzones/yaml_nsg_config
 
 # create nsg yaml file from nsg csv files
 python3 csv_to_yaml.py 

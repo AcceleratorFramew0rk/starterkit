@@ -11,7 +11,7 @@ DESCRIPTION
 variable "name_prefix" {
   description = "(Optional) A prefix for the name of all the resource groups and resources."
   type        = string
-  default     = "aafdev"
+  default     = "aaf"
   nullable    = true
 }
 

@@ -1,0 +1,17 @@
+Priority,Name,Port,Protocol,Source,Destination,DestinationPort,Action,Direction
+100,AllowHTTPSVirtualNetwork,*,Tcp,VirtualNetwork,VirtualNetwork,443,Allow,Inbound
+110,Allow3443ApiManagement,*,Tcp,ApiManagement,VirtualNetwork,3443,Allow,Inbound
+120,Allow6390AzureLoadBalancer,*,Tcp,AzureLoadBalancer,VirtualNetwork,6390,Allow,Inbound
+4060,CustomDenyAllInbound,*,Tcp,*,*,*,Deny,Inbound
+100,AllowHTTPSVirtualNetwork,*,Tcp,VirtualNetwork,VirtualNetwork,443,Allow,Outbound
+110,AllowHTTPSStorage,*,Tcp,VirtualNetwork,Storage,443,Allow,Outbound
+120,AllowHTTPAzureActiveDirectory,*,Tcp,VirtualNetwork,AzureActiveDirectory,80,Allow,Outbound
+130,AllowHTTPSAzureActiveDirectory,*,Tcp,VirtualNetwork,AzureActiveDirectory,443,Allow,Outbound
+140,Allow1433SSQL,*,Tcp,VirtualNetwork,SQL,1433,Allow,Outbound
+150,AllowHTTPSAzureKeyVaultSouthEastAsia,*,Tcp,VirtualNetwork,AzureKeyVault.SouthEastAsia,443,Allow,Outbound
+160,Allow5671-5672Storage,*,Tcp,VirtualNetwork,EventHub,5671-5672,Allow,Outbound
+170,AllowHTTPSEventHub,*,Tcp,VirtualNetwork,EventHub,443,Allow,Outbound
+180,Allow445Storage,*,Tcp,VirtualNetwork,Storage,445,Allow,Outbound
+190,AllowHTTPSAzureCloudSouthEastAsia,*,Tcp,VirtualNetwork,AzureCloud.SouthEastAsia,443,Allow,Outbound
+200,Allow1886AzureMonitor,*,Tcp,VirtualNetwork,AzureMonitor,1886,Allow,Outbound
+4060,CustomDenyAllOutbound,*,Tcp,*,*,*,Deny,Outbound

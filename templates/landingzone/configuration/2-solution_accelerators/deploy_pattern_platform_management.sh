@@ -1,5 +1,5 @@
 # management - bastion host
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/management/bastion_host
+cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/2-solution_accelerators/management/bastion_host
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name={{resource_group_name}}" \
@@ -16,7 +16,7 @@ terraform apply -auto-approve \
 -var="resource_group_name={{resource_group_name}}"
 
 # management - tooling server
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/management/vm
+cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/2-solution_accelerators/management/vm
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name={{resource_group_name}}" \

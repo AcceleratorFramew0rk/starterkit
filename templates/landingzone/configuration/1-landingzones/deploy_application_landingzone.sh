@@ -1,5 +1,5 @@
 # spoke project 
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/application/networking_spoke_project
+cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/1-landingzones/application/networking_spoke_project
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name={{resource_group_name}}" \
@@ -16,7 +16,7 @@ terraform apply -auto-approve \
 -var="resource_group_name={{resource_group_name}}"
 
 # spoke devops 
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/application/networking_spoke_devops
+cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/1-landingzones/application/networking_spoke_devops
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name={{resource_group_name}}" \

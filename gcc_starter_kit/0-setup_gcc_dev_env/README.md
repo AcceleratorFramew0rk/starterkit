@@ -1,4 +1,4 @@
-cd /tf/avm/gcc_starter_kit/0-setup_gcc_dev_env
+cd /tf/avm/gcc_starter_kit/1-setup_vnets_application
 
 terraform init -reconfigure
 terraform plan

@@ -1,5 +1,5 @@
 # goto nsg configuration folder
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/nsg
+cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/1-landingzones/nsg
 
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/yaml_nsg_config
 
@@ -10,7 +10,7 @@ python3 csv_to_yaml.py
 ./replace.sh
 
 # goto landing zone folder
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones
+cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/1-landingzones
 
 # platform landing zone
 ./deploy_platform_landingzone.sh

@@ -51,23 +51,39 @@ def csv_to_yaml():
 											if cell_heading == "name":
 												cell_text = cell.replace("\n", ", ") + ":" + "\n"
 												yaml_row_heading = "  " + cell_text
+												cell_tag = "name"
+												cell_text = "    " + cell_tag + ": \"" + cell.replace("\n", ", ") + "\"\n"			
+												yaml_row_heading += cell_text																			
 											else:
+
+    # "rule02" = {
+    #   name                       = "${module.naming.network_security_rule.name_unique}2"
+    #   access                     = "Allow"
+    #   destination_address_prefix = "*"
+    #   destination_port_ranges    = ["80", "443"]
+    #   direction                  = "Inbound"
+    #   priority                   = 200
+    #   protocol                   = "Tcp"
+    #   source_address_prefix      = "*"
+    #   source_port_range          = "*"
+    # }
+
 												if cell_heading == "priority":
-													cell_tag = "nsg_rule_priority"
+													cell_tag = "priority"
 												if cell_heading == "port":
-													cell_tag = "nsg_rule_source_port_range"
+													cell_tag = "source_port_range"
 												if cell_heading == "protocol":
-													cell_tag = "nsg_rule_protocol"
+													cell_tag = "protocol"
 												if cell_heading == "source":
-													cell_tag = "nsg_rule_source_address_prefix"
+													cell_tag = "source_address_prefix"
 												if cell_heading == "destination":
-													cell_tag = "nsg_rule_destination_address_prefix"
+													cell_tag = "destination_address_prefix"
 												if cell_heading == "destinationport":
-													cell_tag = "nsg_rule_destination_port_range"
+													cell_tag = "destination_port_range"
 												if cell_heading == "action":
-													cell_tag = "nsg_rule_access"
+													cell_tag = "access"
 												if cell_heading == "direction":
-													cell_tag = "nsg_rule_direction"
+													cell_tag = "direction"
 												# cell_text = "	" + cell_heading + ": " + cell.replace("\n", ", ") + "\n"
 												cell_text = "    " + cell_tag + ": \"" + cell.replace("\n", ", ") + "\"\n"
 												yaml_text += cell_text

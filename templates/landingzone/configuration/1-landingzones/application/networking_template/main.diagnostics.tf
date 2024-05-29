@@ -3,7 +3,7 @@ module "diagnosticsetting1" {
   source  = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-vnet"
-  target_resource_id = module.nsg1.nsg_resource.id
+  target_resource_id = module.nsg1.resource.id
   log_analytics_workspace_id = local.remote.log_analytics_workspace.id
   diagnostics = {
     categories = {

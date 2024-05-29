@@ -1,5 +1,5 @@
 # goto solution accelerators folder
-/tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
+cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/2-solution_accelerators
 
 # platform common services - firewall, agw, bastion host, tooling server
 ./deploy_pattern_platform_internet_egress.sh

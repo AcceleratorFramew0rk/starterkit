@@ -1,0 +1,18 @@
+  resource_group_name: "gcci-platform" 
+  log_analytics_workspace_resource_group_name: "gcci-agency-law" 
+  log_analytics_workspace_name: "gcci-agency-workspace"  
+  # virtual network - leave empty if there is no such virtual network   
+  ingress_egress_vnet_name_ingress_internet: 
+  ingress_egress_vnet_name_egress_internet: 
+  ingress_egress_vnet_name_ingress_intranet: 
+  ingress_egress_vnet_name_egress_intranet: 
+  management_vnet_name: 
+  project_vnet_name: "gcci-vnet-project"   
+  devops_vnet_name: "gcci-vnet-devops"   
+  ingress_egress_vnet_name_ingress_internet_cidr: 
+  ingress_egress_vnet_name_egress_internet_cidr: 
+  ingress_egress_vnet_name_ingress_intranet_cidr: 
+  ingress_egress_vnet_name_egress_intranet_cidr: 
+  management_vnet_name_cidr: 
+  project_vnet_name_cidr: "100.64.0.0/23" 
+  devops_vnet_name_cidr: "100.127.4.0/24" 
