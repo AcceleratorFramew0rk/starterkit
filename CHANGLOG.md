@@ -1,4 +1,4 @@
-# 0.0.2 (TBC)
+# 0.0.2 (May 29, 2024)
 ## COMPATIBLE WITH:
 * aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
 * azurerm: version 3.85
