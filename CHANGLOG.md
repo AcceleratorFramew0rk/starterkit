@@ -8,8 +8,10 @@
 * 
 
 ## ENHANCEMENTS:
+* update avm "Azure/avm-res-network-bastionhost/azurerm" to version 0.2.0
 * add diagnostic settings for bastion host
 * add diagnostic settings for devops container instance 
+* 
 
 ## BUG FIXES:
 * 
