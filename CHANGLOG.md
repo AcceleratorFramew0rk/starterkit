@@ -1,3 +1,18 @@
+# 0.0.3 (TBD)
+## COMPATIBLE WITH:
+* aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
+* azurerm: version 3.85
+* aaf: 0.0.1
+
+## FEATURES:
+* 
+
+## ENHANCEMENTS:
+* add diagnostic settings for bastion host
+
+## BUG FIXES:
+* 
+
 # 0.0.2 (May 29, 2024)
 ## COMPATIBLE WITH:
 * aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
