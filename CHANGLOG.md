@@ -9,6 +9,7 @@
 
 ## ENHANCEMENTS:
 * add diagnostic settings for bastion host
+* add diagnostic settings for devops container instance 
 
 ## BUG FIXES:
 * 
