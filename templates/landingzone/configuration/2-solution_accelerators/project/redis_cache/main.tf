@@ -5,15 +5,15 @@ module "private_dns_zones" {
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.redis.cache.windows.net"
   dns_zone_tags         = {
-      env = local.global_settings.environment 
+      env = try(local.global_settings.environment, var.environment) 
     }
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
-        vnetid           = local.remote.networking.virtual_networks.spoke_project.virtual_network.id  
+        vnetid           = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id  
         autoregistration = false # true
         tags = {
-          env = local.global_settings.environment 
+          env = try(local.global_settings.environment, var.environment) 
         }
       }
     }
@@ -25,9 +25,9 @@ module "private_endpoint" {
   name                           = "${module.redis_cache.resource.name}PrivateEndpoint"
   location                       = azurerm_resource_group.this.location
   resource_group_name            = azurerm_resource_group.this.name
-  subnet_id                      = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["DbSubnet"].id 
+  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["DbSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["DbSubnet"].id : var.subnet_id 
   tags                           = {
-      env = local.global_settings.environment 
+      env = try(local.global_settings.environment, var.environment)  
     }
   private_connection_resource_id = module.redis_cache.resource.id
   is_manual_connection           = false
@@ -43,13 +43,13 @@ module "private_endpoint" {
 module "redis_cache" {
   source = "./../../../../../../modules/databases/terraform-azurerm-redis-cache"
 
-  name                         = "${module.naming.redis_cache.name}${random_string.this.result}" # alpha numeric characters only are allowed in "name var.name_prefix == null ? "${random_string.prefix.result}${var.acr_name}" : "${var.name_prefix}${var.acr_name}"
+  name                         = "${module.naming.redis_cache.name}${random_string.this.result}" 
   resource_group_name          = azurerm_resource_group.this.name
   location                     = azurerm_resource_group.this.location
   tags = { 
     purpose = "redis cache" 
-    project_code = local.global_settings.prefix 
-    env = local.global_settings.environment 
+    project_code = try(local.global_settings.prefix, var.prefix) 
+    env = try(local.global_settings.environment, var.environment) 
     zone = "project"
     tier = "db"           
   } 

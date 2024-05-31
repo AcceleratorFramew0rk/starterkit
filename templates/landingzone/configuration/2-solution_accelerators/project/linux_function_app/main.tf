@@ -6,15 +6,15 @@ module "private_dns_zones" {
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.azurewebsites.net"
   dns_zone_tags         = {
-      env = local.global_settings.environment 
+      env = try(local.global_settings.environment, var.environment) 
     }
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
-        vnetid           = local.remote.networking.virtual_networks.spoke_project.virtual_network.id  
+        vnetid           = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id  
         autoregistration = false # true
         tags = {
-          env = local.global_settings.environment 
+          env = try(local.global_settings.environment, var.environment) 
         }
       }
     }
@@ -100,7 +100,7 @@ module "linux_function_app" {
     primary = {
       name                          = "primary-interfaces"
       private_dns_zone_resource_ids =  [module.private_dns_zones.private_dnz_zone_output.id] 
-      subnet_resource_id            = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["FunctionAppSubnet"].id 
+      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["FunctionAppSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["FunctionAppSubnet"].id : var.subnet_id 
       inherit_lock = true
       inherit_tags = true
       lock = {
@@ -140,14 +140,14 @@ module "linux_function_app" {
   diagnostic_settings = {
     diagnostic_settings_1 = {
       name                  = "dia_settings_1"
-      workspace_resource_id = local.remote.log_analytics_workspace.id 
+      workspace_resource_id = try(local.remote.log_analytics_workspace.id, null) != null ? local.remote.log_analytics_workspace.id : var.log_analytics_workspace_id 
     }
   }
 
   tags = { 
     purpose = "linux function app" 
-    project_code = local.global_settings.prefix 
-    env = local.global_settings.environment 
+    project_code = try(local.global_settings.prefix, var.prefix) 
+    env = try(local.global_settings.environment, var.environment) 
     zone = "project"
     tier = "app"           
   } 

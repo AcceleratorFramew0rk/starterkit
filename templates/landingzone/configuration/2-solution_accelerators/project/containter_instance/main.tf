@@ -7,7 +7,7 @@ module "container_group1" {
   ip_address_type     = "Private" # "Public"
   os_type             = "Linux"
   dns_name_label      = null #  this one needs to be unique
-  subnet_ids          = [local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["CiSubnet"].id ]
+  subnet_ids          = [try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["CiSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["CiSubnet"].id : var.subnet_id  ]
   restart_policy     = "OnFailure" // Possible values are 'Always'(default) 'Never' 'OnFailure'
 
   identity = {
@@ -46,8 +46,8 @@ module "container_group1" {
   }
   tags = { 
     purpose = "devops runner container instance" 
-    project_code = local.global_settings.prefix 
-    env = local.global_settings.environment 
+    project_code = try(local.global_settings.prefix, var.prefix)  
+    env = try(local.global_settings.environment, var.environment) 
     zone = "devops"
     tier = "na"          
   }   

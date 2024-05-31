@@ -40,12 +40,12 @@ module "aks_cluster" {
   enable_telemetry    = var.enable_telemetry # see variables.tf
   name                = module.naming.kubernetes_cluster.name_unique
   resource_group_name = azurerm_resource_group.this.name
-  vnet_subnet_id      = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["SystemNodePoolSubnet"].id
+  vnet_subnet_id      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["SystemNodePoolSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["SystemNodePoolSubnet"].id : var.systemnode_subnet_id
   node_resource_group = "${lower(module.naming.resource_group.name)}-solution-accelerators-aks-nodes" # node_resource_group                 = var.node_resource_group
   pod_cidr            = "172.31.0.0/18"
   dns_service_ip      = "172.16.0.10" # "10.0.0.10"
   service_cidr        = "172.16.0.0/18" #"10.0.0.0/16"
-  log_analytics_workspace_id = local.remote.log_analytics_workspace.id
+  log_analytics_workspace_id = try(local.remote.log_analytics_workspace.id, null) != null ? local.remote.log_analytics_workspace.id : var.log_analytics_workspace_id
 
   managed_identities = {
     user_assigned_resource_ids = [
@@ -63,7 +63,7 @@ module "aks_cluster" {
       min_count            = 2
       os_sku               = "Ubuntu"
       mode                 = "User"
-      vnet_subnet_id       = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id
+      vnet_subnet_id       = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id : var.usernode_subnet_id
     },
     ingress = {
       name                 = "ingress"
@@ -73,7 +73,7 @@ module "aks_cluster" {
       min_count            = 2
       os_sku               = "Ubuntu"
       mode                 = "User"
-      vnet_subnet_id       = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id
+      vnet_subnet_id       = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id : var.usernode_subnet_id
     }
   }
 }

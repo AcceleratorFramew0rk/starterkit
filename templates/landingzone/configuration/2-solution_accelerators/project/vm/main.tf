@@ -73,7 +73,7 @@ module "virtualmachine1" {
       ip_configurations = {
         ip_configuration_1 = {
           name                          = "${module.naming.network_interface.name}-ipconfig1"
-          private_ip_subnet_resource_id = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["AppSubnet"].id 
+          private_ip_subnet_resource_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["AppSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["AppSubnet"].id : var.subnet_id 
           create_public_ip_address      = false # true
           public_ip_address_name        = module.naming.public_ip.name_unique
         }
@@ -93,8 +93,8 @@ module "virtualmachine1" {
 
   tags = { 
     purpose = "tooling server" 
-    project_code = local.global_settings.prefix 
-    env = local.global_settings.environment 
+    project_code = try(local.global_settings.prefix, var.prefix) 
+    env = try(local.global_settings.environment, var.environment) 
     zone = "management"
     tier = "na"          
   }   

@@ -11,7 +11,7 @@ module "private_dns_zones" {
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
-        vnetid           = local.remote.networking.virtual_networks.spoke_project.virtual_network.id  
+        vnetid           = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id  
         autoregistration = false # true
         tags = {
           "env" = "dev"
@@ -22,7 +22,7 @@ module "private_dns_zones" {
 
 
 resource "azurerm_application_security_group" "this" {
-  name = "tf-appsecuritygroup-pe" # ${local.prefix}"
+  name = "tf-appsecuritygroup-pe" 
 
   resource_group_name = azurerm_resource_group.this.name
   location            = azurerm_resource_group.this.location
@@ -37,14 +37,14 @@ module "servicebus" {
   sku                           = "Premium"
   resource_group_name           = azurerm_resource_group.this.name
   location                      = azurerm_resource_group.this.location
-  name                          = "${module.naming.container_registry.name_unique}${random_string.this.result}" # "${module.naming.servicebus_namespace.name_unique}-${local.prefix}"
+  name                          = "${module.naming.container_registry.name_unique}${random_string.this.result}" 
   public_network_access_enabled = false
 
   private_endpoints = {
     max = {
       name                        = "max"
       private_dns_zone_group_name = "max_group"
-      subnet_resource_id          = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceBusSubnet"].id  # azurerm_subnet.example.id
+      subnet_resource_id          = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceBusSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceBusSubnet"].id : var.subnet_id 
 
       role_assignments = {
         key = {
@@ -72,7 +72,7 @@ module "servicebus" {
     staticIp = {
       name                   = "staticIp"
       network_interface_name = "nic1"
-      subnet_resource_id     = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceBusSubnet"].id  # azurerm_subnet.example.id
+      subnet_resource_id     = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceBusSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceBusSubnet"].id : var.subnet_id 
 
       ip_configurations = {
         ipconfig1 = {
@@ -84,15 +84,15 @@ module "servicebus" {
 
     noDnsGroup = {
       name               = "noDnsGroup"
-      subnet_resource_id = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceBusSubnet"].id  # azurerm_subnet.example.id
+      subnet_resource_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceBusSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceBusSubnet"].id : var.subnet_id 
     }
 
     withDnsGroup = {
       name                        = "withDnsGroup"
       private_dns_zone_group_name = "withDnsGroup_group"
 
-      subnet_resource_id            = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceBusSubnet"].id  # azurerm_subnet.example.id
-      private_dns_zone_resource_ids = [module.private_dns_zones.private_dnz_zone_output.id] # [azurerm_private_dns_zone.example.id]
+      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceBusSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceBusSubnet"].id : var.subnet_id 
+      private_dns_zone_resource_ids = [module.private_dns_zones.private_dnz_zone_output.id] 
     }
   }
 }

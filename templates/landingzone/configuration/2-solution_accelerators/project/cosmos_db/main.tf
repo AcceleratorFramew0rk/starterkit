@@ -10,7 +10,7 @@ module "private_dns_zones" {
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
-        vnetid           = local.remote.networking.virtual_networks.spoke_project.virtual_network.id  
+        vnetid           = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id  
         autoregistration = false # true
         tags = {
           "env" = "dev"
@@ -37,8 +37,8 @@ module "cosmos_db" {
       name                            = var.pe_name
       private_service_connection_name = var.pe_connection_name
       subnet_name                     = "DbSubnet" 
-      vnet_name                       = local.remote.networking.virtual_networks.spoke_project.virtual_network.name  
-      vnet_rg_name                    = local.remote.resource_group.name  
+      vnet_name                       = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.name, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.name : var.vnet_name  
+      vnet_rg_name                    = try(local.remote.resource_group.name, null) != null ? local.remote.resource_group.name : var.vnet_resource_group_name  
     }
   }
 

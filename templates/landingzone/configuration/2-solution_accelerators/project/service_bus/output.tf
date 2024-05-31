@@ -1,6 +1,6 @@
-output "servicebus_resource" {
-  value       = module.servicebus 
-  description = "The Azure Acr resource"
+output "resource" {
+  value       = module.servicebus.resource 
+  description = "The Azure service bus resource"
   sensitive = true  
 }
 

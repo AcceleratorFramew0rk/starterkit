@@ -1,4 +1,4 @@
-output "storageaccount_resource" {
+output "resource" {
   value       = module.storageaccount.resource 
   description = "The Azure storageaccount resource"
   sensitive = true  

@@ -14,7 +14,7 @@ resource "azurerm_route" "this" {
 }
 
 resource "azurerm_subnet_route_table_association" "hub_gateway" {
-  subnet_id      = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["SystemNodePoolSubnet"].id 
+  subnet_id      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["SystemNodePoolSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["SystemNodePoolSubnet"].id : var.systemnode_subnet_id
   route_table_id = azurerm_route_table.this.id
 
   depends_on = ["azurerm_route_table.this"]

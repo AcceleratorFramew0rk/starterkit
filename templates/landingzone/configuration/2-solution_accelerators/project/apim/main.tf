@@ -24,13 +24,13 @@ module "apim" {
 
   virtual_network_type = "Internal"
   virtual_network_configuration = {
-    subnet_id = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ApiSubnet"].id 
+    subnet_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ApiSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ApiSubnet"].id : var.subnet_id 
   }
 
   tags = { 
     purpose = "api management" 
-    project_code = local.global_settings.prefix 
-    env = local.global_settings.environment 
+    project_code = try(local.global_settings.prefix, var.prefix) 
+    env = try(local.global_settings.environment, var.environment) 
     zone = "project"
     tier = "api"           
   }     

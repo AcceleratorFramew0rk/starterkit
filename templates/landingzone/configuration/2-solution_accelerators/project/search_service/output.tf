@@ -1,4 +1,4 @@
-output "searchservice_resource" {
+output "resource" {
   value       = module.searchservice.resource 
   description = "The Azure Acr resource"
   sensitive = true  

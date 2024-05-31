@@ -29,8 +29,8 @@ variable "storage_account_name" {
 }
 
 module "landingzone" {
-  # source="./../../../../../../modules/framework/terraform-azurerm-azure-accelerator-framework"
-  source = "AcceleratorFramew0rk/aaf/azurerm"
+  source="./../../../../../../modules/framework/terraform-azurerm-azure-accelerator-framework"
+  # source = "AcceleratorFramew0rk/aaf/azurerm"
 
   resource_group_name  = var.resource_group_name 
   storage_account_name = var.storage_account_name 
@@ -39,7 +39,7 @@ module "landingzone" {
 module "naming" {
   source  = "Azure/naming/azurerm"
   version = ">= 0.3.0"
-  prefix                 = ["${local.global_settings.prefix}"] 
+  prefix                 = ["${try(local.global_settings.prefix, var.prefix)}"] 
   unique-seed            = "random"
   unique-length          = 3
   unique-include-numbers = false  
@@ -56,6 +56,6 @@ data "azurerm_client_config" "current" {}
 
 # local remote variables
 locals {
-  global_settings = module.landingzone.global_settings   
-  remote =  module.landingzone.remote   
+  global_settings = try(module.landingzone.global_settings, null)   
+  remote =  try(module.landingzone.remote, null)   
 } 

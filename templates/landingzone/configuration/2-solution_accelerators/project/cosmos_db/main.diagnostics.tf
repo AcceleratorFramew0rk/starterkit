@@ -3,7 +3,7 @@ module "diagnosticsetting1" {
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-cosmos-db"
   target_resource_id = module.cosmos_db.cosmosdb_id
-  log_analytics_workspace_id = local.remote.log_analytics_workspace.id
+  log_analytics_workspace_id = try(local.remote.log_analytics_workspace.id, null) != null ? local.remote.log_analytics_workspace.id : var.log_analytics_workspace_id
   diagnostics = {
     categories = {
       log = [

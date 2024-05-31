@@ -13,13 +13,13 @@ module "keyvault" {
   private_endpoints = {
     primary = {
       private_dns_zone_resource_ids = [module.private_dns_zones.private_dnz_zone_output.id] 
-      subnet_resource_id            = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceSubnet"].id  
+      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceSubnet"].id : var.subnet_id  
     }
   }
   tags = { 
     purpose = "key vault" 
-    project_code = local.global_settings.prefix 
-    env = local.global_settings.environment 
+    project_code = try(local.global_settings.prefix, var.prefix) 
+    env = try(local.global_settings.environment, var.environment) 
     zone = "project"
     tier = "service"           
   }   
@@ -33,15 +33,15 @@ module "private_dns_zones" {
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.vaultcore.azure.net"
   dns_zone_tags         = {
-    env = local.global_settings.environment 
+    env = try(local.global_settings.environment, var.environment) 
   }
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
-        vnetid           = local.remote.networking.virtual_networks.spoke_project.virtual_network.id  
+        vnetid           = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id  
         autoregistration = false # true
         tags = {
-          env = local.global_settings.environment 
+          env = try(local.global_settings.environment, var.environment) 
         }
       }
     }

@@ -36,7 +36,7 @@ locals {
       name                  = substr("worker${i}${random_id.prefix.hex}", 0, 8)
       vm_size               = "Standard_F8s_v2"  # "Standard_D2s_v3"
       node_count            = 1
-      vnet_subnet_id        = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id # azurerm_subnet.test.id
+      vnet_subnet_id        = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id : var.usernode_subnet_id
       create_before_destroy = i % 2 == 0
     }
   }
@@ -53,7 +53,7 @@ module "aks_cluster" {
   # version = "8.0.0"  
   source = "./../../../../../../modules/compute/terraform-azurerm-aks"
 
-  prefix                    = local.global_settings.prefix # random_id.name.hex
+  prefix                    = try(local.global_settings.prefix, var.prefix) # random_id.name.hex
   resource_group_name       = azurerm_resource_group.this.name # local.resource_group.name
   kubernetes_version        = var.kubernetes_version # "1.26" # don't specify the patch version!
 
@@ -155,7 +155,7 @@ module "aks_cluster" {
   # }
 
   sku_tier                          = "Standard" # Free, Standard or Premium
-  vnet_subnet_id                    = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["SystemNodePoolSubnet"].id  # azurerm_subnet.test.id
+  vnet_subnet_id                    = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["SystemNodePoolSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["SystemNodePoolSubnet"].id : var.systemnode_subnet_id
 
   agents_labels = {
     "node1" : "label1"

@@ -9,15 +9,15 @@ module "private_dns_zones" {
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.blob.core.windows.net"
   dns_zone_tags         = {
-      env = local.global_settings.environment 
+      env = try(local.global_settings.environment, var.environment) 
     }
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
-        vnetid           = local.remote.networking.virtual_networks.spoke_project.virtual_network.id  
+        vnetid           = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id   
         autoregistration = false # true
         tags = {
-          env = local.global_settings.environment 
+          env = try(local.global_settings.environment, var.environment) 
         }
       }
     }
@@ -53,8 +53,8 @@ module "storageaccount" {
   }
   tags = { 
     purpose = "storage account" 
-    project_code = local.global_settings.prefix 
-    env = local.global_settings.environment 
+    project_code = try(local.global_settings.prefix, var.prefix) 
+    env = try(local.global_settings.environment, var.environment) 
     zone = "project"
     tier = "db"           
   }     
@@ -82,9 +82,9 @@ module "storageaccount" {
     endpoint => {
       # the name must be set to avoid conflicting resources.
       name                          = "pe-${endpoint}-${module.naming.storage_account.name_unique}"
-      subnet_resource_id            = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["DbSubnet"].id # module.virtualnetwork_project.subnets["AiSubnet"].id # azurerm_subnet.private.id
+      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["DbSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["DbSubnet"].id : var.subnet_id  
       subresource_name              = [endpoint]
-      private_dns_zone_resource_ids = [module.private_dns_zones.private_dnz_zone_output.id] # [azurerm_private_dns_zone.this[endpoint].id]
+      private_dns_zone_resource_ids = [module.private_dns_zones.private_dnz_zone_output.id] 
       # these are optional but illustrate making well-aligned service connection & NIC names.
       private_service_connection_name = "psc-${endpoint}-${module.naming.storage_account.name_unique}"
       network_interface_name          = "nic-pe-${endpoint}-${module.naming.storage_account.name_unique}"
@@ -92,7 +92,7 @@ module "storageaccount" {
       inherit_lock                    = false
 
       tags = {
-        env = local.global_settings.environment 
+        env = try(local.global_settings.environment, var.environment) 
       }
 
       role_assignments = {

@@ -26,7 +26,7 @@ module "private_dns_zones" {
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
-        vnetid           = local.remote.networking.virtual_networks.spoke_project.virtual_network.id  
+        vnetid           = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id  
         autoregistration = false # true
         tags = {
           "env" = "dev"
@@ -41,7 +41,7 @@ module "private_endpoint" {
   name                           = "${module.appservice.resource.name}PrivateEndpoint"
   location                       = azurerm_resource_group.this.location
   resource_group_name            = azurerm_resource_group.this.name
-  subnet_id                      = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["WebSubnet"].id 
+  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["WebSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["WebSubnet"].id : var.subnet_id 
   tags                           = {
       environment = "dev"
     }
@@ -60,8 +60,8 @@ module "appservice" {
   location                     = azurerm_resource_group.this.location
   tags = { 
     purpose = "app service" 
-    project_code = local.global_settings.prefix 
-    env = local.global_settings.environment 
+    project_code = try(local.global_settings.prefix, var.prefix) 
+    env = try(local.global_settings.environment, var.environment) 
     zone = "project"
     tier = "service"           
   } 
@@ -95,7 +95,7 @@ module "appservice" {
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
   app_service_id = module.appservice.resource.id
-  subnet_id      = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["AppSubnet"].id 
+  subnet_id      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["AppSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["AppSubnet"].id : var.subnet_id 
 }
 
 

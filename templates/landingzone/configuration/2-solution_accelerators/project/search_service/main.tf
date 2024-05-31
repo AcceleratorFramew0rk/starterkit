@@ -12,8 +12,8 @@ module "searchservice" {
 
   tags = { 
     purpose = "search service" 
-    project_code = local.global_settings.prefix 
-    env = local.global_settings.environment 
+    project_code = try(local.global_settings.prefix, var.prefix) 
+    env = try(local.global_settings.environment, var.environment) 
     zone = "project"
     tier = "ai"           
   }     
@@ -28,15 +28,15 @@ module "private_dns_zones" {
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.search.windows.net"
   dns_zone_tags         = {
-      env = local.global_settings.environment 
+      env = try(local.global_settings.environment, var.environment) 
     }
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
-        vnetid           = local.remote.networking.virtual_networks.spoke_project.virtual_network.id  
+        vnetid           = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id  
         autoregistration = false # true
         tags = {
-          env = local.global_settings.environment 
+          env = try(local.global_settings.environment, var.environment) 
         }
       }
     }
@@ -48,9 +48,9 @@ module "private_endpoint" {
   name                           = "${module.searchservice.resource.name}PrivateEndpoint"
   location                       = azurerm_resource_group.this.location
   resource_group_name            = azurerm_resource_group.this.name
-  subnet_id                      = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["AiSubnet"].id 
+  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["AiSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["AiSubnet"].id : var.subnet_id 
   tags                           = {
-      env = local.global_settings.environment 
+      env = try(local.global_settings.environment, var.environment) 
     }
   private_connection_resource_id = module.searchservice.resource.id
   is_manual_connection           = false

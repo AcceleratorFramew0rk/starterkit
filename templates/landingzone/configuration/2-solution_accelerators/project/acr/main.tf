@@ -10,7 +10,7 @@ module "private_dns_zones" {
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
-        vnetid           = local.remote.networking.virtual_networks.spoke_project.virtual_network.id  
+        vnetid           = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id  
         autoregistration = false # true
         tags = {
           "env" = "dev"
@@ -27,12 +27,12 @@ module "container_registry" {
   location                     = azurerm_resource_group.this.location
   sku                          = "Premium" # ["Basic", "Standard", "Premium"]
   admin_enabled                = true 
-  log_analytics_workspace_id   = local.remote.log_analytics_workspace.id 
+  log_analytics_workspace_id   = try(local.remote.log_analytics_workspace.id, null) != null ? local.remote.log_analytics_workspace.id : var.log_analytics_workspace_id 
   log_analytics_retention_days = 7 
   tags = { 
     purpose = "container registry" 
-    project_code = local.global_settings.prefix 
-    env = local.global_settings.environment 
+    project_code = try(local.global_settings.prefix, var.prefix) 
+    env = try(local.global_settings.environment, var.environment) 
     zone = "project"
     tier = "service"           
   }     
@@ -44,7 +44,7 @@ module "private_endpoint" {
   name                           = "${module.container_registry.name}PrivateEndpoint"
   location                       = azurerm_resource_group.this.location
   resource_group_name            = azurerm_resource_group.this.name
-  subnet_id                      = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceSubnet"].id 
+  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceSubnet"].id : var.subnet_id 
   tags                           = {
       environment = "dev"
     }
