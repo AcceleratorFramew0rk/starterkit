@@ -1,7 +1,7 @@
 module "naming" {
   source  = "Azure/naming/azurerm"
   version = ">= 0.3.0"
-  prefix                 = ["${local.global_settings.prefix}"] 
+  prefix                 = ["${try(local.global_settings.prefix,"")}"] 
   unique-seed            = "random"
   unique-length          = 3
   unique-include-numbers = false  
