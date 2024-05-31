@@ -21,8 +21,8 @@ SUBSCRIPTION_ID=$(echo "$ACCOUNT_INFO" | jq ".id" -r)
 echo $SUBSCRIPTION_ID
 
 # ** IMPORTANT - find out the random code from the storage account name
-PROJECT_CODE="aaf"
-RND_NUM="qvm"
+PROJECT_CODE="${PREFIX}"
+RND_NUM="xxx"
 ENV="sandpit"
 VNET_NAME="gcci-vnet-project"
 SYSTEMNODE_SUBNET_NAME="SystemNodePoolSubnet"

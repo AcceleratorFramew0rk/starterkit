@@ -23,7 +23,7 @@ echo $SUBSCRIPTION_ID
 
 # ** IMPORTANT - find out the random code from the storage account name
 PROJECT_CODE="${PREFIX}"
-RND_NUM="rnv"
+RND_NUM="xxx"
 ENV="sandpit"
 VNET_NAME="gcci-vnet-project"
 SUBNET_NAME="ServiceSubnet"
