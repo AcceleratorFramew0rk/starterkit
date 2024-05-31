@@ -21,7 +21,7 @@ ACCOUNT_INFO=$(az account show 2> /dev/null)
 SUBSCRIPTION_ID=$(echo "$ACCOUNT_INFO" | jq ".id" -r)
 echo $SUBSCRIPTION_ID
 
-# ** IMPORTANT - find out the random code from the storage account name
+# ** IMPORTANT - find out the random code from the storage account name and replace xxx for RND_NUM 
 PROJECT_CODE="${PREFIX}"
 RND_NUM="xxx"
 ENV="sandpit"
