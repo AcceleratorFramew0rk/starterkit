@@ -1,4 +1,22 @@
-# 0.0.2 (TBC)
+# 0.0.3 (TBD)
+## COMPATIBLE WITH:
+* aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
+* azurerm: version 3.85
+* aaf: 0.0.1
+
+## FEATURES:
+* 
+
+## ENHANCEMENTS:
+* update avm "Azure/avm-res-network-bastionhost/azurerm" to version 0.2.0
+* add diagnostic settings for bastion host
+* add diagnostic settings for devops container instance 
+* standalone deployment for solution accelerator - mssql
+
+## BUG FIXES:
+* 
+
+# 0.0.2 (May 29, 2024)
 ## COMPATIBLE WITH:
 * aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
 * azurerm: version 3.85
