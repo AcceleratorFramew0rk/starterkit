@@ -5,7 +5,7 @@
 * aaf: 0.0.1
 
 ## FEATURES:
-* 
+* standalone deployment for each solution accelerator with no dependencies to launchpad import.sh script and landing zones
 
 ## ENHANCEMENTS:
 * update avm "Azure/avm-res-network-bastionhost/azurerm" to version 0.2.0
