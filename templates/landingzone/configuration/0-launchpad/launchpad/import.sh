@@ -260,7 +260,7 @@ FOLDER_NAME=$(basename "$(pwd)")
 echo "Folder Name: ${FOLDER_NAME}"
 
 # Escape slashes in the search variable
-search="{{gcc_starter_kit}}"
+search="gcc_starter_kit"
 replace="${FOLDER_NAME}"
 
 echo $search
