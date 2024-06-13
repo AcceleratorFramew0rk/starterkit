@@ -9,8 +9,7 @@
 * 
 
 ## ENHANCEMENTS:
-* add global settings tags to acr
-* add global settings tags to aks
+* add global settings tags to all solution accelerators, 0-setup_gcc_dev_env
 
 ## BUG FIXES:
 * 
