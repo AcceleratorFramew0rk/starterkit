@@ -1,4 +1,4 @@
-cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/2-solution_accelerators/management/bastion_host
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/management/bastion_host
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name=aoaidev-rg-launchpad" \

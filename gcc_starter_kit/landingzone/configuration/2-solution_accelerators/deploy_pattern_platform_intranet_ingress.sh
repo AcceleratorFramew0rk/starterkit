@@ -1,5 +1,5 @@
 # intranet ingress agw
-cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/2-solution_accelerators/hub_intranet_ingress/agw
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/hub_intranet_ingress/agw
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name=aoaidev-rg-launchpad" \
@@ -16,7 +16,7 @@ terraform apply -auto-approve \
 -var="resource_group_name=aoaidev-rg-launchpad"
 
 # intranet ingress firewall
-cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/2-solution_accelerators/hub_intranet_ingress/firewall_ingress
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/hub_intranet_ingress/firewall_ingress
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name=aoaidev-rg-launchpad" \

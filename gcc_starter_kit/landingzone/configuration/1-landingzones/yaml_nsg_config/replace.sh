@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# sudo chmod -R -f 777 /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/1-landingzones/nsg/csv/replace.sh
+# sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/nsg/csv/replace.sh
 
 # begin network security group - replace cidr with config data
 
@@ -55,7 +55,7 @@ configure_nsg () {
 #------------------------------------------------------------------------
 
 
-CONFIG_FILE_PATH="/tf/avm/{{gcc_starter_kit}}/landingzone/configuration/0-launchpad/launchpad/config.yaml"
+CONFIG_FILE_PATH="/tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad/config.yaml"
 echo $CONFIG_FILE_PATH
 eval $(parse_yaml $CONFIG_FILE_PATH "CONFIG_")
 # e,g,
