@@ -1,9 +1,9 @@
-output "azure_bastion_resource" {
+output "resource" {
   value       = {
-    id = module.azure_bastion.bastion_resource.id
-    name = module.azure_bastion.bastion_resource.name
+    id = module.azure_bastion.resource.id
+    name = module.azure_bastion.resource.name
   }
-  description = "The Azure containter instance resource"
+  description = "The Azure bastion host resource"
 }
 
 output "global_settings" {

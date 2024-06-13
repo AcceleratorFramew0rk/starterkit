@@ -12,16 +12,7 @@ subnets:
     WebSubnet: # DO NOT CHANGE subnet name
       address_prefixes: ["100.64.0.0/27"]          
     AppSubnet: # DO NOT CHANGE subnet name
-      address_prefixes: ["100.64.0.32/27"]
-      delegations: [ 
-        {
-          name: "appservice",
-          service_delegation: {
-            name: "Microsoft.Web/serverFarms", 
-            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
-            }
-        }
-      ]         
+      address_prefixes: ["100.64.0.32/27"]       
     DbSubnet: # DO NOT CHANGE subnet name
       address_prefixes: ["100.64.0.64/27"]
     ServiceSubnet: # DO NOT CHANGE subnet name
@@ -68,7 +59,20 @@ subnets:
         }
       ]  
     ServiceBusSubnet: # DO NOT CHANGE subnet name
-      address_prefixes: ["100.64.1.96/27"]                      
+      address_prefixes: ["100.64.1.96/27"]         
+    CosmosDbSubnet: # DO NOT CHANGE subnet name 
+      address_prefixes: ["100.64.1.128/27"]    
+    AppServiceSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: ["100.64.1.160/27"]
+      delegations: [ 
+        {
+          name: "AppServiceSubnet",
+          service_delegation: {
+            name: "Microsoft.Web/serverFarms", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ]                          
 # ** IMPORTANT - DO NOT CHANGE BELOW
   hub_internet_ingress: 
     AzureFirewallSubnet: 

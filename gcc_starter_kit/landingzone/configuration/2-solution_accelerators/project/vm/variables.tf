@@ -28,3 +28,9 @@ variable "environment" {
   type        = string  
   default = "sandpit"
 }
+
+variable "source_image_resource_id" {
+  type        = string  
+  default = null # "/subscriptions/<subscription_id>/resourceGroups/<resource_group>/providers/Microsoft.Compute/images/<custom_image_name>"
+}
+

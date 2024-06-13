@@ -3,7 +3,7 @@ module "diagnosticsetting" {
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-firewall"
   target_resource_id = module.firewall.resource.id # bug in avm module which output id or name the resource object
-  log_analytics_workspace_id = local.remote.log_analytics_workspace.id
+  log_analytics_workspace_id = try(local.remote.log_analytics_workspace.id, null) != null ? local.remote.log_analytics_workspace.id : var.log_analytics_workspace_id
   diagnostics = {
     categories = {
       log = [

@@ -1,4 +1,4 @@
-output "firewall_resource" {
+output "resource" {
   value       = {
     id = module.firewall.resource.id
     name = module.firewall.resource.name

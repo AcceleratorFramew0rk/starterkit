@@ -29,11 +29,10 @@ resource "azurerm_application_security_group" "this" {
 }
 
 module "servicebus" {
-  # source = "../../"
   source  = "Azure/avm-res-servicebus-namespace/azurerm"
   version = "0.1.0"
-  # insert the 3 required variables here
 
+  # insert the 3 required variables here
   sku                           = "Premium"
   resource_group_name           = azurerm_resource_group.this.name
   location                      = azurerm_resource_group.this.location
@@ -77,7 +76,7 @@ module "servicebus" {
       ip_configurations = {
         ipconfig1 = {
           name               = "ipconfig1"
-          private_ip_address = "10.0.0.7"
+          private_ip_address = try(cidrhost(local.global_settings.subnets.project.ServiceBusSubnet.address_prefixes.0, 10), null)  # "100.64.1.100" 
         }
       }
     }

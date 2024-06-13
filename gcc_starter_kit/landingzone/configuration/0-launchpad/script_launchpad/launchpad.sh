@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# ---------------------------------------------------------------------------------------
+# Create storage account and containers for storing terraform state file
+#
+# Example usage:
+#
+# cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/script_launchpad
+# PREFIX="aaf"
+# ./launchpad.sh $PREFIX
+#
+# ---------------------------------------------------------------------------------------
+
 # Check if at least one parameter is provided
 if [ "$#" -lt 1 ]; then
   echo "Usage: $0 [prefix]"
@@ -37,6 +48,12 @@ else
     fi
 fi
 
+
+# az storage account list --resource-group $RG_NAME --query "[?contains(name, '$STG_NAME')]" > /dev/null 2>&1
+# if [ $? -eq 0 ]; then
+#     read -p "ERROR: Storage Account Name $STG_NAME already exists. Exiting."
+#     exit 1
+# fi
 
 # Create Storage account and containers for storing state files
 az storage account create --name $STG_NAME --resource-group $RG_NAME --location $LOC --sku Standard_LRS --kind StorageV2 --allow-blob-public-access true --min-tls-version TLS1_2

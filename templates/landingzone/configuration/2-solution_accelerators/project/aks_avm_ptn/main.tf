@@ -36,7 +36,7 @@ module "aks_cluster" {
   # source              = "../../"
   source = "./../../../../../../modules/compute/terraform-azurerm-avm-ptn-aks-production"  
 
-  kubernetes_version  = "1.28"
+  kubernetes_version  = "1.29"
   enable_telemetry    = var.enable_telemetry # see variables.tf
   name                = module.naming.kubernetes_cluster.name_unique
   resource_group_name = azurerm_resource_group.this.name
@@ -58,8 +58,8 @@ module "aks_cluster" {
     workload = {
       name                 = "workload"
       vm_size              = "Standard_D2d_v5"
-      orchestrator_version = "1.28"
-      max_count            = 16
+      orchestrator_version = "1.29"
+      max_count            = 4 # 16 - ensure subnet has sufficent IPs
       min_count            = 2
       os_sku               = "Ubuntu"
       mode                 = "User"
@@ -68,8 +68,8 @@ module "aks_cluster" {
     ingress = {
       name                 = "ingress"
       vm_size              = "Standard_D2d_v5"
-      orchestrator_version = "1.28"
-      max_count            = 4
+      orchestrator_version = "1.29"
+      max_count            = 4  # 16 - ensure subnet has sufficent IPs
       min_count            = 2
       os_sku               = "Ubuntu"
       mode                 = "User"

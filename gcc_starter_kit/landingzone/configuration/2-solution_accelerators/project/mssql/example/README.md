@@ -4,17 +4,17 @@
 
 # prepare and create launchpad - only run once per subscription
 
-sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/script_launchpad
+sudo chmod -R -f 777 /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/0-launchpad/script_launchpad
 
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/script_launchpad
+cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/0-launchpad/script_launchpad
 
-PREFIX="aaf"
+PREFIX="dbsuat"
 echo $PREFIX
 
 ./launchpad.sh $PREFIX
 
 # goto solution accelerator folder
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/mssql
+cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/2-solution_accelerators/project/mssql
 
 # get subscription id
 ACCOUNT_INFO=$(az account show 2> /dev/null)
@@ -23,7 +23,7 @@ echo $SUBSCRIPTION_ID
 
 # ** IMPORTANT - find out the random code from the storage account name and replace xxx for RND_NUM 
 PROJECT_CODE="${PREFIX}"
-RND_NUM="xxx"
+RND_NUM="cos"
 ENV="sandpit"
 VNET_NAME="gcci-vnet-project"
 SUBNET_NAME="DbSubnet"
@@ -32,6 +32,10 @@ SUBNET_NAME="DbSubnet"
 VNET_ID="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/${VNET_NAME}"
 SUBNET_ID="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/${VNET_NAME}/subnets/${SUBNET_NAME}"
 LAW_ID="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/gcci-agency-law/providers/Microsoft.OperationalInsights/workspaces/gcci-agency-workspace"
+
+echo $VNET_ID
+echo $SUBNET_ID
+echo $LAW_ID
 
 # terraform init, plan and apply
 

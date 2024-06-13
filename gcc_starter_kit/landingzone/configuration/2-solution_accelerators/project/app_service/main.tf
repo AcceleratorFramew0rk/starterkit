@@ -95,7 +95,7 @@ module "appservice" {
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
   app_service_id = module.appservice.resource.id
-  subnet_id      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["AppSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["AppSubnet"].id : var.subnet_id 
+  subnet_id      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["AppServiceSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["AppServiceSubnet"].id : var.subnet_id 
 }
 
 

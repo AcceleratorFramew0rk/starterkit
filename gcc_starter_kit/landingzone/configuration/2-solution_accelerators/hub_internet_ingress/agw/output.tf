@@ -1,4 +1,4 @@
-output "agw_resource" {
+output "resource" {
   value       = module.application_gateway.resource 
   description = "The Azure application gateway resource"
 }

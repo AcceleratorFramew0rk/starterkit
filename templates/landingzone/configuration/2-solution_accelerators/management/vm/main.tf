@@ -33,32 +33,7 @@ locals {
   tags = {
     scenario = "windows_w_data_disk_and_public_ip"
   }
-  test_regions = ["southeastasia", "southeastasia"]
-  # test_regions = ["centralus", "eastasia", "westus2", "eastus2", "westeurope", "japaneast"]
-}
-
-resource "random_integer" "region_index" {
-  max = length(local.test_regions) - 1
-  min = 0
-}
-
-resource "random_integer" "zone_index" {
-  max = length(module.regions.regions_by_name[local.test_regions[random_integer.region_index.result]].zones)
-  min = 1
-}
-
-module "virtualmachine1" {
-  source = "Azure/avm-res-compute-virtualmachine/azurerm"
-  version = "0.1.0"
-
-  enable_telemetry                       = var.enable_telemetry
-  location                               = azurerm_resource_group.this.location
-  resource_group_name                    = azurerm_resource_group.this.name
-  virtualmachine_os_type                 = "Windows"
-  name                                   = "${module.naming.virtual_machine.name}${random_string.this.result}" 
-  admin_credential_key_vault_resource_id = module.avm_res_keyvault_vault.resource.id
-  virtualmachine_sku_size                = "Standard_D8s_v3" # "standard_d2_v2" "Standard_D8s_v3" 
-  zone                                   = random_integer.zone_index.result 
+  regions = ["southeastasia", "southeastasia"]
 
   source_image_reference = {
     publisher = "MicrosoftWindowsServer"
@@ -66,6 +41,41 @@ module "virtualmachine1" {
     sku       = "2022-datacenter-g2"
     version   = "latest"
   }
+}
+
+resource "random_integer" "region_index" {
+  max = length(local.regions) - 1
+  min = 0
+}
+
+resource "random_integer" "zone_index" {
+  max = length(module.regions.regions_by_name[local.regions[random_integer.region_index.result]].zones)
+  min = 1
+}
+
+resource "azurerm_user_assigned_identity" "user" {
+  location            = azurerm_resource_group.this.location
+  name                = module.naming.user_assigned_identity.name_unique
+  resource_group_name = azurerm_resource_group.this.name
+}
+
+module "virtualmachine1" {
+  source = "Azure/avm-res-compute-virtualmachine/azurerm"
+  version = "0.14.0"
+
+  enable_telemetry                       = var.enable_telemetry
+  location                               = azurerm_resource_group.this.location
+  resource_group_name                    = azurerm_resource_group.this.name
+  virtualmachine_os_type                 = "Windows"
+  name                                   = "${module.naming.virtual_machine.name}${random_string.this.result}" 
+  admin_credential_key_vault_resource_id = module.avm_res_keyvault_vault.resource.id
+  virtualmachine_sku_size                = "Standard_D8s_v3" # "Standard_D8s_v3" 
+  zone                                   = random_integer.zone_index.result 
+
+  # use source_image_resource_id for gcc, else use default source_image_reference
+  source_image_reference = try(var.source_image_resource_id, null) == null ? local.source_image_reference : null
+
+  source_image_resource_id = try(var.source_image_resource_id, null) == null ? null : var.source_image_resource_id
 
   network_interfaces = {
     network_interface_1 = {
@@ -73,7 +83,7 @@ module "virtualmachine1" {
       ip_configurations = {
         ip_configuration_1 = {
           name                          = "${module.naming.network_interface.name}-ipconfig1"
-          private_ip_subnet_resource_id = local.remote.networking.virtual_networks.spoke_management.virtual_subnets.subnets["InfraSubnet"].id 
+          private_ip_subnet_resource_id = try(local.remote.networking.virtual_networks.spoke_management.virtual_subnets.subnets["InfraSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_management.virtual_subnets.subnets["InfraSubnet"].id : var.subnet_id 
           create_public_ip_address      = false # true
           public_ip_address_name        = module.naming.public_ip.name_unique
         }
@@ -93,21 +103,19 @@ module "virtualmachine1" {
 
   tags = { 
     purpose = "tooling server" 
-    project_code = local.global_settings.prefix 
-    env = local.global_settings.environment 
+    project_code = try(local.global_settings.prefix, var.prefix) 
+    env = try(local.global_settings.environment, var.environment) 
     zone = "management"
     tier = "na"          
   }   
+
+  managed_identities = {
+    system_assigned            = false # true
+    user_assigned_resource_ids = [azurerm_user_assigned_identity.user.id]   
+  }
 
   depends_on = [
     module.avm_res_keyvault_vault
   ]
 }
 
-
-      # - identity {
-      #     - identity_ids = [
-      #         - "/subscriptions/0b5b13b8-0ad7-4552-936f-8fae87e0633f/resourceGroups/Built-In-Identity-RG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/Built-In-Identity-southeastasia",
-      #       ] -> null
-      #     - type         = "UserAssigned" -> null
-      #   }

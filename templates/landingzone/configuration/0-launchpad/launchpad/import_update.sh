@@ -15,27 +15,36 @@ parse_yaml() {
    }'
 }
 
-echo Hello, what is the storage accout name?
-read STG_NAME
+# echo Hello, what is the storage accout name?
+# read STG_NAME
 
-if [[ "$STG_NAME" == "" ]]; then
-    echo "Storage Account Name is empty. ERROR: Please provide an Storage Account Name. Script Exit now."
+
+# if [[ "$STG_NAME" == "" ]]; then
+#     echo "Storage Account Name is empty. ERROR: Please provide an Storage Account Name. Script Exit now."
+# else
+    
+echo "working directory:"
+CWD=$(pwd)
+echo $CWD
+CONFIG_FILE_PATH="${CWD}/config.yaml"
+echo $CONFIG_FILE_PATH
+eval $(parse_yaml $CONFIG_FILE_PATH "CONFIG_")
+# Define your variables
+PROJECT_CODE="${CONFIG_prefix}" 
+# Generate resource group name to store state file
+RG_NAME="${PROJECT_CODE}-rg-launchpad"
+
+echo "Resource Group Name: ${RG_NAME}"
+
+STORAGE_ACCOUNT_NAME_PREFIX="${PROJECT_CODE}stgtfstate"
+STORAGE_ACCOUNT_INFO=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '$STORAGE_ACCOUNT_NAME_PREFIX')]" 2> /dev/null)
+if [[ $? -ne 0 ]]; then
+    echo "no storage account"
+    exit
 else
-        
-    echo "working directory:"
-    CWD=$(pwd)
-    echo $CWD
-    CONFIG_FILE_PATH="${CWD}/config.yaml"
-    echo $CONFIG_FILE_PATH
-    eval $(parse_yaml $CONFIG_FILE_PATH "CONFIG_")
-    # Define your variables
-    PROJECT_CODE="${CONFIG_prefix}" 
-    # Generate resource group name to store state file
-    RG_NAME="${PROJECT_CODE}-rg-launchpad"
-
-    echo "Resource Group Name: ${RG_NAME}"
+    # echo $STORAGE_ACCOUNT_INFO
+    STG_NAME=$(echo "$STORAGE_ACCOUNT_INFO" | jq ".[0].name" -r)
     echo "Storage Account Name: ${STG_NAME}"
-
 
     echo "updating gcci_platform tfstate..."
     ACCOUNT_INFO=$(az account show 2> /dev/null)
@@ -64,6 +73,41 @@ else
 
     MSYS_NO_PATHCONV=1 terraform import "azurerm_log_analytics_workspace.gcci_agency_workspace" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-agency-law/providers/Microsoft.OperationalInsights/workspaces/gcci-agency-workspace" 
 
-    read -p "Press enter to continue..."
+
+    echo "-----------------------------------------------------------------------------"  
+    echo "Start creating NSG yaml configuration file"  
+    timestamp
+    echo "-----------------------------------------------------------------------------"
+
+    # begin rename gcc_starter_kit to folder name
+
+    # goto starter kit parent folder
+    cd ./../../../../
+
+    # Get the folder name
+    FOLDER_NAME=$(basename "$(pwd)")
+    echo "Folder Name: ${FOLDER_NAME}"
+
+    # Escape slashes in the search variable
+    search="gcc_starter_kit"
+    replace="${FOLDER_NAME}"
+
+    echo $search
+    echo $replace
+    # Perform replace
+    find . -name '*.md' -exec sed -i -e "s/$search/$replace/g" {} +
+    find . -name '*.sh' -exec sed -i -e "s/$search/$replace/g" {} +
+
+    # end rename gcc_starter_kit to folder name
+
+    # goto nsg configuration folder
+    cd /tf/avm/${replace}/landingzone/configuration/1-landingzones/yaml_nsg_config
+
+    # create nsg yaml file from nsg csv files
+    python3 csv_to_yaml.py 
+
+    # replace subnet cidr range from config.yaml file in launchpad
+    ./replace.sh
+
 
 fi
