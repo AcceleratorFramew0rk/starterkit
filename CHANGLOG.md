@@ -9,7 +9,8 @@
 * 
 
 ## ENHANCEMENTS:
-* 
+* add global settings tags to acr
+* add global settings tags to aks
 
 ## BUG FIXES:
 * 
