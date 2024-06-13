@@ -12,9 +12,10 @@
 * add diagnostic settings for bastion host
 * add diagnostic settings for devops container instance 
 * standalone deployment for solution accelerator - mssql
+* add diagnoatics settings for apim, search service, service bus, storage account
 
 ## BUG FIXES:
-* 
+* fix network security group for application gateway
 
 # 0.0.2 (May 29, 2024)
 ## COMPATIBLE WITH:
