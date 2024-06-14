@@ -12,7 +12,7 @@
 * add global settings tags to all solution accelerators, 0-setup_gcc_dev_env
 
 ## BUG FIXES:
-* 
+* apim - verify environment to set to either Non Production [Developer1] or Production [Premium] sku
 
 # 0.0.3 (13 Jun 2024)
 ## COMPATIBLE WITH:
