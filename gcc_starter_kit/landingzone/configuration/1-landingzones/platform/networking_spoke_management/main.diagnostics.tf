@@ -1,5 +1,5 @@
 module "diagnosticsetting1" {
-  source  = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"
+  source  = "AcceleratorFramew0rk/aaf/azurerm//modules/diagnostics/terraform-azurerm-diagnosticsetting"
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-mgmtinfra"
   target_resource_id = module.nsg1.resource.id
@@ -20,7 +20,7 @@ module "diagnosticsetting1" {
 }
 
 module "diagnosticsetting2" {
-  source  = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"
+  source  = "AcceleratorFramew0rk/aaf/azurerm//modules/diagnostics/terraform-azurerm-diagnosticsetting"
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-mgmtbastion"
   target_resource_id = module.nsg2.resource.id
@@ -41,7 +41,7 @@ module "diagnosticsetting2" {
 }
 
 module "diagnosticsetting3" {
-  source  = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"
+  source  = "AcceleratorFramew0rk/aaf/azurerm//modules/diagnostics/terraform-azurerm-diagnosticsetting"
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-mgmtsecurity"
   target_resource_id = module.nsg3.resource.id

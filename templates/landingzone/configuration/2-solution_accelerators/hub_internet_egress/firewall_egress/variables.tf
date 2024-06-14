@@ -19,7 +19,7 @@ variable "subnet_id" {
   default = null
 }
 
-variable "azurefirewallmanagement_subnet_id " {
+variable "azurefirewallmanagement_subnet_id" {
   type        = string  
   default = null
 }

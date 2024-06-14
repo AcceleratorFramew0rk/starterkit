@@ -34,6 +34,8 @@ subnets:
       address_prefixes: ["100.64.0.192/27"]
     UserNodePoolSubnet: # DO NOT CHANGE subnet name
       address_prefixes: ["100.64.0.224/27"]
+    UserNodePoolWindowsSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: ["100.64.1.192/27"]      
     AiSubnet: # DO NOT CHANGE subnet name
       address_prefixes: ["100.64.1.0/27"]   
     LogicAppSubnet: # DO NOT CHANGE subnet name

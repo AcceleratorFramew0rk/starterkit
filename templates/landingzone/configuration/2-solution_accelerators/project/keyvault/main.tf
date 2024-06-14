@@ -16,13 +16,18 @@ module "keyvault" {
       subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceSubnet"].id : var.subnet_id  
     }
   }
-  tags = { 
-    purpose = "key vault" 
-    project_code = try(local.global_settings.prefix, var.prefix) 
-    env = try(local.global_settings.environment, var.environment) 
-    zone = "project"
-    tier = "service"           
-  }   
+
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "key vault" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
+    }
+  ) 
+  
   depends_on = [module.private_dns_zones]  
 }
 
@@ -32,9 +37,18 @@ module "private_dns_zones" {
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.vaultcore.azure.net"
-  dns_zone_tags         = {
-    env = try(local.global_settings.environment, var.environment) 
-  }
+
+  dns_zone_tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "key vault private dns zone" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
+    }
+  ) 
+
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"

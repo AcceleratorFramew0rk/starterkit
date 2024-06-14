@@ -29,8 +29,8 @@ variable "storage_account_name" {
 }
 
 module "landingzone" {
-  source="./../../../../../../modules/framework/terraform-azurerm-azure-accelerator-framework"
-  # source = "AcceleratorFramew0rk/aaf/azurerm"
+  # source="./../../../../../../modules/framework/terraform-azurerm-aaf"
+  source = "AcceleratorFramew0rk/aaf/azurerm"
 
   resource_group_name  = var.resource_group_name 
   storage_account_name = var.storage_account_name 

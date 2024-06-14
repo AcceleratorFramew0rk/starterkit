@@ -5,17 +5,35 @@ module "private_dns_zones" {
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.servicebus.core.windows.net"
-  dns_zone_tags         = {
-      environment = "dev"
+
+  dns_zone_tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "service bus private dns zone" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
     }
+  ) 
+
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
         vnetid           = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id  
         autoregistration = false # true
-        tags = {
-          "env" = "dev"
-        }
+
+        tags        = merge(
+          local.global_settings.tags,
+          {
+            purpose = "service bus vnet link" 
+            project_code = try(local.global_settings.prefix, var.prefix) 
+            env = try(local.global_settings.environment, var.environment) 
+            zone = "project"
+            tier = "app"   
+          }
+        ) 
+
       }
     }
 }
@@ -48,7 +66,7 @@ module "servicebus" {
       role_assignments = {
         key = {
           role_definition_id_or_name = "Contributor"
-          description                = "This is a test role assignment"
+          description                = "Contributor role assignment"
           principal_id               = data.azurerm_client_config.current.object_id
         }
       }
@@ -58,10 +76,16 @@ module "servicebus" {
         name = "Testing name CanNotDelete"
       }
 
-      tags = {
-        environment = "testing"
-        department  = "engineering"
-      }
+      tags        = merge(
+        local.global_settings.tags,
+        {
+          purpose = "service bus private endpoint" 
+          project_code = try(local.global_settings.prefix, var.prefix) 
+          env = try(local.global_settings.environment, var.environment) 
+          zone = "project"
+          tier = "app"   
+        }
+      ) 
 
       application_security_group_associations = {
         asg1 = azurerm_application_security_group.this.id
@@ -94,5 +118,17 @@ module "servicebus" {
       private_dns_zone_resource_ids = [module.private_dns_zones.private_dnz_zone_output.id] 
     }
   }
+
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "service bus" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
+    }
+  ) 
+
 }
 

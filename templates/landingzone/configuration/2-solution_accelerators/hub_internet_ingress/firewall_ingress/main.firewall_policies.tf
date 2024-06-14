@@ -8,30 +8,48 @@ module "firewall_policy" {
   firewall_policy_sku = "Premium" # "Basic" # both firewall and firewall policy must in same tier
 }
 
+module "rule_collection_group" {
+  source             = "Azure/avm-res-network-firewallpolicy/azurerm//modules/rule_collection_groups"
 
-resource "azurerm_firewall_nat_rule_collection" "natcollection" {
-
-  name                = module.naming.firewall_nat_rule_collection.name_unique
-  azure_firewall_name = module.firewall.resource.name 
-  resource_group_name = azurerm_resource_group.this.name 
-  priority            = 100
-  action              = "Dnat"
-  rule {
-    name = "ingress_rule"
-    source_addresses = [
-      "*",
-    ]
-    destination_ports = [
-      "443",
-    ]
-    destination_addresses = [
-      module.public_ip_firewall1.public_ip_id 
-    ]
-    translated_port = 443 
-    translated_address = try(cidrhost(local.global_settings.subnets.hub_internet_ingress.AgwSubnet.address_prefixes.0, 10), null)  # (agw subnet cidr 100.127.0.64/27, offset 10) >"100.127.0.74" 
-    protocols = [
-      "TCP",
-    ]
-  }
-
+  firewall_policy_rule_collection_group_firewall_policy_id = module.firewall_policy.resource.id
+  firewall_policy_rule_collection_group_name               = "NetworkRuleCollectionGroup"
+  firewall_policy_rule_collection_group_priority           = 400
+  firewall_policy_rule_collection_group_network_rule_collection = [
+    {
+      action   = "Allow"
+      name     = "NetworkRuleCollection"
+      priority = 400
+      rule = [
+        {
+          name                  = "OutboundToInternet"
+          description           = "Allow traffic outbound to the Internet"
+          destination_addresses = ["0.0.0.0/0"]
+          destination_ports     = ["443"]
+          source_addresses      = ["*"] # define the cidr ip
+          protocols             = ["TCP"]
+        }
+      ]
+    }
+  ]
+  firewall_policy_rule_collection_group_application_rule_collection = [
+    {
+      action   = "Allow"
+      name     = "ApplicationRuleCollection"
+      priority = 600
+      rule = [
+        {
+          name             = "AllowAll"
+          description      = "Allow traffic to Microsoft.com"
+          source_addresses = ["*"]  # define the cidr ip
+          protocols = [
+            {
+              port = 443
+              type = "Https"
+            }
+          ]
+          destination_fqdns = ["microsoft.com"]
+        }
+      ]
+    }
+  ]
 }

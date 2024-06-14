@@ -9,7 +9,7 @@ module "natgateway" {
 }
 
 module "subnet_nat_gateway_association" {
-  source  = "./../../../../../../modules/networking/terraform-azurerm-subnetnatgatewayassociation"
+  source  = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-subnetnatgatewayassociation"
 
   nat_gateway_id                = module.natgateway.resource.id
   subnet_ids          = {

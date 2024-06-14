@@ -11,6 +11,13 @@ module "virtualnetwork_hub_internet_ingress" {
   location                 = var.location # "southeastasia"
   virtual_network_address_space = ["${local.ingress_egress_vnet_name_ingress_internet_cidr}"]
   subnets = {}  
+  tags                           = merge(
+    var.tags,
+    {
+      purpose = "virtual network hub internet ingress" 
+    }
+  ) 
+
 }
 
 module "virtualnetwork_hub_internet_egress" {
@@ -24,7 +31,13 @@ module "virtualnetwork_hub_internet_egress" {
   resource_group_name           = azurerm_resource_group.this.name
   location                 = var.location # "southeastasia"
   virtual_network_address_space = ["${local.ingress_egress_vnet_name_egress_internet_cidr}"]
-  subnets = {}   
+  subnets = {}     
+  tags                           = merge(
+    var.tags,
+    {
+      purpose = "virtualnetwork_hub_internet_egress" 
+    }
+  ) 
 }
 
 module "virtualnetwork_hub_intranet_ingress" {
@@ -38,7 +51,13 @@ module "virtualnetwork_hub_intranet_ingress" {
   resource_group_name           = azurerm_resource_group.this.name
   location                 = var.location # "southeastasia"
   virtual_network_address_space = ["${local.ingress_egress_vnet_name_ingress_intranet_cidr}"]
-  subnets = {}   
+  subnets = {}       
+  tags                           = merge(
+    var.tags,
+    {
+      purpose = "virtualnetwork_hub_intranet_ingress" 
+    }
+  ) 
 }
 
 module "virtualnetwork_hub_intranet_egress" {
@@ -52,7 +71,13 @@ module "virtualnetwork_hub_intranet_egress" {
   resource_group_name           = azurerm_resource_group.this.name
   location                 = var.location # "southeastasia"
   virtual_network_address_space = ["${local.ingress_egress_vnet_name_egress_intranet_cidr}"]
-  subnets = {}   
+  subnets = {}         
+  tags                           = merge(
+    var.tags,
+    {
+      purpose = "virtualnetwork_hub_intranet_egress" 
+    }
+  ) 
 }
 
 module "virtualnetwork_project" {
@@ -66,7 +91,13 @@ module "virtualnetwork_project" {
   resource_group_name           = azurerm_resource_group.this.name
   location                 = var.location # "southeastasia"
   virtual_network_address_space = ["${local.project_vnet_name_cidr}"]
-  subnets = {}   
+  subnets = {}         
+  tags                           = merge(
+    var.tags,
+    {
+      purpose = "virtualnetwork_project" 
+    }
+  ) 
 }
 
 module "virtualnetwork_management" {
@@ -80,7 +111,13 @@ module "virtualnetwork_management" {
   resource_group_name           = azurerm_resource_group.this.name
   location                 = var.location # "southeastasia"
   virtual_network_address_space = ["${local.management_vnet_name_cidr}"]
-  subnets = {}   
+  subnets = {}         
+  tags                           = merge(
+    var.tags,
+    {
+      purpose = "virtualnetwork_management" 
+    }
+  ) 
 }
 
 module "virtualnetwork_devops" {
@@ -94,5 +131,11 @@ module "virtualnetwork_devops" {
   resource_group_name           = azurerm_resource_group.this.name
   location                 = var.location # "southeastasia"
   virtual_network_address_space = ["${local.devops_vnet_name_cidr}"]
-  subnets = {}   
+  subnets = {}         
+  tags                           = merge(
+    var.tags,
+    {
+      purpose = "virtualnetwork_devops" 
+    }
+  ) 
 }

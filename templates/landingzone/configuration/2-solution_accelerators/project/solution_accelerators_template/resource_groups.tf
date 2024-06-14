@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "this" {
-  name     = "${module.naming.resource_group.name}-solution-accelerators-yourresourcegroup" 
-  location = "${local.global_settings.location}" 
+  name     = "${module.naming.resource_group.name}-solution-accelerators-azureresourcename" 
+  location = "${try(local.global_settings.location, var.location)}" 
 }
 
 

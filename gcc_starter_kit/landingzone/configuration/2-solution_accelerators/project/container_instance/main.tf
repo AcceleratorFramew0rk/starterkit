@@ -1,5 +1,6 @@
 module "container_group1" {
-  source  = "./../../../../../../modules/compute/terraform-azurerm-containergroup"
+  # source  = "./../../../../../../modules/compute/terraform-azurerm-containergroup"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/compute/terraform-azurerm-containergroup"  
 
   name                = "${module.naming.container_group.name}${random_string.this.result}"
   resource_group_name = azurerm_resource_group.this.name 
@@ -44,11 +45,16 @@ module "container_group1" {
       commands = ["/bin/sh", "-c", "while sleep 1000; do :; done"]
     }
   }
-  tags = { 
-    purpose = "devops runner container instance" 
-    project_code = try(local.global_settings.prefix, var.prefix)  
-    env = try(local.global_settings.environment, var.environment) 
-    zone = "devops"
-    tier = "na"          
-  }   
+
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "container instance" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
+    }
+  ) 
+
 }

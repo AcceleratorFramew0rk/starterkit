@@ -4,17 +4,35 @@ module "private_dns_zones" {
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.vaultcore.azure.net"
-  dns_zone_tags         = {
-    env = try(local.global_settings.environment, var.environment) 
-  }
+
+  dns_zone_tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "mssql database private dns zone" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "db"   
+    }
+  ) 
+
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
         vnetid           = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null)  != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id   
         autoregistration = false # true
-        tags = {
-          env = try(local.global_settings.environment, var.environment) 
-        }
+
+        tags        = merge(
+          local.global_settings.tags,
+          {
+            purpose = "mssql database vnet link" 
+            project_code = try(local.global_settings.prefix, var.prefix) 
+            env = try(local.global_settings.environment, var.environment) 
+            zone = "project"
+            tier = "db"   
+          }
+        ) 
+
       }
     }
 }
@@ -57,8 +75,9 @@ locals {
 
 # This is the module call
 module "sql_server" {
-  source = "./../../../../../../modules/databases/terraform-azurerm-avm-res-sql-server"  
-
+  # source = "./../../../../../../modules/databases/terraform-azurerm-avm-res-sql-server"  
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/databases/terraform-azurerm-avm-res-sql-server"  
+  
   enable_telemetry             = var.enable_telemetry
   name                         = "${module.naming.mssql_server.name}${random_string.this.result}" 
   resource_group_name          = azurerm_resource_group.this.name
@@ -76,13 +95,17 @@ module "sql_server" {
     }
   }
 
-  tags = { 
-    purpose = "mssql database" 
-    project_code = try(local.global_settings.prefix, var.prefix) 
-    env = try(local.global_settings.environment, var.environment) 
-    zone = "project"
-    tier = "db"           
-  }  
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "mssql database" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "db"   
+    }
+  ) 
+
   depends_on = [
     module.keyvault
   ]

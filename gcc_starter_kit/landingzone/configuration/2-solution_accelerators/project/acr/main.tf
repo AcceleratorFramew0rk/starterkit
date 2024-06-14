@@ -4,23 +4,38 @@ module "private_dns_zones" {
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.azurecr.io"
-  dns_zone_tags         = {
-      environment = "dev"
+  dns_zone_tags         = merge(
+    local.global_settings.tags,
+    {
+      purpose = "container registry dns zone" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "service"   
     }
+  )
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
         vnetid           = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id  
         autoregistration = false # true
-        tags = {
-          "env" = "dev"
-        }
+        tags = merge(
+          local.global_settings.tags,
+          {
+            purpose = "container registry vnet link" 
+            project_code = try(local.global_settings.prefix, var.prefix) 
+            env = try(local.global_settings.environment, var.environment) 
+            zone = "project"
+            tier = "service"   
+          }
+        )
       }
     }
 }
 
 module "container_registry" {
-  source = "./../../../../../../modules/compute/terraform-azurerm-containerregistry"
+  # source = "./../../../../../../modules/compute/terraform-azurerm-containerregistry"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/compute/terraform-azurerm-containerregistry" 
 
   name                         = "${module.naming.container_registry.name_unique}${random_string.this.result}"
   resource_group_name          = azurerm_resource_group.this.name
@@ -29,25 +44,37 @@ module "container_registry" {
   admin_enabled                = true 
   log_analytics_workspace_id   = try(local.remote.log_analytics_workspace.id, null) != null ? local.remote.log_analytics_workspace.id : var.log_analytics_workspace_id 
   log_analytics_retention_days = 7 
-  tags = { 
-    purpose = "container registry" 
-    project_code = try(local.global_settings.prefix, var.prefix) 
-    env = try(local.global_settings.environment, var.environment) 
-    zone = "project"
-    tier = "service"           
-  }     
+
+  tags = merge(
+    local.global_settings.tags,
+    {
+      purpose = "container registry" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "service"   
+    }
+  ) 
 }
 
 module "private_endpoint" {
-  source = "./../../../../../../modules/networking/terraform-azurerm-privateendpoint"
-  
+  # source = "./../../../../../../modules/networking/terraform-azurerm-privateendpoint"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
+
   name                           = "${module.container_registry.name}PrivateEndpoint"
   location                       = azurerm_resource_group.this.location
   resource_group_name            = azurerm_resource_group.this.name
   subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceSubnet"].id : var.subnet_id 
-  tags                           = {
-      environment = "dev"
+  tags                           = merge(
+    local.global_settings.tags,
+    {
+      purpose = "container registry private endpoint" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "service"   
     }
+  ) 
   private_connection_resource_id = module.container_registry.id
   is_manual_connection           = false
   subresource_name               = "registry"

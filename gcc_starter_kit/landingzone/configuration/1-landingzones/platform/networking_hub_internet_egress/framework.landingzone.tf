@@ -34,7 +34,7 @@ variable "storage_account_name" {
 }
 
 module "landingzone" {
-  # source="./../../../../../../modules/framework/terraform-azurerm-azure-accelerator-framework"
+  # source="./../../../../../../modules/framework/terraform-azurerm-aaf"
   source = "AcceleratorFramew0rk/aaf/azurerm"
 
   resource_group_name  = var.resource_group_name # "aoaidev-rg-launchpad" # DO NOT CHANGE - codegen

@@ -34,7 +34,7 @@ variable "environment" {
   default = "sandpit"
 }
 
-variable "resource_group_name" {
+variable "platform_resource_group_name" {
   type        = string  
   default = "gcci_platform"
 }

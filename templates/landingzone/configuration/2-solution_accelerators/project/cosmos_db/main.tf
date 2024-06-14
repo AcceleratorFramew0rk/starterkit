@@ -4,23 +4,42 @@ module "private_dns_zones" {
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.documents.azure.com"
-  dns_zone_tags         = {
-      environment = "dev"
+
+  dns_zone_tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "consmos db private dns zone" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "db"   
     }
+  ) 
+
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
         vnetid           = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id  
         autoregistration = false # true
-        tags = {
-          "env" = "dev"
-        }
+
+        tags        = merge(
+          local.global_settings.tags,
+          {
+            purpose = "consmos db vnet link" 
+            project_code = try(local.global_settings.prefix, var.prefix) 
+            env = try(local.global_settings.environment, var.environment) 
+            zone = "project"
+            tier = "db"   
+          }
+        ) 
+
       }
     }
 }
 
 module "cosmos_db" {
-  source              = "./../../../../../../modules/databases/terraform-azurerm-cosmosdb"
+  # source              = "./../../../../../../modules/databases/terraform-azurerm-cosmosdb"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/databases/terraform-azurerm-cosmosdb"
   
   resource_group_name = azurerm_resource_group.this.name
   location            = azurerm_resource_group.this.location
@@ -42,13 +61,17 @@ module "cosmos_db" {
     }
   }
 
-  # tags = { 
-  #   purpose = "azure open ai service" 
-  #   project_code = local.global_settings.prefix 
-  #   env = local.global_settings.environment 
-  #   zone = "project"
-  #   tier = "ai"           
-  # } 
+  # # tags is from local variable in the modules. to fix this - fixed on 13 Jun 2024.
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "consmos db" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "db"   
+    }
+  ) 
   
   depends_on = [
     azurerm_resource_group.this,

@@ -4,17 +4,36 @@ module "private_dns_zones" {
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.openai.azure.com"
-  dns_zone_tags         = {
+
+  dns_zone_tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "azure open ai service private dns zone" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
       env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
     }
+  ) 
+
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
         vnetid           = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id  
         autoregistration = false # true
-        tags = {
-          env = try(local.global_settings.environment, var.environment) 
-        }
+
+        tags        = merge(
+          local.global_settings.tags,
+          {
+            purpose = "azure open ai service vnet link" 
+            project_code = try(local.global_settings.prefix, var.prefix) 
+            env = try(local.global_settings.environment, var.environment) 
+            zone = "project"
+            tier = "app"   
+          }
+        ) 
+
+
       }
     }
 }
@@ -53,13 +72,16 @@ module "azureopenai" {
     }
   }
 
-  tags = { 
-    purpose = "azure open ai service" 
-    project_code = try(local.global_settings.prefix, var.prefix) 
-    env = try(local.global_settings.environment, var.environment) 
-    zone = "project"
-    tier = "ai"           
-  }   
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "azure open ai service" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
+    }
+  ) 
 
   depends_on = [
     module.private_dns_zones

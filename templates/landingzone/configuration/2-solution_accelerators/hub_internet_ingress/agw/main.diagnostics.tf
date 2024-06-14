@@ -1,5 +1,5 @@
 module "diagnosticsetting" {
-  source = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"  
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/diagnostics/terraform-azurerm-diagnosticsetting"  
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-agw"
   target_resource_id = module.application_gateway.resource.id # bug in avm module which output id or name the resource object

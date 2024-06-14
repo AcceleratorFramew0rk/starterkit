@@ -13,8 +13,8 @@ variable "random_length" {
 variable "global_tags" {
   description = "(Optional) A random length for the naming."
   default     = {
-    env   = "Dev"
-    owner = "AVM Terraform GCC Starter Kit"
+    env   = "Sandpit"
+    owner = "AAF for GCC Starter Kit"
     dept  = "IT"
   }
 }

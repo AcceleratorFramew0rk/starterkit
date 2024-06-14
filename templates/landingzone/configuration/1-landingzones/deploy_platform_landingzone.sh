@@ -1,5 +1,5 @@
 # egress internet
-cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/1-landingzones/platform/networking_hub_internet_egress
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/platform/networking_hub_internet_egress
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name=aoaidev-rg-launchpad" \
@@ -16,7 +16,7 @@ terraform apply -auto-approve \
 -var="resource_group_name=aoaidev-rg-launchpad"
 
 # ingress internet
-cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/1-landingzones/platform/networking_hub_internet_ingress
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/platform/networking_hub_internet_ingress
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name=aoaidev-rg-launchpad" \
@@ -33,7 +33,7 @@ terraform apply -auto-approve \
 -var="resource_group_name=aoaidev-rg-launchpad"
 
 # egress intranet
-cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/1-landingzones/platform/networking_hub_intranet_egress
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/platform/networking_hub_intranet_egress
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name=aoaidev-rg-launchpad" \
@@ -50,7 +50,7 @@ terraform apply -auto-approve \
 -var="resource_group_name=aoaidev-rg-launchpad"
 
 # ingress intranet
-cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/1-landingzones/platform/networking_hub_intranet_ingress
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/platform/networking_hub_intranet_ingress
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name=aoaidev-rg-launchpad" \
@@ -68,7 +68,7 @@ terraform apply -auto-approve \
 
 
 # management
-cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/1-landingzones/platform/networking_spoke_management
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/platform/networking_spoke_management
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name=aoaidev-rg-launchpad" \

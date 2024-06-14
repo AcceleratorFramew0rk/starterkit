@@ -36,8 +36,9 @@ module "private_dns_zones" {
 }
 
 module "private_endpoint" {
-  source = "./../../../../../../modules/networking/terraform-azurerm-privateendpoint"
-  
+  # source = "./../../../../../../modules/networking/terraform-azurerm-privateendpoint"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
+ 
   name                           = "${module.appservice.resource.name}PrivateEndpoint"
   location                       = azurerm_resource_group.this.location
   resource_group_name            = azurerm_resource_group.this.name
@@ -53,18 +54,13 @@ module "private_endpoint" {
 }
 
 module "appservice" {
-  source = "./../../../../../../modules/webapps/terraform-azurerm-appservice"
+  # source = "./../../../../../../modules/webapps/terraform-azurerm-appservice"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/webapps/terraform-azurerm-appservice"
 
   name                         = "${module.naming.app_service.name}${random_string.this.result}" # alpha numeric characters only are allowed in "name var.name_prefix == null ? "${random_string.prefix.result}${var.acr_name}" : "${var.name_prefix}${var.acr_name}"
   resource_group_name          = azurerm_resource_group.this.name
   location                     = azurerm_resource_group.this.location
-  tags = { 
-    purpose = "app service" 
-    project_code = try(local.global_settings.prefix, var.prefix) 
-    env = try(local.global_settings.environment, var.environment) 
-    zone = "project"
-    tier = "service"           
-  } 
+
   app_service_plan_id = azurerm_app_service_plan.this.id
   client_affinity_enabled = false
   client_cert_enabled = false
@@ -89,6 +85,18 @@ module "appservice" {
     "Example" = "Extend",
     "LZ"      = "CAF"
   }
+
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "app service" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
+    }
+  ) 
+
 }
 
 # Tested with :  AzureRM version 2.55.0

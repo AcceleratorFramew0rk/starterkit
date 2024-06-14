@@ -6,7 +6,8 @@ resource "azurerm_user_assigned_identity" "this" {
 }
 
 module "apim" {
-  source = "./../../../../../../modules/apim/api_management"
+  # source = "./../../../../../../modules/apim/api_management"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/apim/api_management" 
 
   name                         = "${module.naming.api_management.name}-${random_string.this.result}" # alpha numeric characters only are allowed in "name var.name_prefix == null ? "${random_string.prefix.result}${var.acr_name}" : "${var.name_prefix}${var.acr_name}"
   resource_group_name          = azurerm_resource_group.this.name
@@ -14,8 +15,7 @@ module "apim" {
 
   publisher_name       = "My Company"
   publisher_email      = "company@terraform.io"
-  sku_name             = "Developer_1"
-
+  sku_name             = try(local.global_settings.environment, var.environment) != "Production" ? "Developer_1" : "Premium"
 
   identity = {
     type = "UserAssigned"
@@ -27,12 +27,16 @@ module "apim" {
     subnet_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ApiSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ApiSubnet"].id : var.subnet_id 
   }
 
-  tags = { 
-    purpose = "api management" 
-    project_code = try(local.global_settings.prefix, var.prefix) 
-    env = try(local.global_settings.environment, var.environment) 
-    zone = "project"
-    tier = "api"           
-  }     
+  tags                = merge(
+    local.global_settings.tags,
+    {
+      purpose = "api management" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
+    }
+  ) 
+    
 }
 

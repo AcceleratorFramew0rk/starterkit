@@ -21,18 +21,24 @@ module "public_ip" {
 }
 
 module "application_gateway" {
-  source = "./../../../../../../modules/networking/terraform-azurerm-applicationgateway"
-
+  # source = "./../../../../../../modules/networking/terraform-azurerm-applicationgateway"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-applicationgateway"
+  
   name                         = "${module.naming.application_gateway.name}${random_string.this.result}" 
   resource_group_name          = azurerm_resource_group.this.name
   location                     = azurerm_resource_group.this.location
-  tags = { 
-    purpose = "hub internet reverse proxy" 
-    project_code = try(local.global_settings.prefix, var.prefix) 
-    env = try(local.global_settings.environment, var.environment) 
-    zone = "hub internet"
-    tier = "na"          
-  }  
+
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "hub internet reverse proxy" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "hub internet"
+      tier = "na"   
+    }
+  )
+
   sku = {
     name     = "WAF_v2" # "Standard_v2"
     tier     = "WAF_v2" # "Standard_v2"

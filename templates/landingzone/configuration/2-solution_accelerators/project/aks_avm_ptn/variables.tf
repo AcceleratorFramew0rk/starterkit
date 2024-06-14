@@ -72,3 +72,8 @@ variable "usernode_subnet_id" {
   type        = string  
   default = null
 }
+
+variable "usernodewindows_subnet_id" {
+  type        = string  
+  default = null
+}

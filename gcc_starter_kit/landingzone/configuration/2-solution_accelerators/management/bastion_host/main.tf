@@ -75,13 +75,17 @@ module "azure_bastion" {
   scale_units            = 2
   shareable_link_enabled = true
   tunneling_enabled      = true
-  tags = { 
-    purpose = "bastion host" 
-    project_code = try(local.global_settings.prefix, var.prefix) 
-    env = try(local.global_settings.environment, var.environment) 
-    zone = "management"
-    tier = "na"           
-  } 
+
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "bastion host" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "management"
+      tier = "bastion"   
+    }
+  ) 
 
   # lock = {
   #   name = "my-lock"

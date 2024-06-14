@@ -101,13 +101,16 @@ module "virtualmachine1" {
     }
   }
 
-  tags = { 
-    purpose = "tooling server" 
-    project_code = try(local.global_settings.prefix, var.prefix) 
-    env = try(local.global_settings.environment, var.environment) 
-    zone = "management"
-    tier = "na"          
-  }   
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "virtual machine tooling server" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "management"
+      tier = "infra"   
+    }
+  )  
 
   managed_identities = {
     system_assigned            = false # true

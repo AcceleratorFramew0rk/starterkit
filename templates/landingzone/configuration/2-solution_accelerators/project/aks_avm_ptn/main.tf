@@ -33,8 +33,8 @@ resource "azurerm_role_assignment" "reader_assignment" {
 # Leaving location as `null` will cause the module to use the resource group location
 # with a data source.
 module "aks_cluster" {
-  # source              = "../../"
-  source = "./../../../../../../modules/compute/terraform-azurerm-avm-ptn-aks-production"  
+  # source = "./../../../../../../modules/compute/terraform-azurerm-avm-ptn-aks-production"  
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/compute/terraform-azurerm-avm-ptn-aks-production" 
 
   kubernetes_version  = "1.29"
   enable_telemetry    = var.enable_telemetry # see variables.tf
@@ -65,6 +65,26 @@ module "aks_cluster" {
       mode                 = "User"
       vnet_subnet_id       = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id : var.usernode_subnet_id
     },
+    # # optional: windows node pool - uncomment if your user worker node is using os_sku = windows
+    #
+    # ERROR Encounter:
+    # │ Agent Pool Name: "npworkload12"): performing CreateOrUpdate: unexpected status 400 (400 Bad Request) with response: {
+    # │   "code": "InvalidOSSKU",
+    # │   "details": null,
+    # │   "message": "OSSKU='Windows2022' is invalid, details: Unrecognized OSSKU",
+    # │   "subcode": "InvalidOSSKU"
+    # │  }
+    #
+    # workload_windows = {
+    #   name                 = "workload1"
+    #   vm_size              = "Standard_D4s_v3"
+    #   orchestrator_version = "1.29"
+    #   max_count            = 4 # 16 - ensure subnet has sufficent IPs
+    #   min_count            = 2
+    #   os_sku               = "Windows2022" # expected os_sku to be one of ["AzureLinux" "CBLMariner" "Mariner" "Ubuntu" "Windows2019" "Windows2022"]
+    #   mode                 = "User"
+    #   vnet_subnet_id       = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolWindowsSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolWindowsSubnet"].id : var.usernodewindows_subnet_id
+    # },    
     ingress = {
       name                 = "ingress"
       vm_size              = "Standard_D2d_v5"
@@ -76,4 +96,16 @@ module "aks_cluster" {
       vnet_subnet_id       = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id : var.usernode_subnet_id
     }
   }
+
+  tags                = merge(
+    local.global_settings.tags,
+    {
+      purpose = "aks private cluster" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
+    }
+  ) 
+
 }

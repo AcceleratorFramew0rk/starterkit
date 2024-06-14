@@ -9,17 +9,36 @@ module "private_dns_zones" {
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.blob.core.windows.net"
   # number_of_record_sets = 2
-  dns_zone_tags         = {
+
+  dns_zone_tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "storage account private dns zone" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
       env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "db"   
     }
+  ) 
+
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
         vnetid           = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id   
         autoregistration = false # true
-        tags = {
-          env = try(local.global_settings.environment, var.environment) 
-        }
+
+        tags        = merge(
+          local.global_settings.tags,
+          {
+            purpose = "storage account vnet link" 
+            project_code = try(local.global_settings.prefix, var.prefix) 
+            env = try(local.global_settings.environment, var.environment) 
+            zone = "project"
+            tier = "db"   
+          }
+        ) 
+
+
       }
     }
 }  
@@ -52,20 +71,24 @@ module "storageaccount" {
     system_assigned            = true
     user_assigned_resource_ids = [azurerm_user_assigned_identity.this_identity.id]
   }
-  tags = { 
-    purpose = "storage account" 
-    project_code = try(local.global_settings.prefix, var.prefix) 
-    env = try(local.global_settings.environment, var.environment) 
-    zone = "project"
-    tier = "db"           
-  }     
+
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "storage account" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "db"   
+    }
+  )    
   /*lock = {
     name = "lock"
     kind = "None"
   } */
   role_assignments = {
     role_assignment_1 = {
-      role_definition_id_or_name       = "Contributor" # data.azurerm_role_definition.this.id
+      role_definition_id_or_name       = "Contributor" 
       principal_id                     = data.azurerm_client_config.current.object_id
       skip_service_principal_aad_check = false
     },
@@ -83,39 +106,6 @@ module "storageaccount" {
     #ip_rules                   = [try(module.public_ip[0].public_ip, var.bypass_ip_cidr)]
     #virtual_network_subnet_ids = toset([azurerm_subnet.private.id])
   }
-
-  #create a private endpoint for each endpoint type
-  # private_endpoints = {
-  #   for endpoint in local.endpoints :
-  #   endpoint => {
-  #     # the name must be set to avoid conflicting resources.
-  #     name                          = "pe-${endpoint}-${module.naming.storage_account.name_unique}"
-  #     subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["DbSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["DbSubnet"].id : var.subnet_id  
-  #     subresource_name              = [endpoint]
-  #     private_dns_zone_resource_ids = [module.private_dns_zones.private_dnz_zone_output.id] 
-  #     # these are optional but illustrate making well-aligned service connection & NIC names.
-  #     private_service_connection_name = "psc-${endpoint}-${module.naming.storage_account.name_unique}"
-  #     network_interface_name          = "nic-pe-${endpoint}-${module.naming.storage_account.name_unique}"
-  #     inherit_tags                    = false
-  #     inherit_lock                    = false
-
-  #     tags = {
-  #       env = try(local.global_settings.environment, var.environment) 
-  #     }
-
-  #     role_assignments = {
-  #       role_assignment_1 = {
-  #         role_definition_id_or_name = data.azurerm_role_definition.this.id
-  #         principal_id               = data.azurerm_client_config.current.object_id
-  #       }
-  #     }
-  #   }
-  # }
-
-  # network_rules {
-  #   default_action             = "Deny" # "Allow" -> "Deny"
-  #     # (3 unchanged attributes hidden)
-  # }
 
   private_endpoints = {
     for endpoint in local.endpoints :
@@ -140,8 +130,8 @@ module "storageaccount" {
 
       role_assignments = {
         role_assignment_1 = {
-          role_definition_id_or_name = "Contributor" # data.azurerm_role_definition.example.name
-          principal_id               = data.azurerm_client_config.current.object_id # coalesce(var.msi_id, data.azurerm_client_config.current.object_id)
+          role_definition_id_or_name = "Contributor" 
+          principal_id               = data.azurerm_client_config.current.object_id 
         }
       }
     }

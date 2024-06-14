@@ -51,7 +51,8 @@ resource "azurerm_user_assigned_identity" "this" {
 module "aks_cluster" {
   # source  = "Azure/aks/azurerm"
   # version = "8.0.0"  
-  source = "./../../../../../../modules/compute/terraform-azurerm-aks"
+  # source = "./../../../../../../modules/compute/terraform-azurerm-aks"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/compute/terraform-azurerm-aks"
 
   prefix                    = try(local.global_settings.prefix, var.prefix) # random_id.name.hex
   resource_group_name       = azurerm_resource_group.this.name # local.resource_group.name
@@ -175,6 +176,17 @@ module "aks_cluster" {
 
   # user node pool
   node_pools          = local.nodes
+
+  tags                = merge(
+    local.global_settings.tags,
+    {
+      purpose = "aks private cluster" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
+    }
+  ) 
 
   depends_on = [
     module.natgateway,

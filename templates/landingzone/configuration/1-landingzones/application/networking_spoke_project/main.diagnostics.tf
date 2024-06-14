@@ -1,6 +1,6 @@
 # nsg diagnostics
 module "diagnosticsetting1" {
-  source  = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"
+  source  = "AcceleratorFramew0rk/aaf/azurerm//modules/diagnostics/terraform-azurerm-diagnosticsetting"
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-app"
   target_resource_id = module.nsg_app.resource.id
@@ -21,7 +21,7 @@ module "diagnosticsetting1" {
 }
 
 module "diagnosticsetting2" {
-  source  = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"
+  source  = "AcceleratorFramew0rk/aaf/azurerm//modules/diagnostics/terraform-azurerm-diagnosticsetting"
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-db"
   target_resource_id = module.nsg_db.resource.id
@@ -42,7 +42,7 @@ module "diagnosticsetting2" {
 }
 
 module "diagnosticsetting3" {
-  source  = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"
+  source  = "AcceleratorFramew0rk/aaf/azurerm//modules/diagnostics/terraform-azurerm-diagnosticsetting"
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-service"
   target_resource_id = module.nsg_service.resource.id
@@ -63,7 +63,7 @@ module "diagnosticsetting3" {
 }
 
 module "diagnosticsetting4" {
-  source  = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"
+  source  = "AcceleratorFramew0rk/aaf/azurerm//modules/diagnostics/terraform-azurerm-diagnosticsetting"
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-api"
   target_resource_id = module.nsg_api.resource.id
@@ -84,7 +84,7 @@ module "diagnosticsetting4" {
 }
 
 module "diagnosticsetting5" {
-  source  = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"
+  source  = "AcceleratorFramew0rk/aaf/azurerm//modules/diagnostics/terraform-azurerm-diagnosticsetting"
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-systemnodepoolsubnet"
   target_resource_id = module.nsg_systemnodepoolsubnet.resource.id
@@ -105,7 +105,7 @@ module "diagnosticsetting5" {
 }
 
 module "diagnosticsetting6" {
-  source  = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"
+  source  = "AcceleratorFramew0rk/aaf/azurerm//modules/diagnostics/terraform-azurerm-diagnosticsetting"
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-usernodepoolsubnet"
   target_resource_id = module.nsg_usernodepoolsubnet.resource.id

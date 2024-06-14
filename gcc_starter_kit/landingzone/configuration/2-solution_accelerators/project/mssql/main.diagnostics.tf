@@ -1,5 +1,5 @@
 module "diagnosticsetting1" {
-  source = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/diagnostics/terraform-azurerm-diagnosticsetting"
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-mssql-database"
   target_resource_id = module.sql_server.resource_databases.database1.id
@@ -31,7 +31,7 @@ module "diagnosticsetting1" {
 }
 
 module "diagnosticsetting2" {
-  source = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/diagnostics/terraform-azurerm-diagnosticsetting"
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-electic-pool"
   target_resource_id = module.sql_server.resource_elasticpools.elasticpool1.id

@@ -46,13 +46,16 @@ module "firewall" {
     public_ip_address_id = module.public_ip_firewall2.public_ip_id 
   }
 
-  tags = { 
-    purpose = "hub internet egress firewall" 
-    project_code = local.global_settings.prefix 
-    env = local.global_settings.environment 
-    zone = "hub internet"
-    tier = "na"          
-  } 
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "hub internet egress firewall" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "hub internet"
+      tier = "na"   
+    }
+  ) 
 
   depends_on = [
     module.public_ip_firewall1,

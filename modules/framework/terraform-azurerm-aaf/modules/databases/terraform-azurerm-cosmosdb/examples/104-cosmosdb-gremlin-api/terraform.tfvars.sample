@@ -1,0 +1,73 @@
+resource_group_name = "rg-sample-104"
+location            = "eastus"
+cosmos_account_name = "samplecosmosacct104"
+cosmos_api          = "gremlin"
+gremlin_dbs = {
+  one = {
+    db_name           = "dbnoautoscale"
+    db_throughput     = 400
+    db_max_throughput = null
+  },
+  two = {
+    db_name           = "dbautoscale"
+    db_throughput     = null
+    db_max_throughput = 1000
+  }
+}
+gremlin_graphs = {
+  one = {
+    graph_name                        = "graph1"
+    db_name                           = "dbautoscale"
+    partition_key_path                = "/Example"
+    partition_key_version             = 2
+    default_ttl_seconds               = 86400
+    graph_throughput                  = 400
+    graph_max_throughput              = null
+    index_policy_settings             = {
+      indexing_automatic        = true
+      indexing_mode             = "consistent"
+      included_paths            = ["/*"]
+      excluded_paths            = ["/\"_etag\"/?"]
+      composite_indexes         = {
+        compositeindexesone             = {
+          indexes  = [
+            { 
+              index_path  = "/container/name"
+              index_order = "Ascending"
+            },
+            { 
+              index_path  = "/container/id"
+              index_order = "Ascending"
+            }
+            ]
+          }
+        }
+      spatial_indexes = {
+        one = {
+          spatial_index_path = "/*"
+        }
+      }
+    }
+    conflict_resolution_policy  = null
+    unique_key =  ["/container/id"]
+  },
+  two = {
+    graph_name                        = "graph2"
+    db_name                           = "dbnoautoscale"
+    partition_key_path                = "/Example"
+    partition_key_version             = 2
+    default_ttl_seconds               = 86400
+    graph_throughput                  = null
+    graph_max_throughput              = 1000
+    index_policy_settings             = {
+      indexing_automatic        = true
+      indexing_mode             = "consistent"
+      included_paths            = ["/*"]
+      excluded_paths            = ["/\"_etag\"/?"]
+      composite_indexes         = null
+      spatial_indexes = null
+    }
+    conflict_resolution_policy  = null
+    unique_key = ["/container/id"]
+}
+}

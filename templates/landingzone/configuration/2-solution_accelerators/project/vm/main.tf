@@ -68,7 +68,7 @@ module "virtualmachine1" {
   resource_group_name                    = azurerm_resource_group.this.name
   virtualmachine_os_type                 = "Windows"
   name                                   = "${module.naming.virtual_machine.name}${random_string.this.result}" 
-  admin_credential_key_vault_resource_id = module.avm_res_keyvault_vault.resource.id
+  admin_credential_key_vault_resource_id = module.avm_res_keyvault_vault.resource_id # module.avm_res_keyvault_vault.resource.id
   virtualmachine_sku_size                = "Standard_D8s_v3" # "Standard_D8s_v3" 
   zone                                   = random_integer.zone_index.result 
 
@@ -101,13 +101,16 @@ module "virtualmachine1" {
     }
   }
 
-  tags = { 
-    purpose = "tooling server" 
-    project_code = try(local.global_settings.prefix, var.prefix) 
-    env = try(local.global_settings.environment, var.environment) 
-    zone = "management"
-    tier = "na"          
-  }   
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "virtual machine" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
+    }
+  )
 
   managed_identities = {
     system_assigned            = false # true

@@ -39,6 +39,7 @@ variable "tags" {
   description = "(Optional) Specifies tags for all the resources"
   default     = {
     createdWith = "Terraform"
+    env = "sandpit"
   }
 }
 
