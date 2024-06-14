@@ -1,4 +1,26 @@
-# 0.0.3 (TBD)
+
+# 0.0.4 (TBD)
+## COMPATIBLE WITH:
+* aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
+* azurerm: version 3.85
+* aaf: 0.0.1
+
+## FEATURES:
+* 
+
+## ENHANCEMENTS:
+* add global settings tags to all solution accelerators, 0-setup_gcc_dev_env
+* add intranet egress firewall
+* add intranet ingress agw
+* add intranet ingress firewall
+* set custom module source to "AcceleratorFramew0rk/aaf/azurerm//modules/..." 
+
+## BUG FIXES:
+* apim - verify environment to set to either Non Production [Developer1] or Production [Premium] sku
+* network - hub intranet egress - remove non valid diagnostics setting for public ip
+* ingress firewall - fixed duplicate resource_group_name variable
+
+# 0.0.3 (13 Jun 2024)
 ## COMPATIBLE WITH:
 * aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
 * azurerm: version 3.85
