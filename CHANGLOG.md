@@ -10,6 +10,9 @@
 
 ## ENHANCEMENTS:
 * add global settings tags to all solution accelerators, 0-setup_gcc_dev_env
+* add intranet egress firewall
+* add intranet ingress agw
+* add intranet ingress firewall
 
 ## BUG FIXES:
 * apim - verify environment to set to either Non Production [Developer1] or Production [Premium] sku
