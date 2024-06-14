@@ -16,6 +16,7 @@
 
 ## BUG FIXES:
 * apim - verify environment to set to either Non Production [Developer1] or Production [Premium] sku
+* network - hub intranet egress - remove non valid diagnostics setting for public ip
 
 # 0.0.3 (13 Jun 2024)
 ## COMPATIBLE WITH:
