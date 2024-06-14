@@ -1,5 +1,5 @@
 module "diagnosticsetting1" {
-  source  = "./../../../../../../modules/diagnostics/terraform-azurerm-diagnosticsetting"
+  source  = "AcceleratorFramew0rk/aaf/azurerm//modules/diagnostics/terraform-azurerm-diagnosticsetting"
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-kv"
   target_resource_id = module.keyvault.resource.id
