@@ -13,7 +13,8 @@
 * add intranet egress firewall
 * add intranet ingress agw
 * add intranet ingress firewall
-* set custom module source to "AcceleratorFramew0rk/aaf/azurerm//modules/..." 
+* set custom module source to "AcceleratorFramew0rk/aaf/azurerm//modules/..."
+* remove hardcoding of virtual network name during import of terraform state in launchpad
 
 ## BUG FIXES:
 * apim - verify environment to set to either Non Production [Developer1] or Production [Premium] sku
