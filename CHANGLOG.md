@@ -3,7 +3,7 @@
 ## COMPATIBLE WITH:
 * aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
 * azurerm: version 3.85
-* aaf: 0.0.1
+* aaf: 0.0.3
 
 ## FEATURES:
 * add intranet egress firewall
