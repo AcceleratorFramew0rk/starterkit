@@ -34,11 +34,11 @@ variable "storage_account_name" {
 }
 
 module "landingzone" {
-  # source="./../../../../../../modules/framework/terraform-azurerm-aaf"
+  # source="./../../../../../../modules/terraform-azurerm-aaf"
   source = "AcceleratorFramew0rk/aaf/azurerm"
 
-  resource_group_name  = var.resource_group_name # "{{resource_group_name}}" # DO NOT CHANGE - codegen
-  storage_account_name = var.storage_account_name # "{{storage_account_name}}" # DO NOT CHANGE - codegen 
+  resource_group_name  = var.resource_group_name # DO NOT CHANGE - codegen
+  storage_account_name = var.storage_account_name # DO NOT CHANGE - codegen 
 }
 
 module "naming" {

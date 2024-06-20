@@ -21,7 +21,7 @@ module "public_ip" {
 }
 
 module "application_gateway" {
-  # source = "./../../../../../../modules/networking/terraform-azurerm-applicationgateway"
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-applicationgateway"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-applicationgateway"
   
   name                         = "${module.naming.application_gateway.name}${random_string.this.result}" 

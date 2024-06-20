@@ -75,7 +75,7 @@ locals {
 
 # This is the module call
 module "sql_server" {
-  # source = "./../../../../../../modules/databases/terraform-azurerm-avm-res-sql-server"  
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/databases/terraform-azurerm-avm-res-sql-server"  
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/databases/terraform-azurerm-avm-res-sql-server"  
   
   enable_telemetry             = var.enable_telemetry

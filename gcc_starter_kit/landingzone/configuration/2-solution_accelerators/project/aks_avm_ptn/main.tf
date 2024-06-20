@@ -33,7 +33,7 @@ resource "azurerm_role_assignment" "reader_assignment" {
 # Leaving location as `null` will cause the module to use the resource group location
 # with a data source.
 module "aks_cluster" {
-  # source = "./../../../../../../modules/compute/terraform-azurerm-avm-ptn-aks-production"  
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/compute/terraform-azurerm-avm-ptn-aks-production"  
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/compute/terraform-azurerm-avm-ptn-aks-production" 
 
   kubernetes_version  = "1.29"

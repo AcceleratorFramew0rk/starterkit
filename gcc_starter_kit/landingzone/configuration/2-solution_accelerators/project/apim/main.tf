@@ -6,7 +6,7 @@ resource "azurerm_user_assigned_identity" "this" {
 }
 
 module "apim" {
-  # source = "./../../../../../../modules/apim/api_management"
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/apim/api_management"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/apim/api_management" 
 
   name                         = "${module.naming.api_management.name}-${random_string.this.result}" # alpha numeric characters only are allowed in "name var.name_prefix == null ? "${random_string.prefix.result}${var.acr_name}" : "${var.name_prefix}${var.acr_name}"

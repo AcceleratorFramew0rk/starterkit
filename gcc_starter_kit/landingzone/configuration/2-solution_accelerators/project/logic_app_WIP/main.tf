@@ -25,7 +25,7 @@
 # }
 
 # module "container_registry" {
-#   source = "./../../../../../../modules/compute/terraform-azurerm-containerregistry"
+#   source = "./../../../../../../modules/terraform-azurerm-aaf/modules/compute/terraform-azurerm-containerregistry"
 
 #   name                         = "${module.naming.container_registry.name}${random_string.this.result}" # alpha numeric characters only are allowed in "name var.name_prefix == null ? "${random_string.prefix.result}${var.acr_name}" : "${var.name_prefix}${var.acr_name}"
 #   resource_group_name          = azurerm_resource_group.this.name
@@ -44,7 +44,7 @@
 # }
 
 # module "private_endpoint" {
-#   source = "./../../../../../../modules/networking/terraform-azurerm-privateendpoint"
+#   source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
   
 #   name                           = "${module.container_registry.name}PrivateEndpoint"
 #   location                       = azurerm_resource_group.this.location

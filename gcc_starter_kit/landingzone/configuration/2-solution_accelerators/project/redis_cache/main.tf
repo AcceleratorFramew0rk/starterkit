@@ -38,7 +38,7 @@ module "private_dns_zones" {
 }
 
 module "private_endpoint" {
-  # source = "./../../../../../../modules/networking/terraform-azurerm-privateendpoint"
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
   
   name                           = "${module.redis_cache.resource.name}PrivateEndpoint"
@@ -60,7 +60,7 @@ module "private_endpoint" {
 }
 
 module "redis_cache" {
-  # source = "./../../../../../../modules/databases/terraform-azurerm-redis-cache"
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/databases/terraform-azurerm-redis-cache"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/databases/terraform-azurerm-redis-cache"
   
   name                         = "${module.naming.redis_cache.name}${random_string.this.result}" 

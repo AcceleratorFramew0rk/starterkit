@@ -36,7 +36,7 @@ module "private_dns_zones" {
 }
 
 module "private_endpoint" {
-  # source = "./../../../../../../modules/networking/terraform-azurerm-privateendpoint"
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
  
   name                           = "${module.appservice.resource.name}PrivateEndpoint"
@@ -54,7 +54,7 @@ module "private_endpoint" {
 }
 
 module "appservice" {
-  # source = "./../../../../../../modules/webapps/terraform-azurerm-appservice"
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/webapps/terraform-azurerm-appservice"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/webapps/terraform-azurerm-appservice"
 
   name                         = "${module.naming.app_service.name}${random_string.this.result}" # alpha numeric characters only are allowed in "name var.name_prefix == null ? "${random_string.prefix.result}${var.acr_name}" : "${var.name_prefix}${var.acr_name}"

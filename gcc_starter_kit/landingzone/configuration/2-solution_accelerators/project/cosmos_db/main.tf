@@ -38,7 +38,7 @@ module "private_dns_zones" {
 }
 
 module "cosmos_db" {
-  # source              = "./../../../../../../modules/databases/terraform-azurerm-cosmosdb"
+  # source              = "./../../../../../../modules/terraform-azurerm-aaf/modules/databases/terraform-azurerm-cosmosdb"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/databases/terraform-azurerm-cosmosdb"
   
   resource_group_name = azurerm_resource_group.this.name

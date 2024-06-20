@@ -1,5 +1,5 @@
 module "container_group1" {
-  # source  = "./../../../../../../modules/compute/terraform-azurerm-containergroup"
+  # source  = "./../../../../../../modules/terraform-azurerm-aaf/modules/compute/terraform-azurerm-containergroup"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/compute/terraform-azurerm-containergroup"  
 
   name                = "${module.naming.container_group.name}${random_string.this.result}"

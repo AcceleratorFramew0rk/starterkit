@@ -1,5 +1,5 @@
 module "searchservice" {
-  # source  = "./../../../../../../modules/cognitive_services/terraform-azurerm-searchservice"
+  # source  = "./../../../../../../modules/terraform-azurerm-aaf/modules/cognitive_services/terraform-azurerm-searchservice"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/cognitive_services/terraform-azurerm-searchservice"
   
   name                         = "${module.naming.search_service.name}${random_string.this.result}" # alpha numeric characters only are allowed in "name var.name_prefix == null ? "${random_string.prefix.result}${var.acr_name}" : "${var.name_prefix}${var.acr_name}"
@@ -65,7 +65,7 @@ module "private_dns_zones" {
 }
 
 module "private_endpoint" {
-  # source = "./../../../../../../modules/networking/terraform-azurerm-privateendpoint"
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
     
   name                           = "${module.searchservice.resource.name}PrivateEndpoint"

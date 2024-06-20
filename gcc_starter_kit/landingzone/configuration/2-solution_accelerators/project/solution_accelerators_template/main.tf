@@ -34,7 +34,7 @@ module "private_dns_zones" {
 }
 
 module "container_registry" {
-  # source = "./../../../../../../modules/compute/terraform-azurerm-containerregistry"
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/compute/terraform-azurerm-containerregistry"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/compute/terraform-azurerm-containerregistry" 
 
   name                         = "${module.naming.container_registry.name_unique}${random_string.this.result}"
@@ -58,7 +58,7 @@ module "container_registry" {
 }
 
 module "private_endpoint" {
-  # source = "./../../../../../../modules/networking/terraform-azurerm-privateendpoint"
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
 
   name                           = "${module.container_registry.name}PrivateEndpoint"
