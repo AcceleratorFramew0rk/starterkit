@@ -9,7 +9,7 @@
 * 
 
 ## ENHANCEMENTS:
-* 
+* remove modules from starter kit. all non avm modules exists in aaf 
 
 ## BUG FIXES:
 * 
