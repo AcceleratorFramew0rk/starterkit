@@ -1,18 +1,17 @@
 
-# 0.0.4 (TBD)
+# 0.0.4 (20 Jun 2024)
 ## COMPATIBLE WITH:
 * aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
 * azurerm: version 3.85
 * aaf: 0.0.1
 
 ## FEATURES:
-* 
-
-## ENHANCEMENTS:
-* add global settings tags to all solution accelerators, 0-setup_gcc_dev_env
 * add intranet egress firewall
 * add intranet ingress agw
 * add intranet ingress firewall
+
+## ENHANCEMENTS:
+* add global settings tags to all solution accelerators, 0-setup_gcc_dev_env
 * set custom module source to "AcceleratorFramew0rk/aaf/azurerm//modules/..."
 * remove hardcoding of virtual network name during import of terraform state in launchpad
 * remove un-used template folder to avoid duplication of codes
