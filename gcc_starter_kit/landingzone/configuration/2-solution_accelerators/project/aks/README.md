@@ -1,4 +1,4 @@
-cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/2-solution_accelerators/project/aks
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/aks
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name={{resource_group_name}}" \

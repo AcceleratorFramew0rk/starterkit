@@ -1,4 +1,4 @@
-cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/1-landingzones/platform/networking_spoke_management
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/platform/networking_spoke_management
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name={{resource_group_name}}" \

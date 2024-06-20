@@ -1,4 +1,4 @@
-cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/1-landingzones/platform/networking_hub_internet_ingress
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/platform/networking_hub_internet_ingress
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name={{resource_group_name}}" \

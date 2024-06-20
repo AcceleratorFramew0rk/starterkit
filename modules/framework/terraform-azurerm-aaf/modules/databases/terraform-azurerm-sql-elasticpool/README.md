@@ -1,1 +1,0 @@
-# terraform-azurerm-avm-res-sql-elasticpool

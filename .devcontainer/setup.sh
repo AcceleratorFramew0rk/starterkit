@@ -12,4 +12,7 @@ pre-commit autoupdate
 git config --global --add safe.directory /tf/avm
 git config pull.rebase false 
 
-
+if [ ! -d /tf/avm/modules/framework/terraform-azurerm-aaf ]; then
+  # clone latest aaf terraform framework - 0.0.3 for reference
+  git clone https://github.com/AcceleratorFramew0rk/terraform-azurerm-aaf.git /tf/avm/modules/framework/terraform-azurerm-aaf
+fi

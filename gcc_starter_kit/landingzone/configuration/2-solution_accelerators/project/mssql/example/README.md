@@ -4,9 +4,9 @@
 
 # prepare and create launchpad - only run once per subscription
 
-sudo chmod -R -f 777 /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/0-launchpad/script_launchpad
+sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/script_launchpad
 
-cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/0-launchpad/script_launchpad
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/script_launchpad
 
 PREFIX="dbsuat"
 echo $PREFIX
@@ -14,7 +14,7 @@ echo $PREFIX
 ./launchpad.sh $PREFIX
 
 # goto solution accelerator folder
-cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/2-solution_accelerators/project/mssql
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/mssql
 
 # get subscription id
 ACCOUNT_INFO=$(az account show 2> /dev/null)

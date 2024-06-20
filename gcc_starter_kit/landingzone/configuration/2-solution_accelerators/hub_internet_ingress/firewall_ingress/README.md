@@ -1,4 +1,4 @@
-cd /tf/avm/{{gcc_starter_kit}}/landingzone/configuration/2-solution_accelerators/hub_internet_ingress/firewall_ingress
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/hub_internet_ingress/firewall_ingress
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name={{resource_group_name}}" \
