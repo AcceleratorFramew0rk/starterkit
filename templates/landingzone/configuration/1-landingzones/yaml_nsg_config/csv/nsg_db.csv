@@ -1,8 +1,0 @@
-Priority,Name,Port,Protocol,Source,Destination,DestinationPort,Action,Direction
-100,AllowInboundSSHManagement,*,Tcp,{{management_infrasubnet_address_prefixes}},{{project_dbsubnet_address_prefixes}},22,Allow,Inbound
-110,AllowMSSQLManagement,*,Tcp,{{management_infrasubnet_address_prefixes}},{{project_dbsubnet_address_prefixes}},1433,Allow,Inbound
-120,AllowMSSQLApp,*,Tcp,VirtualNetwork,{{project_dbsubnet_address_prefixes}},1433,Allow,Inbound
-130,AllowHTTPSDevOpsRunner,*,Tcp,{{devops_runnersubnet_address_prefixes}},{{project_dbsubnet_address_prefixes}},443,Allow,Inbound
-140,AllowMSSQLVirtualNetwork,*,Tcp,VirtualNetwork,VirtualNetwork,1433,Allow,Inbound
-4060,CustomDenyAllInbound,*,Tcp,*,*,*,Deny,Inbound
-4060,CustomDenyAllOutbound,*,Tcp,*,*,*,Deny,Outbound

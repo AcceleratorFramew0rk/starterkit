@@ -2,17 +2,17 @@
   log_analytics_workspace_resource_group_name: "gcci-agency-law" 
   log_analytics_workspace_name: "gcci-agency-workspace" 
   # virtual network - leave empty if there is no such virtual network   
-  ingress_egress_vnet_name_ingress_internet: "gcci-vnet-ingress-internet"   
-  ingress_egress_vnet_name_egress_internet: "gcci-vnet-egress-internet"  
-  ingress_egress_vnet_name_ingress_intranet: "gcci-vnet-ingress-intranet" 
-  ingress_egress_vnet_name_egress_intranet: "gcci-vnet-egress-intranet"  
+  hub_ingress_internet_vnet_name: "gcci-vnet-ingress-internet"   
+  hub_egress_internet_vnet_name: "gcci-vnet-egress-internet"  
+  hub_ingress_intranet_vnet_name: "gcci-vnet-ingress-intranet" 
+  hub_egress_intranet_vnet_name: "gcci-vnet-egress-intranet"  
   management_vnet_name: "gcci-vnet-management"   
   project_vnet_name:  
   devops_vnet_name: 
-  ingress_egress_vnet_name_ingress_internet_cidr: "100.127.0.0/24" 
-  ingress_egress_vnet_name_egress_internet_cidr: "100.127.1.0/24" 
-  ingress_egress_vnet_name_ingress_intranet_cidr: "10.20.0.0/25" 
-  ingress_egress_vnet_name_egress_intranet_cidr: "10.20.1.0/25" 
+  hub_ingress_internet_vnet_name_cidr: "100.127.0.0/24" 
+  hub_egress_internet_vnet_name_cidr: "100.127.1.0/24" 
+  hub_ingress_intranet_vnet_name_cidr: "10.20.0.0/25" 
+  hub_egress_intranet_vnet_name_cidr: "10.20.1.0/25" 
   management_vnet_name_cidr: "100.127.3.0/24" 
   project_vnet_name_cidr: 
   devops_vnet_name_cidr: 

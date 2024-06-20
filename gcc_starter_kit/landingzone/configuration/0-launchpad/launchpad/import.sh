@@ -63,21 +63,21 @@ timestamp() {
 
 echo "init files"
 # ensure folder and terraform.tf already exists
-cp ./../../../../../templates/landingzone/configuration/0-launchpad/launchpad/terraform.tf ./terraform.tf
-if [ ! -d ./../../../configuration/1-landingzones ]; then
+# cp ./../../../../../templates/landingzone/configuration/0-launchpad/launchpad/terraform.tf ./terraform.tf
+# if [ ! -d ./../../../configuration/1-landingzones ]; then
 
-  echo "create directory 1-landingzones"
-  mkdir ./../../../configuration/1-landingzones
+#   echo "create directory 1-landingzones"
+#   mkdir ./../../../configuration/1-landingzones
 
-fi
-if [ ! -d ./../../../configuration/2-solution_accelerators ]; then
+# fi
+# if [ ! -d ./../../../configuration/2-solution_accelerators ]; then
 
-  echo "create directory 2-solution_accelerators"
-  mkdir ./../../../configuration/2-solution_accelerators
+#   echo "create directory 2-solution_accelerators"
+#   mkdir ./../../../configuration/2-solution_accelerators
 
-fi
-cp -a ./../../../../../templates/landingzone/configuration/1-landingzones ./../../../configuration
-cp -a ./../../../../../templates/landingzone/configuration/2-solution_accelerators ./../../../configuration
+# fi
+# cp -a ./../../../../../templates/landingzone/configuration/1-landingzones ./../../../configuration
+# cp -a ./../../../../../templates/landingzone/configuration/2-solution_accelerators ./../../../configuration
 
 #------------------------------------------------------------------------
 # get current subscriptin information
@@ -217,19 +217,48 @@ MSYS_NO_PATHCONV=1 terraform init  -reconfigure \
 -backend-config="key=gcci-platform.tfstate"
 
 
+# vnets:
+#   # IMPORTANT: leave empty if there is no such virtual network   
+#   ingress_internet: "gcci-vnet-ingress-internet"   
+#   egress_internet: "gcci-vnet-egress-internet"  
+#   ingress_intranet: "gcci-vnet-ingress-intranet" 
+#   egress_intranet: "gcci-vnet-egress-intranet"  
+#   project: "gcci-vnet-project"   
+#   management: "gcci-vnet-management"   
+#   devops: "gcci-vnet-devops" 
+
+# CONFIG_vnets_ingress_internet
+
+echo "vnets:" 
+echo $CONFIG_vnets_hub_ingress_internet
+echo $CONFIG_vnets_hub_egress_internet
+echo $CONFIG_vnets_hub_ingress_intranet
+echo $CONFIG_vnets_hub_egress_intranet
+echo $CONFIG_vnets_project
+echo $CONFIG_vnets_management
+echo $CONFIG_vnets_devops
+
 # Replace the hardcoded subscription ID with the $SUBSCRIPTION_ID variable
 # resource group
 MSYS_NO_PATHCONV=1 terraform import "azurerm_resource_group.gcci_platform" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform" 
 MSYS_NO_PATHCONV=1 terraform import "azurerm_resource_group.gcci_agency_law" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-agency-law" 
 
 # virtual networks
-MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_ingress_internet" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/gcci-vnet-ingress-internet" 
-MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_egress_internet" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/gcci-vnet-egress-internet" 
-MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_ingress_intranet" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/gcci-vnet-ingress-intranet" 
-MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_egress_intranet" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/gcci-vnet-egress-intranet" 
-MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_project" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/gcci-vnet-project" 
-MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_management" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/gcci-vnet-management" 
-MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_devops" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/gcci-vnet-devops" 
+# MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_ingress_internet" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/gcci-vnet-ingress-internet" 
+# MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_egress_internet" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/gcci-vnet-egress-internet" 
+# MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_ingress_intranet" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/gcci-vnet-ingress-intranet" 
+# MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_egress_intranet" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/gcci-vnet-egress-intranet" 
+# MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_project" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/gcci-vnet-project" 
+# MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_management" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/gcci-vnet-management" 
+# MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_devops" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/gcci-vnet-devops" 
+
+MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_ingress_internet" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/$CONFIG_vnets_hub_ingress_internet" 
+MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_egress_internet" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/$CONFIG_vnets_hub_egress_internet" 
+MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_ingress_intranet" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/$CONFIG_vnets_hub_ingress_intranet" 
+MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_egress_intranet" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/$CONFIG_vnets_hub_egress_intranet" 
+MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_project" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/$CONFIG_vnets_project" 
+MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_management" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/$CONFIG_vnets_management" 
+MSYS_NO_PATHCONV=1 terraform import "azurerm_virtual_network.gcci_vnet_devops" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/$CONFIG_vnets_devops" 
 
 # log analytics workspace
 MSYS_NO_PATHCONV=1 terraform import "azurerm_log_analytics_workspace.gcci_agency_workspace" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-agency-law/providers/Microsoft.OperationalInsights/workspaces/gcci-agency-workspace" 

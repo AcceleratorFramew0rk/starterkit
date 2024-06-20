@@ -1,10 +1,20 @@
-prefix: "aoaidev"
+prefix: "aoaiuat"
 location: "southeastasia"
 environment: "sandpit"
 app_config:
   private_dns_zones: # to replace with your application domain name
     internet_ingress_domain_name: internet.sandpitlabs.com 
     intranet_ingress_domain_name: intranet.sandpitlabs.com 
+# virtual networks name configuration - change the below if you are using different vnets name
+vnets:
+  # IMPORTANT: leave empty if there is no such virtual network   
+  hub_ingress_internet: "gcci-vnet-ingress-internet"   
+  hub_egress_internet: "gcci-vnet-egress-internet"  
+  hub_ingress_intranet: "gcci-vnet-ingress-intranet" 
+  hub_egress_intranet: "gcci-vnet-egress-intranet"  
+  project: "gcci-vnet-project"   
+  management: "gcci-vnet-management"   
+  devops: "gcci-vnet-devops"   
 # subnets cidr configuration
 subnets:
   # IMPORTANT ** comment off the below any project subnets if it is not used

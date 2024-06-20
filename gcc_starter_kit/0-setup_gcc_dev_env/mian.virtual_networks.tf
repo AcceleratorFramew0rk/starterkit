@@ -3,13 +3,13 @@ module "virtualnetwork_hub_internet_ingress" {
   source  = "Azure/avm-res-network-virtualnetwork/azurerm"
   version = "0.1.4"
 
-  count = try(local.ingress_egress_vnet_name_ingress_internet, null) == null ? 0 : 1
+  count = try(local.hub_ingress_internet_vnet_name, null) == null ? 0 : 1
 
-  name                     = local.ingress_egress_vnet_name_ingress_internet 
+  name                     = local.hub_ingress_internet_vnet_name 
   enable_telemetry              = true
   resource_group_name           = azurerm_resource_group.this.name
   location                 = var.location # "southeastasia"
-  virtual_network_address_space = ["${local.ingress_egress_vnet_name_ingress_internet_cidr}"]
+  virtual_network_address_space = ["${local.hub_ingress_internet_vnet_name_cidr}"]
   subnets = {}  
   tags                           = merge(
     var.tags,
@@ -24,13 +24,13 @@ module "virtualnetwork_hub_internet_egress" {
   source  = "Azure/avm-res-network-virtualnetwork/azurerm"
   version = "0.1.4"
 
-  count = try(local.ingress_egress_vnet_name_egress_internet, null) == null ? 0 : 1
+  count = try(local.hub_egress_internet_vnet_name, null) == null ? 0 : 1
 
-  name                     = local.ingress_egress_vnet_name_egress_internet # "vnet-hub-internet"
+  name                     = local.hub_egress_internet_vnet_name # "vnet-hub-internet"
   enable_telemetry              = true
   resource_group_name           = azurerm_resource_group.this.name
   location                 = var.location # "southeastasia"
-  virtual_network_address_space = ["${local.ingress_egress_vnet_name_egress_internet_cidr}"]
+  virtual_network_address_space = ["${local.hub_egress_internet_vnet_name_cidr}"]
   subnets = {}     
   tags                           = merge(
     var.tags,
@@ -44,13 +44,13 @@ module "virtualnetwork_hub_intranet_ingress" {
   source  = "Azure/avm-res-network-virtualnetwork/azurerm"
   version = "0.1.4"
 
-  count = try(local.ingress_egress_vnet_name_ingress_intranet, null) == null ? 0 : 1
+  count = try(local.hub_ingress_intranet_vnet_name, null) == null ? 0 : 1
 
-  name                     = local.ingress_egress_vnet_name_ingress_intranet # "vnet-hub-internet"
+  name                     = local.hub_ingress_intranet_vnet_name # "vnet-hub-internet"
   enable_telemetry              = true
   resource_group_name           = azurerm_resource_group.this.name
   location                 = var.location # "southeastasia"
-  virtual_network_address_space = ["${local.ingress_egress_vnet_name_ingress_intranet_cidr}"]
+  virtual_network_address_space = ["${local.hub_ingress_intranet_vnet_name_cidr}"]
   subnets = {}       
   tags                           = merge(
     var.tags,
@@ -64,13 +64,13 @@ module "virtualnetwork_hub_intranet_egress" {
   source  = "Azure/avm-res-network-virtualnetwork/azurerm"
   version = "0.1.4"
 
-  count = try(local.ingress_egress_vnet_name_egress_intranet, null) == null ? 0 : 1
+  count = try(local.hub_egress_intranet_vnet_name, null) == null ? 0 : 1
 
-  name                     = local.ingress_egress_vnet_name_egress_intranet 
+  name                     = local.hub_egress_intranet_vnet_name 
   enable_telemetry              = true
   resource_group_name           = azurerm_resource_group.this.name
   location                 = var.location # "southeastasia"
-  virtual_network_address_space = ["${local.ingress_egress_vnet_name_egress_intranet_cidr}"]
+  virtual_network_address_space = ["${local.hub_egress_intranet_vnet_name_cidr}"]
   subnets = {}         
   tags                           = merge(
     var.tags,
