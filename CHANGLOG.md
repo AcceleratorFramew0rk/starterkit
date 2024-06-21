@@ -12,7 +12,7 @@
 * remove modules from starter kit. all non avm modules exists in aaf 
 
 ## BUG FIXES:
-* 
+* fixed [This object does not have an attribute named "resource"] keyvault resource_id error for management vm
 
 # 0.0.4 (20 Jun 2024)
 ## COMPATIBLE WITH:
