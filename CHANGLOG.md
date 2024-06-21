@@ -9,7 +9,8 @@
 * 
 
 ## ENHANCEMENTS:
-* remove modules from starter kit. all non avm modules exists in aaf 
+* remove modules from starter kit. all non avm modules exists in aaf
+* allow to set the source_image_resource_id for vm solution accelerator 
 
 ## BUG FIXES:
 * fix [This object does not have an attribute named "resource"] keyvault resource_id error for management vm
