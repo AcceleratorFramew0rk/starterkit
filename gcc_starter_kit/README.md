@@ -24,7 +24,10 @@ Review and, if necessary, modify the details of the project subnets and cidr ran
 
 ### import gcci tfstate and create launchpad storage account and containers
 ```bash
+sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/level0/gcci_platform/import.sh
+sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad
+
 ./import.sh
 ```
 

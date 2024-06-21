@@ -11,8 +11,10 @@ cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
 # devops service - runner container instance
 ./deploy_pattern_devops_runner.sh
 
-# aks architype - acr + aks + sql server, keyvaule, storage account
+# application aks architype - acr + aks + sql server, keyvaule, storage account
 ./deploy_pattern_aks_architype.sh
 
-# app service architype - app service + sql server, keyvaule, storage account
+# OR 
+
+# application app service architype - app service + sql server, keyvaule, storage account
 ./deploy_pattern_appservice_architype.sh

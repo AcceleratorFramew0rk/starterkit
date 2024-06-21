@@ -68,7 +68,7 @@ module "virtualmachine1" {
   resource_group_name                    = azurerm_resource_group.this.name
   virtualmachine_os_type                 = "Windows"
   name                                   = "${module.naming.virtual_machine.name}${random_string.this.result}" 
-  admin_credential_key_vault_resource_id = module.avm_res_keyvault_vault.resource.id
+  admin_credential_key_vault_resource_id = module.avm_res_keyvault_vault.resource_id
   virtualmachine_sku_size                = "Standard_D8s_v3" # "Standard_D8s_v3" 
   zone                                   = random_integer.zone_index.result 
 
