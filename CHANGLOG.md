@@ -10,7 +10,9 @@
 
 ## ENHANCEMENTS:
 * remove modules from starter kit. all non avm modules exists in aaf
-* allow to set the source_image_resource_id for vm solution accelerator 
+* allow to set the source_image_resource_id for vm solution accelerator
+* gcc dev env to accept variables via -var in terraform plan/apply
+* add non gcc dev env for virtual networks
 
 ## BUG FIXES:
 * fix [This object does not have an attribute named "resource"] keyvault resource_id error for management vm
