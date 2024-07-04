@@ -6,13 +6,14 @@
 * aaf: 0.0.3
 
 ## FEATURES:
-* 
+* add launchpad for non gcc env with creation of virtual networks
 
 ## ENHANCEMENTS:
 * remove modules from starter kit. all non avm modules exists in aaf
 * allow to set the source_image_resource_id for vm solution accelerator
 * gcc dev env to accept variables via -var in terraform plan/apply
-* add non gcc dev env for virtual networks
+* rename script_launchpad to script
+
 
 ## BUG FIXES:
 * fix [This object does not have an attribute named "resource"] keyvault resource_id error for management vm
