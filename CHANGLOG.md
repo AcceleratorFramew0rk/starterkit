@@ -13,6 +13,7 @@
 * allow to set the source_image_resource_id for vm solution accelerator
 * gcc dev env to accept variables via -var in terraform plan/apply
 * rename script_launchpad to script
+* upgrade avm virtual networks to version = "0.2.3"
 
 
 ## BUG FIXES:
