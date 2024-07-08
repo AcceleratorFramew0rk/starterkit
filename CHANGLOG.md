@@ -14,6 +14,7 @@
 * gcc dev env to accept variables via -var in terraform plan/apply
 * rename script_launchpad to script
 * upgrade avm virtual networks to version = "0.2.3"
+* upgrade avm private dns zone to version = "0.1.2"
 
 
 ## BUG FIXES:
