@@ -43,3 +43,107 @@ variable "tags" {
   }
 }
 
+# ----------------------------------------------------
+# config virtual networks
+# ----------------------------------------------------
+variable "resource_group_name" {
+  type        = string  
+  description = "(Optional) Specifies resource group name of gcci_platform"
+  default     = "gcci_platform"
+}
+
+variable "log_analytics_workspace_resource_group_name" {
+  type        = string  
+  description = "(Optional) Specifies log_analytics_workspace_resource_group_name of gcci_platform"
+  default     = "gcci-agency-law"
+}
+
+variable "log_analytics_workspace_name" {
+  type        = string  
+  description = "(Optional) Specifies log_analytics_workspace_name of gcci_platform"
+  default     = "gcci-agency-workspace"
+}
+
+variable "vnets_hub_ingress_internet_name" {
+  type        = string  
+  description = "(Optional) Specifies vnets_hub_ingress_internet_name of gcci_platform"
+  default     = null
+}
+
+variable "vnets_hub_ingress_internet_cidr" {
+  type        = string  
+  description = "(Optional) Specifies vnets_hub_ingress_internet_cidr of gcci_platform"
+  default     = null
+}
+
+variable "vnets_hub_egress_internet_name" {
+  type        = string  
+  description = "(Optional) Specifies vnets_hub_egress_internet_name of gcci_platform"
+  default     = null
+}
+
+variable "vnets_hub_egress_internet_cidr" {
+  type        = string  
+  description = "(Optional) Specifies vnets_hub_egress_internet_cidr of gcci_platform"
+  default     = null
+}
+
+variable "vnets_hub_ingress_intranet_name" {
+  type        = string  
+  description = "(Optional) Specifies vnets_hub_ingress_intranet_name of gcci_platform"
+  default     = null
+}
+
+variable "vnets_hub_ingress_intranet_cidr" {
+  type        = string  
+  description = "(Optional) Specifies vnets_hub_ingress_intranet_cidr of gcci_platform"
+  default     = null
+}
+
+variable "vnets_hub_egress_intranet_name" {
+  type        = string  
+  description = "(Optional) Specifies vnets_hub_egress_intranet_name of gcci_platform"
+  default     = null
+}
+
+variable "vnets_hub_egress_intranet_cidr" {
+  type        = string  
+  description = "(Optional) Specifies vnets_hub_egress_intranet_cidr of gcci_platform"
+  default     = null
+}
+
+variable "vnets_management_name" {
+  type        = string  
+  description = "(Optional) Specifies vnets_management_name of gcci_platform"
+  default     = null
+}
+
+variable "vnets_management_cidr" {
+  type        = string  
+  description = "(Optional) Specifies vnets_management_cidr of gcci_platform"
+  default     = null
+}
+
+variable "vnets_project_name" {
+  type        = string  
+  description = "(Optional) Specifies vnets_project_name of gcci_platform"
+  default     = null
+}
+
+variable "vnets_project_cidr" {
+  type        = string  
+  description = "(Optional) Specifies vnets_project_cidr of gcci_platform"
+  default     = null
+}
+
+variable "vnets_devops_name" {
+  type        = string  
+  description = "(Optional) Specifies vnets_devops_name of gcci_platform"
+  default     = null
+}
+
+variable "vnets_devops_cidr" {
+  type        = string  
+  description = "(Optional) Specifies vnets_project_cidr of gcci_platform"
+  default     = null
+}

@@ -7,7 +7,7 @@ app_config:
     intranet_ingress_domain_name: intranet.sandpitlabs.com 
 # virtual networks name configuration - change the below if you are using different vnets name
 vnets:
-  # IMPORTANT: leave empty if there is no such virtual network   
+  # IMPORTANT: leave empty if there is no such virtual network - will read the cidr from the platform configuration through terraform import  
   hub_ingress_internet: "gcci-vnet-ingress-internet"   
   hub_egress_internet: "gcci-vnet-egress-internet"  
   hub_ingress_intranet: "gcci-vnet-ingress-intranet" 

@@ -1,0 +1,101 @@
+resource_group_name: "gcci-platform" # DO NOT CHANGE
+log_analytics_workspace_resource_group_name: "gcci-agency-law"  # DO NOT CHANGE
+log_analytics_workspace_name: "gcci-agency-workspace"  # DO NOT CHANGE
+# # virtual network - leave empty if there is no such virtual network   
+prefix: "aoaiuat"
+location: "southeastasia"
+environment: "sandpit"
+app_config:
+  private_dns_zones: # to replace with your application domain name
+    internet_ingress_domain_name: internet.sandpitlabs.com 
+    intranet_ingress_domain_name: intranet.sandpitlabs.com 
+# virtual networks name configuration - change the below if you are using different vnets name
+vnets:
+  # IMPORTANT: leave empty if there is no such virtual network   
+  hub_ingress_internet: 
+    name: "gcci-vnet-ingress-internet"     
+    cidr: "100.127.0.0/24" 
+  hub_egress_internet:  
+    name: "gcci-vnet-egress-internet"     
+    cidr: "100.127.1.0/24" 
+  hub_ingress_intranet:  
+    name: "gcci-vnet-ingress-intranet"    
+    cidr: "10.20.0.0/25"
+  hub_egress_intranet:  
+    name: "gcci-vnet-egress-intranet"     
+    cidr: "10.20.1.0/25" 
+  management:  
+    name: "gcci-vnet-management"     
+    cidr: "100.127.3.0/24" 
+  project:  
+    name:    
+    cidr: 
+  devops:  
+    name:    
+    cidr: 
+# subnets cidr configuration
+subnets:
+  # IMPORTANT ** comment off the below any project subnets if it is not used
+  project:
+    WebSubnet: # DO NOT CHANGE subnet name
+      address_prefixes:        
+    AppSubnet: # DO NOT CHANGE subnet name
+      address_prefixes:   
+    DbSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: 
+    ServiceSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: 
+    FunctionAppSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: 
+    ApiSubnet: # DO NOT CHANGE subnet name
+      address_prefixes:
+    SystemNodePoolSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: 
+    UserNodePoolSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: 
+    UserNodePoolWindowsSubnet: # DO NOT CHANGE subnet name
+      address_prefixes:     
+    AiSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: 
+    LogicAppSubnet: # DO NOT CHANGE subnet name
+      address_prefixes: 
+    CiSubnet: # DO NOT CHANGE subnet name 
+      address_prefixes: 
+    ServiceBusSubnet: # DO NOT CHANGE subnet name
+      address_prefixes:       
+    CosmosDbSubnet: # DO NOT CHANGE subnet name 
+      address_prefixes:  
+    AppServiceSubnet: # DO NOT CHANGE subnet name
+      address_prefixes:     
+# ** IMPORTANT - DO NOT CHANGE BELOW
+  hub_internet_ingress: 
+    AzureFirewallSubnet: 
+      address_prefixes: ["100.127.0.0/26"]
+    AgwSubnet: 
+      address_prefixes: ["100.127.0.64/26"]  
+  hub_internet_egress:
+    AzureFirewallSubnet:  
+      address_prefixes: ["100.127.1.0/26"]
+    AzureFirewallManagementSubnet:  
+      address_prefixes: ["100.127.1.64/26"]  
+  hub_intranet_ingress:
+    AzureFirewallSubnet:  
+      address_prefixes: ["10.20.0.0/26"]
+    AgwSubnet:  
+      address_prefixes: ["10.20.0.64/26"]
+  hub_intranet_egress:
+    AzureFirewallSubnet:   
+      address_prefixes: ["10.20.1.0/26"]
+    AzureFirewallManagementSubnet:   
+      address_prefixes: ["10.20.1.64/26"]  
+  devops:
+    RunnerSubnet: 
+    VpnSubnet:    
+      address_prefixes:  
+  management:
+    InfraSubnet:     
+      address_prefixes: ["100.127.3.0/26"]
+    SecuritySubnet:     
+      address_prefixes: ["100.127.3.64/26"]
+    AzureBastionSubnet:     
+      address_prefixes: ["100.127.3.128/26"]  

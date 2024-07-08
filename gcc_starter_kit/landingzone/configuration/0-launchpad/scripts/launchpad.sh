@@ -5,7 +5,7 @@
 #
 # Example usage:
 #
-# cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/script_launchpad
+# cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts
 # PREFIX="aaf"
 # ./launchpad.sh $PREFIX
 #
@@ -48,16 +48,10 @@ else
     fi
 fi
 
-
-# az storage account list --resource-group $RG_NAME --query "[?contains(name, '$STG_NAME')]" > /dev/null 2>&1
-# if [ $? -eq 0 ]; then
-#     read -p "ERROR: Storage Account Name $STG_NAME already exists. Exiting."
-#     exit 1
-# fi
-
 # Create Storage account and containers for storing state files
 az storage account create --name $STG_NAME --resource-group $RG_NAME --location $LOC --sku Standard_LRS --kind StorageV2 --allow-blob-public-access true --min-tls-version TLS1_2
 
 az storage container create --account-name $STG_NAME --name $CONTAINER1 --public-access blob --fail-on-exist
 az storage container create --account-name $STG_NAME --name $CONTAINER2 --public-access blob --fail-on-exist
 az storage container create --account-name $STG_NAME --name $CONTAINER3 --public-access blob --fail-on-exist
+

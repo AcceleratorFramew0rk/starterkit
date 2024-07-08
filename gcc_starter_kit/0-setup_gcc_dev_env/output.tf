@@ -10,37 +10,37 @@ output "gcci_agency_law" {
 }
 
 output "hub_internet_ingress" {
-  value       = module.virtualnetwork_hub_internet_ingress # azurerm_virtual_network.vnet
+  value       = module.virtualnetwork_hub_internet_ingress[0].resource # azurerm_virtual_network.vnet
   description = "The Azure Virtual Network resource"
 }
 
 output "hub_internet_egress" {
-  value       = module.virtualnetwork_hub_internet_egress # azurerm_virtual_network.vnet
+  value       = module.virtualnetwork_hub_internet_egress[0].resource # azurerm_virtual_network.vnet
   description = "The Azure Virtual Network resource"
 }
 
 output "hub_intranet_ingress" {
-  value       = module.virtualnetwork_hub_intranet_ingress # azurerm_virtual_network.vnet
+  value       = module.virtualnetwork_hub_intranet_ingress[0].resource # azurerm_virtual_network.vnet
   description = "The Azure Virtual Network resource"
 }
 
 output "hub_intranet_egress" {
-  value       = module.virtualnetwork_hub_intranet_egress # azurerm_virtual_network.vnet
+  value       = module.virtualnetwork_hub_intranet_egress[0].resource # azurerm_virtual_network.vnet
   description = "The Azure Virtual Network resource"
 }
 
 output "spoke_project" {
-  value       = module.virtualnetwork_project # azurerm_virtual_network.vnet
+  value       = module.virtualnetwork_project[0].resource # azurerm_virtual_network.vnet
   description = "The Azure Virtual Network resource"
 }
 
 output "spoke_management" {
-  value       = module.virtualnetwork_management # azurerm_virtual_network.vnet
+  value       = module.virtualnetwork_management[0].resource # azurerm_virtual_network.vnet
   description = "The Azure Virtual Network resource"
 }
 
 output "spoke_devops" {
-  value       = module.virtualnetwork_devops # azurerm_virtual_network.vnet
+  value       = module.virtualnetwork_devops[0].resource # azurerm_virtual_network.vnet
   description = "The Azure Virtual Network resource"
 }
 
