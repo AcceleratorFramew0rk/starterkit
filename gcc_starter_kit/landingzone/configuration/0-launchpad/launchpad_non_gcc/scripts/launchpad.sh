@@ -58,9 +58,12 @@ az storage container create --account-name $STG_NAME --name $CONTAINER3 --public
 # replace {{resource_group_name}} and {{storage_account_name}} in all .md files
 cd ./../../../configuration
 pwd
-find . -name '*.md' -exec sed -i -e 's/{{resource_group_name}}/$RG_NAME/g' {} \;
-find . -name '*.md' -exec sed -i -e 's/{{storage_account_name}}/$STG_NAME/g' {} \;
-find . -name '*.sh' -exec sed -i -e 's/{{resource_group_name}}/$RG_NAME/g' {} \;
-find . -name '*.sh' -exec sed -i -e 's/{{storage_account_name}}/$STG_NAME/g' {} \;
+echo $RG_NAME
+echo $STG_NAME
+
+find . -name '*.md' -exec sed -i -e "s/{{resource_group_name}}/$RG_NAME/g" {} \;
+find . -name '*.md' -exec sed -i -e "s/{{storage_account_name}}/$STG_NAME/g" {} \;
+find . -name 'deploy*.sh' -exec sed -i -e "s/{{resource_group_name}}/$RG_NAME/g" {} \;
+find . -name 'deploy*.sh' -exec sed -i -e "s/{{storage_account_name}}/$STG_NAME/g" {} \;
 
 
