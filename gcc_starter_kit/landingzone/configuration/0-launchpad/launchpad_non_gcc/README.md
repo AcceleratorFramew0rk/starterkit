@@ -3,7 +3,7 @@
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration
 
 # create launchpad storage account and containers
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad_non_gcc
 
 PREFIX=aoaiuat
 
