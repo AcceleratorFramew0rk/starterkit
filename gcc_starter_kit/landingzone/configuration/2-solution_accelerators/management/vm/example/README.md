@@ -68,9 +68,9 @@ terraform apply -auto-approve \
 -var="environment=${ENV}" 
 
 
-SOURCE_IMAGE_RESOURCE_ID="/subscriptions/e22a351f-db36-4a02-9793-0f2189d5f3ab/resourceGroups/aoaiuat-rg-solution-accelerators-project-virtualmachine/providers/Microsoft.Compute/galleries/gccvmgallery/images/vmdefinition001/versions/0.0.1"
+SOURCE_IMAGE_RESOURCE_ID="/subscriptions/xxxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx/resourceGroups/aoaiuat-rg-solution-accelerators-project-virtualmachine/providers/Microsoft.Compute/galleries/gccvmgallery/images/vmdefinition001/versions/0.0.1"
 
-SOURCE_IMAGE_RESOURCE_ID="/subscriptions/e22a351f-db36-4a02-9793-0f2189d5f3ab/resourceGroups/aoaiuat-rg-solution-accelerators-project-virtualmachine/providers/Microsoft.Compute/galleries/gccvmgallery/images/vmdefinition001"
+SOURCE_IMAGE_RESOURCE_ID="/subscriptions/xxxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx/resourceGroups/aoaiuat-rg-solution-accelerators-project-virtualmachine/providers/Microsoft.Compute/galleries/gccvmgallery/images/vmdefinition001"
 
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
