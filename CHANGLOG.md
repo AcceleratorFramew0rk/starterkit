@@ -7,6 +7,8 @@
 
 ## FEATURES:
 * add launchpad for non gcc env with creation of virtual networks
+* add logic app solution accelerators
+* add app service with logic app solution accelerators
 
 ## ENHANCEMENTS:
 * remove modules from starter kit. all non avm modules exists in aaf
@@ -15,6 +17,7 @@
 * rename script_launchpad to script
 * upgrade avm virtual networks to version = "0.2.3"
 * upgrade avm private dns zone to version = "0.1.2"
+* add variable for imgage docker url for container instance
 
 
 ## BUG FIXES:
