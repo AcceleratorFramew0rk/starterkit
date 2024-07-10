@@ -3,8 +3,6 @@ module "keyvault" {
   source  = "Azure/avm-res-keyvault-vault/azurerm"
   version = "0.5.2"  
 
-  count = try(local.keyvault.id, null) == null ? 1 : 0 
-
   enable_telemetry              = var.enable_telemetry
   location                        = azurerm_resource_group.this.location
   name                            = "${module.naming.key_vault.name}-${random_string.this.result}" 
@@ -55,12 +53,3 @@ resource "random_password" "sql_admin" {
   override_special = "$#%"
 }
 
-# add secret to existing keyvault in service tier
-resource "azurerm_key_vault_secret" "example" {
-
-  count = try(local.keyvault.id, null) == null ? 0 : 1 
-
-  name         = "sql_admin_password"
-  value        =  random_password.sql_admin.result
-  key_vault_id = local.keyvault.id 
-}

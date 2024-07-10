@@ -2,9 +2,11 @@ module "private_dns_zones" {
   source                = "Azure/avm-res-network-privatednszone/azurerm"   
   version = "0.1.2" 
 
+  # count = try(local.keyvault.id, null) == null ? 1 : 0 
+
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
-  domain_name           = "privatelink.vaultcore.azure.net"
+  domain_name           = "privatelink.database.windows.net" 
 
   tags        = merge(
     local.global_settings.tags,

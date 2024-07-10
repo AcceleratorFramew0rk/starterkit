@@ -12,6 +12,6 @@ data "terraform_remote_state" "keyvault" {
 
 
 locals {
-  keyvault = try(data.terraform_remote_state.keyvault.outputs.resource, null)    
+  keyvault = try(data.terraform_remote_state.keyvault.outputs.resource, null)     
 }
 
