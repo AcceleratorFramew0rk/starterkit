@@ -1,11 +1,12 @@
 module "private_dns_zones" {
-  source                = "Azure/avm-res-network-privatednszone/azurerm"  
+  source                = "Azure/avm-res-network-privatednszone/azurerm"   
+  version = "0.1.2" 
 
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.documents.azure.com"
 
-  dns_zone_tags        = merge(
+  tags        = merge(
     local.global_settings.tags,
     {
       purpose = "consmos db private dns zone" 

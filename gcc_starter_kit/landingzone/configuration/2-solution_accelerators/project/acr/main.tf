@@ -1,10 +1,11 @@
 module "private_dns_zones" {
   source                = "Azure/avm-res-network-privatednszone/azurerm"  
+  version = "0.1.2"
 
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.azurecr.io"
-  dns_zone_tags         = merge(
+  tags         = merge(
     local.global_settings.tags,
     {
       purpose = "container registry dns zone" 
@@ -79,6 +80,6 @@ module "private_endpoint" {
   is_manual_connection           = false
   subresource_name               = "registry"
   private_dns_zone_group_name    = "AcrPrivateDnsZoneGroup"
-  private_dns_zone_group_ids     = [module.private_dns_zones.private_dnz_zone_output.id] 
+  private_dns_zone_group_ids     = [module.private_dns_zones.resource.id] 
 }
 

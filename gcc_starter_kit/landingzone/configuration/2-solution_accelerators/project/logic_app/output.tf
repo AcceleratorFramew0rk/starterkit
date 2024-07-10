@@ -1,6 +1,6 @@
-output "acr_resource" {
-  value       = module.container_registry 
-  description = "The Azure Acr resource"
+output "resource" {
+  value       = module.logicapp.resource 
+  description = "The Azure logicapp resource"
   sensitive = true  
 }
 

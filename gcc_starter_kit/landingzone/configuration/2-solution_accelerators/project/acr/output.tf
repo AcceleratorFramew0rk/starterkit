@@ -1,4 +1,4 @@
-output "acr_resource" {
+output "resource" {
   value       = module.container_registry 
   description = "The Azure Acr resource"
   sensitive = true  

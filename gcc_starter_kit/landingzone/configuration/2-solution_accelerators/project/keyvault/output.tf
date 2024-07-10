@@ -1,4 +1,4 @@
-output "keyvault_resource" {
+output "resource" {
   value       = module.keyvault.resource 
   description = "The Azure keyvault resource"
   sensitive = true  

@@ -14,6 +14,11 @@ variable "subnet_id" {
   default = null
 }
 
+variable "service_subnet_id" {
+  type        = string  
+  default = null
+}
+
 variable "log_analytics_workspace_id" {
   type        = string  
   default = null

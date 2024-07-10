@@ -3,14 +3,15 @@ locals {
 }
 
 module "private_dns_zones" {
-  source                = "Azure/avm-res-network-privatednszone/azurerm"  
+  source                = "Azure/avm-res-network-privatednszone/azurerm"   
+  version = "0.1.2" 
 
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.blob.core.windows.net"
   # number_of_record_sets = 2
 
-  dns_zone_tags        = merge(
+  tags        = merge(
     local.global_settings.tags,
     {
       purpose = "storage account private dns zone" 
@@ -116,7 +117,7 @@ module "storageaccount" {
       subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["DbSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["DbSubnet"].id : var.subnet_id  
       subresource_name              = endpoint
       # private_dns_zone_resource_ids = [azurerm_private_dns_zone.this[endpoint].id]
-      private_dns_zone_resource_ids = [module.private_dns_zones.private_dnz_zone_output.id] 
+      private_dns_zone_resource_ids = [module.private_dns_zones.resource.id] 
       # these are optional but illustrate making well-aligned service connection & NIC names.
       private_service_connection_name = "psc-${endpoint}-${module.naming.storage_account.name_unique}"
       network_interface_name          = "nic-pe-${endpoint}-${module.naming.storage_account.name_unique}"

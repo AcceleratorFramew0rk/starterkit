@@ -1,6 +1,6 @@
 output "cosmos_db_id" {
   value       = module.cosmos_db.cosmosdb_id 
-  description = "The Azure Acr resource"
+  description = "The Azure cosmos_db resource"
   sensitive = true  
 }
 

@@ -15,12 +15,13 @@ resource "azurerm_app_service_plan" "this" {
 }
 
 module "private_dns_zones" {
-  source                = "Azure/avm-res-network-privatednszone/azurerm"  
+  source                = "Azure/avm-res-network-privatednszone/azurerm"   
+  version = "0.1.2" 
 
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.azurewebsites.net"
-  dns_zone_tags         = {
+  tags         = {
       environment = "dev"
     }
   virtual_network_links = {
@@ -50,7 +51,7 @@ module "private_endpoint" {
   is_manual_connection           = false
   subresource_name               = "sites"
   private_dns_zone_group_name    = "default" 
-  private_dns_zone_group_ids     = [module.private_dns_zones.private_dnz_zone_output.id] 
+  private_dns_zone_group_ids     = [module.private_dns_zones.resource.id] 
 }
 
 module "appservice" {

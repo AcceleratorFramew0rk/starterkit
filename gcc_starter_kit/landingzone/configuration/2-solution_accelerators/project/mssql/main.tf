@@ -1,11 +1,12 @@
 module "private_dns_zones" {
-  source                = "Azure/avm-res-network-privatednszone/azurerm"  
+  source                = "Azure/avm-res-network-privatednszone/azurerm"   
+  version = "0.1.2" 
 
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.vaultcore.azure.net"
 
-  dns_zone_tags        = merge(
+  tags        = merge(
     local.global_settings.tags,
     {
       purpose = "mssql database private dns zone" 
@@ -90,7 +91,7 @@ module "sql_server" {
 
   private_endpoints = {
     primary = {
-      private_dns_zone_resource_ids = [module.private_dns_zones.private_dnz_zone_output.id] 
+      private_dns_zone_resource_ids = [module.private_dns_zones.resource.id] 
       subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["DbSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["DbSubnet"].id : var.subnet_id  
     }
   }

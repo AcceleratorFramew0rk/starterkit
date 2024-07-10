@@ -1,4 +1,4 @@
-output "containergroup_resource" {
+output "resource" {
   value       = {
     id = module.container_group1.resource.id
     name = module.container_group1.resource.name

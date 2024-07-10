@@ -1,4 +1,4 @@
-output "azureopenai_resource" {
+output "resource" {
   value       = module.azureopenai.resource 
   description = "The Azure azure openai resource"
   sensitive = true  

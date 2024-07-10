@@ -1,10 +1,11 @@
 module "private_dns_zones" {
-  source                = "Azure/avm-res-network-privatednszone/azurerm"  
+  source                = "Azure/avm-res-network-privatednszone/azurerm"    
+  version = "0.1.2"
 
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = local.global_settings.app_config.private_dns_zones.intranet_ingress_domain_name # "sandpitlabs.com"
-  dns_zone_tags         = {
+  tags         = {
       env = local.global_settings.environment 
     }
   virtual_network_links = {

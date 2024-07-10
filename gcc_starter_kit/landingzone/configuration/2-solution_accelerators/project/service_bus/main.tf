@@ -1,12 +1,13 @@
 # add your solution accelerator terraform here.
 module "private_dns_zones" {
-  source                = "Azure/avm-res-network-privatednszone/azurerm"  
+  source                = "Azure/avm-res-network-privatednszone/azurerm"   
+  version = "0.1.2" 
 
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.servicebus.core.windows.net"
 
-  dns_zone_tags        = merge(
+  tags        = merge(
     local.global_settings.tags,
     {
       purpose = "service bus private dns zone" 
@@ -115,7 +116,7 @@ module "servicebus" {
       private_dns_zone_group_name = "withDnsGroup_group"
 
       subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceBusSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceBusSubnet"].id : var.subnet_id 
-      private_dns_zone_resource_ids = [module.private_dns_zones.private_dnz_zone_output.id] 
+      private_dns_zone_resource_ids = [module.private_dns_zones.resource.id] 
     }
   }
 

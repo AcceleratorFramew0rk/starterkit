@@ -1,11 +1,12 @@
 module "private_dns_zones" {
-  source                = "Azure/avm-res-network-privatednszone/azurerm"  
+  source                = "Azure/avm-res-network-privatednszone/azurerm"   
+  version = "0.1.2" 
 
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.redis.cache.windows.net"
 
-  dns_zone_tags        = merge(
+  tags        = merge(
     local.global_settings.tags,
     {
       purpose = "redis cache private dns zone" 
@@ -52,7 +53,7 @@ module "private_endpoint" {
   is_manual_connection           = false
   subresource_name               = "redisCache"
   private_dns_zone_group_name    = "default"
-  private_dns_zone_group_ids     = [module.private_dns_zones.private_dnz_zone_output.id] 
+  private_dns_zone_group_ids     = [module.private_dns_zones.resource.id] 
   depends_on = [
     module.private_dns_zones,
     module.redis_cache

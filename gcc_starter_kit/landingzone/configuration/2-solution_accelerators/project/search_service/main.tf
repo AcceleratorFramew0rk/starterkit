@@ -26,13 +26,14 @@ module "searchservice" {
 }
 
 module "private_dns_zones" {
-  source                = "Azure/avm-res-network-privatednszone/azurerm"  
+  source                = "Azure/avm-res-network-privatednszone/azurerm"   
+  version = "0.1.2" 
 
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.search.windows.net"
 
-  dns_zone_tags        = merge(
+  tags        = merge(
     local.global_settings.tags,
     {
       purpose = "search service private dns zone" 
@@ -77,7 +78,7 @@ module "private_endpoint" {
   is_manual_connection           = false
   subresource_name               = "searchService"
   private_dns_zone_group_name    = "default"
-  private_dns_zone_group_ids     = [module.private_dns_zones.private_dnz_zone_output.id] 
+  private_dns_zone_group_ids     = [module.private_dns_zones.resource.id] 
 
   tags        = merge(
     local.global_settings.tags,

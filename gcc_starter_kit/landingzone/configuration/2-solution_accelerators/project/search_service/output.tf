@@ -1,6 +1,6 @@
 output "resource" {
   value       = module.searchservice.resource 
-  description = "The Azure Acr resource"
+  description = "The Azure searchservice resource"
   sensitive = true  
 }
 
