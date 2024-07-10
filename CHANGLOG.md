@@ -1,9 +1,9 @@
 
-# 0.0.5 (TBD)
+# 0.0.5 (10 Jul 2024)
 ## COMPATIBLE WITH:
 * aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
 * azurerm: version 3.85
-* aaf: 0.0.3
+* aaf: 0.0.4
 
 ## FEATURES:
 * add launchpad for non gcc env with creation of virtual networks
@@ -17,8 +17,6 @@
 * rename script_launchpad to script
 * upgrade avm virtual networks to version = "0.2.3"
 * upgrade avm private dns zone to version = "0.1.2"
-* add variable for imgage docker url for container instance
-
 
 ## BUG FIXES:
 * fix [This object does not have an attribute named "resource"] keyvault resource_id error for management vm
