@@ -8,7 +8,6 @@
 ## FEATURES:
 * add launchpad for non gcc env with creation of virtual networks
 * add logic app solution accelerators
-* add app service with logic app solution accelerators
 
 ## ENHANCEMENTS:
 * remove modules from starter kit. all non avm modules exists in aaf
