@@ -66,9 +66,8 @@ resource "azurerm_user_assigned_identity" "this" {
 }
 
 module "logicapp" {
-  # source= = "/tf/avm/modules/terraform-azurerm-aaf/modules/logic_app/standard"
-  source = "./../../../../../../modules/terraform-azurerm-aaf/modules/logic_app/standard"  
-  # source = "AcceleratorFramew0rk/aaf/azurerm//modules/logic_app/standard"
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/logic_app/standard"  
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/logic_app/standard"
 
   # insert the 4 required variables here
 
