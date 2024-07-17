@@ -8,7 +8,7 @@
 * add logs and backup to solution accelerator app service
 
 ## ENHANCEMENTS:
-* 
+* change subnets creation using avm "Azure/avm-res-network-virtualnetwork/azurerm//modules/subnet"
 
 ## BUG FIXES:
 * 
