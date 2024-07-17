@@ -11,7 +11,7 @@
 * change subnets creation using avm "Azure/avm-res-network-virtualnetwork/azurerm//modules/subnet"
 
 ## BUG FIXES:
-* fixed cosmos db mondo deploy error
+* fixed cosmos db mongo deploy error
 
 # 0.0.5 (10 Jul 2024)
 ## COMPATIBLE WITH:
