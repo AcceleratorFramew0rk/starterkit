@@ -1,3 +1,18 @@
+# 0.0.6 (TBD)
+## COMPATIBLE WITH:
+* aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
+* azurerm: version 3.85
+* aaf: 0.0.5
+
+## FEATURES:
+* add logs and backup to solution accelerator app service
+
+## ENHANCEMENTS:
+* change subnets creation using avm "Azure/avm-res-network-virtualnetwork/azurerm//modules/subnet"
+
+## BUG FIXES:
+* fixed cosmos db mongo deploy error
+* fixed cosmos db sql deploy error
 
 # 0.0.5 (10 Jul 2024)
 ## COMPATIBLE WITH:
