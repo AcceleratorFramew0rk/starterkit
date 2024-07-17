@@ -119,7 +119,7 @@ module "linux_function_app" {
     primary = {
       name                          = "primary-interfaces"
       private_dns_zone_resource_ids =  [module.private_dns_zones.resource.id] 
-      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["FunctionAppSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["FunctionAppSubnet"].id : var.subnet_id 
+      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["FunctionAppSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["FunctionAppSubnet"].resource.id : var.subnet_id 
       inherit_lock = true
       inherit_tags = true
       lock = {

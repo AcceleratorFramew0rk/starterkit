@@ -45,7 +45,7 @@ module "private_endpoint" {
   name                           = "${module.redis_cache.resource.name}PrivateEndpoint"
   location                       = azurerm_resource_group.this.location
   resource_group_name            = azurerm_resource_group.this.name
-  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["DbSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["DbSubnet"].id : var.subnet_id 
+  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["DbSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["DbSubnet"].resource.id : var.subnet_id 
   tags                           = {
       env = try(local.global_settings.environment, var.environment)  
     }
@@ -64,7 +64,7 @@ module "redis_cache" {
   # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/databases/terraform-azurerm-redis-cache"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/databases/terraform-azurerm-redis-cache"
   
-  name                         = "${module.naming.redis_cache.name}${random_string.this.result}" 
+  name                         = "${module.naming.redis_cache.name}-${random_string.this.result}" 
   resource_group_name          = azurerm_resource_group.this.name
   location                     = azurerm_resource_group.this.location
  

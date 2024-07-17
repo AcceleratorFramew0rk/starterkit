@@ -33,7 +33,7 @@ module "firewall" {
   firewall_ip_configuration = [
     {
       name                 = "ipconfig1"
-      subnet_id            = try(local.remote.networking.virtual_networks.hub_internet_egress.virtual_subnets.subnets["AzureFirewallSubnet"].id, null) != null ? local.remote.networking.virtual_networks.hub_internet_egress.virtual_subnets.subnets["AzureFirewallSubnet"].id : var.subnet_id 
+      subnet_id            = try(local.remote.networking.virtual_networks.hub_internet_egress.virtual_subnets["AzureFirewallSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.hub_internet_egress.virtual_subnets["AzureFirewallSubnet"].resource.id : var.subnet_id 
       public_ip_address_id = module.public_ip_firewall1.public_ip_id 
     }
   ]
@@ -41,8 +41,8 @@ module "firewall" {
   # firewall_management_ip_configuration is an object and not a list, therefore no []
   firewall_management_ip_configuration = {
     name                 = "ipconfig2"
-    # subnet_id            = local.remote.networking.virtual_networks.hub_internet_egress.virtual_subnets.subnets["AzureFirewallManagementSubnet"].id # module.virtualnetwork_ingress_egress.subnets["AzureFirewallManagementSubnet"].id  # azurerm_subnet.subnet.id
-    subnet_id            = try(local.remote.networking.virtual_networks.hub_internet_egress.virtual_subnets.subnets["AzureFirewallManagementSubnet"].id, null) != null ? local.remote.networking.virtual_networks.hub_internet_egress.virtual_subnets.subnets["AzureFirewallManagementSubnet"].id : var.azurefirewallmanagement_subnet_id 
+    # subnet_id            = local.remote.networking.virtual_networks.hub_internet_egress.virtual_subnets["AzureFirewallManagementSubnet"].resource.id # module.virtualnetwork_ingress_egress.subnets["AzureFirewallManagementSubnet"].resource.id  # azurerm_subnet.subnet.id
+    subnet_id            = try(local.remote.networking.virtual_networks.hub_internet_egress.virtual_subnets["AzureFirewallManagementSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.hub_internet_egress.virtual_subnets["AzureFirewallManagementSubnet"].resource.id : var.azurefirewallmanagement_subnet_id 
     public_ip_address_id = module.public_ip_firewall2.public_ip_id 
   }
 

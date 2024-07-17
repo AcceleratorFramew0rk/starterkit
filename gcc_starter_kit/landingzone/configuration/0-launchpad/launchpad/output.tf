@@ -14,37 +14,37 @@ output "gcci_agency_law" {
 }
 
 output "hub_internet_ingress" {
-  value = azurerm_virtual_network.gcci_vnet_ingress_internet
+  value = try(azurerm_virtual_network.gcci_vnet_ingress_internet, null) 
   description = "The virtual network gcci_vnet_ingress_internet for gcci platform"
 }
 
 output "hub_internet_egress" {
-  value = azurerm_virtual_network.gcci_vnet_egress_internet
+  value = try(azurerm_virtual_network.gcci_vnet_egress_internet, null) 
   description = "The virtual network gcci_vnet_ingress_internet for gcci platform"
 }
 
 output "hub_intranet_ingress" {
-  value = azurerm_virtual_network.gcci_vnet_ingress_intranet
+  value = try(azurerm_virtual_network.gcci_vnet_ingress_intranet, null) 
   description = "The virtual network gcci_vnet_ingress_internet for gcci platform"
 }
 
 output "hub_intranet_egress" {
-  value = azurerm_virtual_network.gcci_vnet_egress_intranet
+  value = try(azurerm_virtual_network.gcci_vnet_egress_intranet, null) 
   description = "The virtual network gcci_vnet_ingress_internet for gcci platform"
 }
 
 output "spoke_project" {
-  value = azurerm_virtual_network.gcci_vnet_project
+  value = try(azurerm_virtual_network.gcci_vnet_project, null) 
   description = "The virtual network gcci_vnet_ingress_internet for gcci platform"
 }
 
 output "spoke_management" {
-  value = azurerm_virtual_network.gcci_vnet_management
+  value = try(azurerm_virtual_network.gcci_vnet_management, null) 
   description = "The virtual network gcci_vnet_ingress_internet for gcci platform"
 }
 
 output "spoke_devops" {
-  value = azurerm_virtual_network.gcci_vnet_devops
+  value = try(azurerm_virtual_network.gcci_vnet_devops, null) 
   description = "The virtual network gcci_vnet_ingress_internet for gcci platform"
 }
 

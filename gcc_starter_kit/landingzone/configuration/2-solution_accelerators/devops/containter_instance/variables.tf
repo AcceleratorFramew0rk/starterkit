@@ -33,3 +33,18 @@ variable "environment" {
   type        = string  
   default = "sandpit"
 }
+
+variable "image" {
+  type        = string  
+  default = "nginx:latest"
+}
+
+variable "cpu" {
+  type        = string  
+  default = "1"
+}
+
+variable "memory" {
+  type        = string  
+  default = "2"
+}

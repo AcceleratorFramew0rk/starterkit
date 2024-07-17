@@ -36,7 +36,7 @@ locals {
       name                  = substr("worker${i}${random_id.prefix.hex}", 0, 8)
       vm_size               = "Standard_F8s_v2"  # "Standard_D2s_v3"
       node_count            = 1
-      vnet_subnet_id        = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id : var.usernode_subnet_id
+      vnet_subnet_id        = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["UserNodePoolSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["UserNodePoolSubnet"].resource.id : var.usernode_subnet_id
       create_before_destroy = i % 2 == 0
     }
   }
@@ -151,12 +151,12 @@ module "aks_cluster" {
   # rbac_aad            = false
   # network_contributor_role_assigned_subnet_ids = {
   #   # vnet_subnet = azurerm_subnet.subnet.id
-  #   vnet_subnet = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["SystemNodePoolSubnet"].id  # azurerm_subnet.test.id
-  #   # vnet_subnet1 = = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id  # azurerm_subnet.test.id
+  #   vnet_subnet = local.remote.networking.virtual_networks.spoke_project.virtual_subnets["SystemNodePoolSubnet"].resource.id  # azurerm_subnet.test.id
+  #   # vnet_subnet1 = = local.remote.networking.virtual_networks.spoke_project.virtual_subnets["UserNodePoolSubnet"].resource.id  # azurerm_subnet.test.id
   # }
 
   sku_tier                          = "Standard" # Free, Standard or Premium
-  vnet_subnet_id                    = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["SystemNodePoolSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["SystemNodePoolSubnet"].id : var.systemnode_subnet_id
+  vnet_subnet_id                    = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["SystemNodePoolSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["SystemNodePoolSubnet"].resource.id : var.systemnode_subnet_id
 
   agents_labels = {
     "node1" : "label1"

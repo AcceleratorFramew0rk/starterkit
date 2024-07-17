@@ -2,13 +2,13 @@ module "container_group1" {
   # source  = "./../../../../../../modules/terraform-azurerm-aaf/modules/compute/terraform-azurerm-containergroup"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/compute/terraform-azurerm-containergroup"  
 
-  name                = "${module.naming.container_group.name}${random_string.this.result}"
+  name                = "${module.naming.container_group.name}-${random_string.this.result}"
   resource_group_name = azurerm_resource_group.this.name 
   location            = azurerm_resource_group.this.location 
   ip_address_type     = "Private" # "Public"
   os_type             = "Linux"
   dns_name_label      = null #  this one needs to be unique
-  subnet_ids          = [try(local.remote.networking.virtual_networks.spoke_devops.virtual_subnets.subnets["RunnerSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_devops.virtual_subnets.subnets["RunnerSubnet"].id : var.subnet_id]
+  subnet_ids          = [try(local.remote.networking.virtual_networks.spoke_devops.virtual_subnets["RunnerSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_devops.virtual_subnets["RunnerSubnet"].resource.id : var.subnet_id]
   restart_policy     = "OnFailure" // Possible values are 'Always'(default) 'Never' 'OnFailure'
 
   identity = {
@@ -16,10 +16,10 @@ module "container_group1" {
   } 
 
   containers = {
-    nginx = { # container.key
-      image  = "nginx:latest"
-      cpu    = 1
-      memory = 2
+    container1 = { # container.key
+      image  = try(var.image, null) == null ? "nginx:latest" : var.image  
+      cpu    = try(var.cpu, 1)
+      memory = try(var.memory, 2)
       ports = {
         port80 = {
           port     = 80

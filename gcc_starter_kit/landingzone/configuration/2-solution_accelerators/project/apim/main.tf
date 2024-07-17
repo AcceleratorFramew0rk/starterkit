@@ -24,7 +24,7 @@ module "apim" {
 
   virtual_network_type = "Internal"
   virtual_network_configuration = {
-    subnet_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ApiSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ApiSubnet"].id : var.subnet_id 
+    subnet_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ApiSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ApiSubnet"].resource.id : var.subnet_id 
   }
 
   tags                = merge(

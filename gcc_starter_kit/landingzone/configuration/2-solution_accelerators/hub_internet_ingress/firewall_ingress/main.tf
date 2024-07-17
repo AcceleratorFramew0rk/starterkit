@@ -23,8 +23,8 @@ module "firewall" {
   firewall_ip_configuration = [
     {
       name                 = "ipconfig1"
-      # subnet_id            = local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets.subnets["AzureFirewallSubnet"].id # module.virtualnetwork_ingress_ingress.subnets["AzureFirewallSubnet"].id  # azurerm_subnet.subnet.id
-      subnet_id            = try(local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets.subnets["AzureFirewallSubnet"].id, null) != null ? local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets.subnets["AzureFirewallSubnet"].id : var.subnet_id 
+      # subnet_id            = local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets["AzureFirewallSubnet"].resource.id # module.virtualnetwork_ingress_ingress.subnets["AzureFirewallSubnet"].resource.id  # azurerm_subnet.subnet.id
+      subnet_id            = try(local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets["AzureFirewallSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets["AzureFirewallSubnet"].resource.id : var.subnet_id 
       public_ip_address_id = module.public_ip_firewall1.public_ip_id # azurerm_public_ip.public_ip.id
     }
   ]

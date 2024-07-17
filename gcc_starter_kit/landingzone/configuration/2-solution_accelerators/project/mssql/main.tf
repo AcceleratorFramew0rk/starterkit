@@ -63,7 +63,7 @@ locals {
     database1 = {
       create_mode     = "Default"
       collation       = "SQL_Latin1_General_CP1_CI_AS"
-      elastic_pool_id = module.sql_server.resource_elasticpools["elasticpool1"].id
+      elastic_pool_id = module.sql_server.resource_elasticpools["elasticpool1"].resource.id
       license_type    = "LicenseIncluded"
       max_size_gb     = 50
       sku_name        = "ElasticPool"
@@ -82,7 +82,7 @@ module "sql_server" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/databases/terraform-azurerm-avm-res-sql-server"  
   
   enable_telemetry             = var.enable_telemetry
-  name                         = "${module.naming.mssql_server.name}${random_string.this.result}" 
+  name                         = "${module.naming.mssql_server.name}-${random_string.this.result}" 
   resource_group_name          = azurerm_resource_group.this.name
   location                     = azurerm_resource_group.this.location
   administrator_login          = "sqladminuser"
@@ -94,7 +94,7 @@ module "sql_server" {
   private_endpoints = {
     primary = {
       private_dns_zone_resource_ids = [module.private_dns_zones.resource.id] 
-      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["DbSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["DbSubnet"].id : var.subnet_id  
+      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["DbSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["DbSubnet"].resource.id : var.subnet_id  
     }
   }
 

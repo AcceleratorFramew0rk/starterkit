@@ -194,8 +194,8 @@ echo "--------------------------------------------------------------------------
 # Update this path based on your environment (Git Bash/Cygwin or WSL)
 # DIRECTORY_PATH="/tf/avm/gcc_starter_kit/landingzone"      
 DIRECTORY_PATH="./../../../configuration"               
-configure_project_files "{{resource_group_name}}" "$RG_NAME"
-configure_project_files "{{storage_account_name}}" "$STG_NAME"
+configure_project_files "aoaiuat-rg-launchpad" "$RG_NAME"
+configure_project_files "aoaiuatstgtfstateahd" "$STG_NAME"
 configure_project_files "{{prefix}}" "$PROJECT_CODE"
 
 # find . -name '*.tf' -exec sed -i -e "s/{{prefix}}/$CONFIG_prefix/g" {} \;
@@ -205,8 +205,8 @@ echo "Start terraform import commands"
 timestamp
 echo "-----------------------------------------------------------------------------"  
 
-#      resource_group_name  = "{{resource_group_name}}" # DO NOT CHANGE - codegen 
-#      storage_account_name = "{{storage_account_name}}" # DO NOT CHANGE - codegen       
+#      resource_group_name  = "aoaiuat-rg-launchpad" # DO NOT CHANGE - codegen 
+#      storage_account_name = "aoaiuatstgtfstateahd" # DO NOT CHANGE - codegen       
 #      container_name       = "0-launchpad"
 #      key                  = "gcci-platform.tfstate"
 

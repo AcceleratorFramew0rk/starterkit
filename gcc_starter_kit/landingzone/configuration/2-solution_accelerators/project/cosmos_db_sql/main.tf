@@ -44,18 +44,28 @@ module "cosmos_db" {
   
   resource_group_name = azurerm_resource_group.this.name
   location            = azurerm_resource_group.this.location
-  cosmos_account_name = "${module.naming.cosmosdb_account.name}${random_string.this.result}" 
+  cosmos_account_name = "${module.naming.cosmosdb_account.name}-${random_string.this.result}" 
   cosmos_api          = var.cosmos_api
   sql_dbs             = var.sql_dbs
   sql_db_containers   = var.sql_db_containers
+
+  # ensure location is south east asia
+  geo_locations ={
+    geo_location1 = {
+      geo_location          = azurerm_resource_group.this.location
+      failover_priority = 0
+      zone_redundant = false
+    }
+  }
+
   private_endpoint = {
     "pe_endpoint" = {
       dns_zone_group_name             = var.dns_zone_group_name
       dns_zone_rg_name                = azurerm_resource_group.this.name 
       enable_private_dns_entry        = true
       is_manual_connection            = false
-      name                            = var.pe_name
-      private_service_connection_name = var.pe_connection_name
+      name                            = "${module.naming.cosmosdb_account.name}-${random_string.this.result}-privateendpoint" # var.pe_name
+      private_service_connection_name = "${module.naming.cosmosdb_account.name}-${random_string.this.result}-serviceconnection" # var.pe_connection_name
       subnet_name                     = "CosmosDbSubnet" 
       vnet_name                       = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.name, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.name : var.vnet_name  
       vnet_rg_name                    = try(local.remote.resource_group.name, null) != null ? local.remote.resource_group.name : var.vnet_resource_group_name  

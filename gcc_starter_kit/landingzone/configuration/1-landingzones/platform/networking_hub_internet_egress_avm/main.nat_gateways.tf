@@ -1,7 +1,7 @@
 module "natgateway" {
   source  = "Azure/avm-res-network-natgateway/azurerm"
 
-  name                = "${module.naming.nat_gateway.name}-${random_string.this.result}-aks" # module.naming.nat_gateway.name_unique
+  name                = "${module.naming.nat_gateway.name}-${random_string.this.result}" # module.naming.nat_gateway.name_unique
   enable_telemetry    = true
   location            = azurerm_resource_group.this.location
   resource_group_name = azurerm_resource_group.this.name
@@ -13,8 +13,7 @@ module "subnet_nat_gateway_association" {
 
   nat_gateway_id                = module.natgateway.resource.id
   subnet_ids          = {
-      subnet_id1 = module.virtual_subnet1.subnets["SystemNodePoolSubnet"].id
-      subnet_id2 = module.virtual_subnet1.subnets["UserNodePoolSubnet"].id
+      subnet_id1 = module.virtual_subnet1.subnets["AzureFirewallSubnet"].id
     }  
 }
 

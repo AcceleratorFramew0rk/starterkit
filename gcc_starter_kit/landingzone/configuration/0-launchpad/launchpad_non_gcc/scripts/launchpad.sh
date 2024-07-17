@@ -63,7 +63,13 @@ echo $STG_NAME
 
 find . -name '*.md' -exec sed -i -e "s/{{resource_group_name}}/$RG_NAME/g" {} \;
 find . -name '*.md' -exec sed -i -e "s/{{storage_account_name}}/$STG_NAME/g" {} \;
-find . -name 'deploy*.sh' -exec sed -i -e "s/{{resource_group_name}}/$RG_NAME/g" {} \;
-find . -name 'deploy*.sh' -exec sed -i -e "s/{{storage_account_name}}/$STG_NAME/g" {} \;
+
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones
+find . -name '*.sh' -exec sed -i -e "s/{{resource_group_name}}/$RG_NAME/g" {} \;
+find . -name '*.sh' -exec sed -i -e "s/{{storage_account_name}}/$STG_NAME/g" {} \;
+
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
+find . -name '*.sh' -exec sed -i -e "s/{{resource_group_name}}/$RG_NAME/g" {} \;
+find . -name '*.sh' -exec sed -i -e "s/{{storage_account_name}}/$STG_NAME/g" {} \;
 
 

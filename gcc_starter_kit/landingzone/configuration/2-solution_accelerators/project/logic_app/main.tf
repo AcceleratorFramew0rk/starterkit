@@ -47,7 +47,7 @@ module "private_endpoint" {
   name                           = "${module.logicapp.resource.name}PrivateEndpoint"
   location                       = azurerm_resource_group.this.location
   resource_group_name            = azurerm_resource_group.this.name
-  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceSubnet"].id : var.service_subnet_id 
+  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id : var.service_subnet_id 
   tags                           = {
       environment = "dev"
     }
@@ -78,7 +78,7 @@ module "logicapp" {
   app_service_plan_id = azurerm_app_service_plan.this.id
 
   # Required for virtual network integration
-  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["LogicAppSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["LogicAppSubnet"].id : var.subnet_id 
+  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["LogicAppSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["LogicAppSubnet"].resource.id : var.subnet_id 
 
   identity = {
     type = "UserAssigned" # "SystemAssigned, UserAssigned"

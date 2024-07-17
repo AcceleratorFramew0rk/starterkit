@@ -18,3 +18,8 @@ cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
 
 # application app service architype - app service + sql server, keyvaule, storage account
 ./deploy_pattern_appservice_architype.sh
+
+# OR 
+
+# application app service logic app architype - app service + logic app + cosmosdb, keyvaule, storage account
+./deploy_pattern_appservice_logicapp_architype.sh

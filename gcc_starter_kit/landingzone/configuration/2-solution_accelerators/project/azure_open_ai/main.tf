@@ -68,7 +68,7 @@ module "azureopenai" {
       name                            = "pe_endpoint"
       private_dns_zone_resource_ids   = [module.private_dns_zones.resource.id]  
       private_service_connection_name = "pe_endpoint_connection"
-      subnet_resource_id              = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["AiSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["AiSubnet"].id : var.subnet_id  
+      subnet_resource_id              = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AiSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AiSubnet"].resource.id : var.subnet_id  
     }
   }
 

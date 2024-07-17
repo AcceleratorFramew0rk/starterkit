@@ -40,7 +40,7 @@ module "aks_cluster" {
   enable_telemetry    = var.enable_telemetry # see variables.tf
   name                = module.naming.kubernetes_cluster.name_unique
   resource_group_name = azurerm_resource_group.this.name
-  vnet_subnet_id      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["SystemNodePoolSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["SystemNodePoolSubnet"].id : var.systemnode_subnet_id
+  vnet_subnet_id      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["SystemNodePoolSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["SystemNodePoolSubnet"].resource.id : var.systemnode_subnet_id
   node_resource_group = "${lower(module.naming.resource_group.name)}-solution-accelerators-aks-nodes" # node_resource_group                 = var.node_resource_group
   pod_cidr            = "172.31.0.0/18"
   dns_service_ip      = "172.16.0.10" # "10.0.0.10"
@@ -63,7 +63,7 @@ module "aks_cluster" {
       min_count            = 2
       os_sku               = "Ubuntu"
       mode                 = "User"
-      vnet_subnet_id       = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id : var.usernode_subnet_id
+      vnet_subnet_id       = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["UserNodePoolSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["UserNodePoolSubnet"].resource.id : var.usernode_subnet_id
     },
     # # optional: windows node pool - uncomment if your user worker node is using os_sku = windows
     #
@@ -83,7 +83,7 @@ module "aks_cluster" {
     #   min_count            = 2
     #   os_sku               = "Windows2022" # expected os_sku to be one of ["AzureLinux" "CBLMariner" "Mariner" "Ubuntu" "Windows2019" "Windows2022"]
     #   mode                 = "User"
-    #   vnet_subnet_id       = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolWindowsSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolWindowsSubnet"].id : var.usernodewindows_subnet_id
+    #   vnet_subnet_id       = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["UserNodePoolWindowsSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["UserNodePoolWindowsSubnet"].resource.id : var.usernodewindows_subnet_id
     # },    
     ingress = {
       name                 = "ingress"
@@ -93,7 +93,7 @@ module "aks_cluster" {
       min_count            = 2
       os_sku               = "Ubuntu"
       mode                 = "User"
-      vnet_subnet_id       = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["UserNodePoolSubnet"].id : var.usernode_subnet_id
+      vnet_subnet_id       = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["UserNodePoolSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["UserNodePoolSubnet"].resource.id : var.usernode_subnet_id
     }
   }
 

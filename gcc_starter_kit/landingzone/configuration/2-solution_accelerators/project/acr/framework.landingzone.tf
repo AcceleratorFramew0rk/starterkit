@@ -4,9 +4,9 @@
 # Example usage
 # vnet_id = local.remote.networking.virtual_networks.spoke_project.virtual_network.id  
 # vnet_name = local.remote.networking.virtual_networks.spoke_project.virtual_network.name  
-# subnet_id = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceSubnet"].id 
-# subnet_id = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["WebSubnet"].id 
-# subnet_id = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["AppSubnet"].id 
+# subnet_id = local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id 
+# subnet_id = local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id 
+# subnet_id = local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AppSubnet"].resource.id 
 # log_analytics_workspace_id = local.remote.log_analytics_workspace.id 
 # resource_group_name = local.remote.resource_group.name  
 #-------------------------------------------------------------------------------

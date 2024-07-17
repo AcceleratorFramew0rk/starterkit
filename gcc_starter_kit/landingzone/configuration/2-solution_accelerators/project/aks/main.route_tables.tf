@@ -15,7 +15,7 @@
 
 # # TODO: add subnets azurerm_subnet_route_table_association
 # resource "azurerm_subnet_route_table_association" "hub_gateway" {
-#   subnet_id      = local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["SystemNodePoolSubnet"].id 
+#   subnet_id      = local.remote.networking.virtual_networks.spoke_project.virtual_subnets["SystemNodePoolSubnet"].resource.id 
 #   route_table_id = azurerm_route_table.this.id
 
 #   depends_on = ["azurerm_route_table.this"]

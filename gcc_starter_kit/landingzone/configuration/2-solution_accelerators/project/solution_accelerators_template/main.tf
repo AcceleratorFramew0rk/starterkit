@@ -65,7 +65,7 @@ module "private_endpoint" {
   name                           = "${module.container_registry.name}PrivateEndpoint"
   location                       = azurerm_resource_group.this.location
   resource_group_name            = azurerm_resource_group.this.name
-  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceSubnet"].id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets.subnets["ServiceSubnet"].id : var.subnet_id 
+  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id : var.subnet_id 
   tags                           = merge(
     local.global_settings.tags,
     {
