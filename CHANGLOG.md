@@ -12,6 +12,7 @@
 
 ## BUG FIXES:
 * fixed cosmos db mongo deploy error
+* fixed cosmos db sql deploy error
 
 # 0.0.5 (10 Jul 2024)
 ## COMPATIBLE WITH:
