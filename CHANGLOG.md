@@ -1,4 +1,19 @@
-# 0.0.6 (TBD)
+# 0.0.7 (TBD)
+## COMPATIBLE WITH:
+* aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
+* azurerm: version 3.85
+* aaf: 0.0.5
+
+## FEATURES:
+* 
+
+## ENHANCEMENTS:
+* 
+
+## BUG FIXES:
+* fixed issue of sed unable to flush to disk fast enough when executing in script file
+  
+# 0.0.6 (17 Jul 2024)
 ## COMPATIBLE WITH:
 * aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
 * azurerm: version 3.85
