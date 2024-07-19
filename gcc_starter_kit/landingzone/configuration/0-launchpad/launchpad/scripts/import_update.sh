@@ -101,7 +101,7 @@ else
     # end rename gcc_starter_kit to folder name
 
     # goto nsg configuration folder
-    cd /tf/avm/${replace}/landingzone/configuration/1-landingzones/yaml_nsg_config
+    cd /tf/avm/${replace}/landingzone/configuration/1-landingzones/scripts
 
     # create nsg yaml file from nsg csv files
     python3 csv_to_yaml.py 

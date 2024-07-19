@@ -1,0 +1,8 @@
+Priority,Name,Port,Protocol,Source,Destination,DestinationPort,Action,Direction
+100,AllowInboundCosmosDbManagement,*,Tcp,{{management_infrasubnet_address_prefixes}},{{project_cosmosdbsubnet_address_prefixes}},10255,Allow,Inbound
+110,AllowCosmosDbManagement,*,Tcp,{{management_infrasubnet_address_prefixes}},{{project_cosmosdbsubnet_address_prefixes}},10255,Allow,Inbound
+120,AllowCosmosDbApp,*,Tcp,VirtualNetwork,{{project_cosmosdbsubnet_address_prefixes}},10255,Allow,Inbound
+130,AllowCosmosDbDevOpsRunner,*,Tcp,{{devops_runnersubnet_address_prefixes}},{{project_cosmosdbsubnet_address_prefixes}},10255,Allow,Inbound
+140,AllowCosmosDbVirtualNetwork,*,Tcp,VirtualNetwork,VirtualNetwork,10255,Allow,Inbound
+4060,CustomDenyAllInbound,*,Tcp,*,*,*,Deny,Inbound
+4060,CustomDenyAllOutbound,*,Tcp,*,*,*,Deny,Outbound

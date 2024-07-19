@@ -1,22 +1,16 @@
-module "nsg1" {
+module "network_security_groups" {
   source  = "Azure/avm-res-network-networksecuritygroup/azurerm"
   version = "0.2.0"
 
+  # for_each = try(local.config, null) == null ? null : local.config
+  # for_each = local.network_security_groups
+  for_each = try(var.subnets.devops, null) == null ? local.global_settings.subnets.devops : var.subnets.devops
+
   enable_telemetry    = var.enable_telemetry
   resource_group_name = azurerm_resource_group.this.name
-  name                = "${module.naming.network_security_group.name}-runner" # between 3 and 24 characters
+  name                = lower("${module.naming.network_security_group.name}-${each.value.name}") # between 3 and 24 characters
   location            = azurerm_resource_group.this.location
-  security_rules            = local.config.nsg_devops_runner  
+  security_rules      = try(local.config[each.value.name], null)  
+
 }
 
-resource "azurerm_subnet_network_security_group_association" "nsgassociation1" {
-  count = lookup(module.virtual_subnet1.subnets, "RunnerSubnet", null) == null ? 0 : 1
-
-  subnet_id                 = module.virtual_subnet1.subnets["RunnerSubnet"].id
-  network_security_group_id = module.nsg1.resource.id
-
-  depends_on = [
-    module.virtual_subnet1,
-    module.nsg1
-  ]
-}

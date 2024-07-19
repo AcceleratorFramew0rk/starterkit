@@ -8,17 +8,22 @@ cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad_non_g
 # define your prefix or project code
 PREFIX=aoaiuat
 
+# create launchpad storage account
 ./scripts/launchpad.sh $PREFIX
 
+# replace the storage account and resource group name
+./scripts/replace.sh $PREFIX
+
+# generate the nsg configuration
 ./scripts/nsg.sh
 
 # create virtual networks for non gcc environment
-
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad_non_gcc
-
 # ** IMPORTANT: if required, modify config.yaml file to determine the vnets name and cidr ranage you want to deploy. 
 
 
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad_non_gcc
+
+# get storage account and resource group name
 RG_NAME=${PREFIX}-rg-launchpad
 STORAGE_ACCOUNT_NAME_PREFIX="${PROJECT_CODE}stgtfstate"
 STORAGE_ACCOUNT_INFO=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '$STORAGE_ACCOUNT_NAME_PREFIX')]" 2> /dev/null)
@@ -26,6 +31,8 @@ STG_NAME=$(echo "$STORAGE_ACCOUNT_INFO" | jq ".[0].name" -r)
 
 echo $RG_NAME
 echo $STG_NAME
+
+# deploy virtual networks
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name=$RG_NAME" \

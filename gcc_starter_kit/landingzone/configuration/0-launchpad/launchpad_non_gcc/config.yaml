@@ -107,7 +107,24 @@ subnets:
             actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
             }
         }
-      ]                          
+      ] 
+  # IMPORTANT ** comment off the below any devops subnets if it is not used          
+  devops:
+    RunnerSubnet:    
+      name: "RunnerSubnet"
+      address_prefixes: ["100.127.4.0/25"]
+      delegations: [
+        {
+          name: "runner",
+          service_delegation: {
+            name: "Microsoft.ContainerInstance/containerGroups", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ]
+    # VpnSubnet:    
+    #   name: "VpnSubnet"
+    #   address_prefixes: ["100.127.4.128/25"]                             
 # ** IMPORTANT - DO NOT CHANGE BELOW
   hub_internet_ingress: 
     AzureFirewallSubnet: 
@@ -137,22 +154,6 @@ subnets:
     AzureFirewallManagementSubnet:   
       name: 
       address_prefixes: 
-  devops:
-    RunnerSubnet:    
-      name: "RunnerSubnet"
-      address_prefixes: ["100.127.4.0/25"]
-      delegations: [
-        {
-          name: "runner",
-          service_delegation: {
-            name: "Microsoft.ContainerInstance/containerGroups", 
-            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
-            }
-        }
-      ]
-    VpnSubnet:    
-      name: "VpnSubnet"
-      address_prefixes: ["100.127.4.128/25"]  
   management:
     InfraSubnet:     
       name: 

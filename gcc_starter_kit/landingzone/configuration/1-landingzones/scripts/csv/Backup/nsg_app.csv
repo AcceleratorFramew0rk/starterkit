@@ -1,0 +1,12 @@
+Priority,Name,Port,Protocol,Source,Destination,DestinationPort,Action,Direction
+100,AllowInboundSSHManagement,*,Tcp,{{management_infrasubnet_address_prefixes}},{{project_appsubnet_address_prefixes}},22,Allow,Inbound
+110,AllowHTTPSManagement,*,Tcp,{{management_infrasubnet_address_prefixes}},{{project_appsubnet_address_prefixes}},443,Allow,Inbound
+120,AllowHTTPSVirtualNetwork,*,Tcp,VirtualNetwork,{{project_appsubnet_address_prefixes}},443,Allow,Inbound
+130,AllowHTTPSDevOpsRunner,*,Tcp,{{devops_runnersubnet_address_prefixes}},{{project_appsubnet_address_prefixes}},443,Allow,Inbound
+140,AllowHTTPSInternetAgw,*,Tcp,{{hub_internet_ingress_agwsubnet_address_prefixes}},{{project_appsubnet_address_prefixes}},443,Allow,Inbound
+150,AllowHTTPSIntranetAgw,*,Tcp,{{hub_intranet_ingress_agwsubnet_address_prefixes}},{{project_appsubnet_address_prefixes}},443,Allow,Inbound
+160,AllowHTTPInternetAgw,*,Tcp,{{hub_internet_ingress_agwsubnet_address_prefixes}},{{project_appsubnet_address_prefixes}},80,Allow,Inbound
+170,AllowHTTPIntranetAgw,*,Tcp,{{hub_intranet_ingress_agwsubnet_address_prefixes}},{{project_appsubnet_address_prefixes}},80,Allow,Inbound
+4060,CustomDenyAllInbound,*,Tcp,*,*,*,Deny,Inbound
+100,AllowHTTPSVirtualNetwork,*,Tcp,VirtualNetwork,VirtualNetwork,443,Allow,Outbound
+4060,CustomDenyAllOutbound,*,Tcp,*,*,*,Deny,Outbound

@@ -1,0 +1,19 @@
+Priority,Name,Port,Protocol,Source,Destination,DestinationPort,Action,Direction
+100,AllowInboundSSHManagement,*,Tcp,{{management_infrasubnet_address_prefixes}},{{hub_internet_ingress_agwsubnet_address_prefixes}},22,Allow,Inbound
+110,AllowHTTPSManagement,*,Tcp,{{management_infrasubnet_address_prefixes}},{{hub_internet_ingress_agwsubnet_address_prefixes}},443,Allow,Inbound
+120,AllowHTTPSInternetAgw,*,Tcp,{{project_appsubnet_address_prefixes}},{{hub_internet_ingress_agwsubnet_address_prefixes}},443,Allow,Inbound
+130,AllowHTTPSVirtualNetwork,*,Tcp,VirtualNetwork,{{hub_internet_ingress_agwsubnet_address_prefixes}},443,Allow,Inbound
+140,AllowHTTPSDevOpsRunner,*,Tcp,{{devops_runnersubnet_address_prefixes}},{{hub_internet_ingress_agwsubnet_address_prefixes}},443,Allow,Inbound
+150,Allow65200GatewayManager,*,Tcp,GatewayManager,*,65200 - 65535,Allow,Inbound
+160,AllowHTTPSAzureLoadBalancer,*,Tcp,AzureLoadBalancer,VirtualNetwork,443,Allow,Inbound
+4060,CustomDenyAllInbound,*,Tcp,*,*,*,Deny,Inbound
+100,AllowHTTPSVirtualNetwork,*,Tcp,VirtualNetwork,VirtualNetwork,443,Allow,Outbound
+4060,CustomDenyAllOutbound,*,Tcp,*,*,*,Deny,Outbound
+110,AllowHTTPSAzureMonitor,*,Tcp,{{hub_internet_ingress_agwsubnet_address_prefixes}},AzureMonitor,443,Allow,Outbound
+120,AllowHTTPSEventHub,*,Tcp,{{hub_internet_ingress_agwsubnet_address_prefixes}},EventHub,443,Allow,Outbound
+130,AllowHTTPSAzureActiveDirectory,*,Tcp,{{hub_internet_ingress_agwsubnet_address_prefixes}},AzureActiveDirectory,443,Allow,Outbound
+140,AllowHTTPSStorage,*,Tcp,{{hub_internet_ingress_agwsubnet_address_prefixes}},Storage,443,Allow,Outbound
+150,AllowHTTPSAzureKeyVault,*,Tcp,{{hub_internet_ingress_agwsubnet_address_prefixes}},AzureKeyVault.SouthEastAsia,443,Allow,Outbound
+160,AllowHTTPSMicrosoftCloudAppSecurity,*,Tcp,{{hub_internet_ingress_agwsubnet_address_prefixes}},MicrosoftCloudAppSecurity,443,Allow,Outbound
+170,AllowHTTPSProjectAppSubnet,*,Tcp,{{hub_internet_ingress_agwsubnet_address_prefixes}},{{project_appsubnet_address_prefixes}},443,Allow,Outbound
+180,AllowHTTPSProjectWebSubnet,*,Tcp,{{hub_internet_ingress_agwsubnet_address_prefixes}},{{project_websubnet_address_prefixes}},443,Allow,Outbound

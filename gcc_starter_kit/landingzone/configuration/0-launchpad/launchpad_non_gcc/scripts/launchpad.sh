@@ -55,21 +55,5 @@ az storage container create --account-name $STG_NAME --name $CONTAINER1 --public
 az storage container create --account-name $STG_NAME --name $CONTAINER2 --public-access blob --fail-on-exist
 az storage container create --account-name $STG_NAME --name $CONTAINER3 --public-access blob --fail-on-exist
 
-# replace {{resource_group_name}} and {{storage_account_name}} in all .md files
-cd ./../../../configuration
-pwd
-echo $RG_NAME
-echo $STG_NAME
-
-find . -name '*.md' -exec sed -i -e "s/{{resource_group_name}}/$RG_NAME/g" {} \;
-find . -name '*.md' -exec sed -i -e "s/{{storage_account_name}}/$STG_NAME/g" {} \;
-
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones
-find . -name '*.sh' -exec sed -i -e "s/{{resource_group_name}}/$RG_NAME/g" {} \;
-find . -name '*.sh' -exec sed -i -e "s/{{storage_account_name}}/$STG_NAME/g" {} \;
-
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
-find . -name '*.sh' -exec sed -i -e "s/{{resource_group_name}}/$RG_NAME/g" {} \;
-find . -name '*.sh' -exec sed -i -e "s/{{storage_account_name}}/$STG_NAME/g" {} \;
 
 
