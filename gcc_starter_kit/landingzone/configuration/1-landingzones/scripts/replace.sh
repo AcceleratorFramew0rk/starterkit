@@ -79,6 +79,9 @@ configure_nsg "{{project_aisubnet_address_prefixes}}" "${CONFIG_subnets_project_
 configure_nsg "{{project_logicappsubnet_address_prefixes}}" "${CONFIG_subnets_project_LogicAppSubnet_address_prefixes//[\[\]]/}"
 configure_nsg "{{project_cisubnet_address_prefixes}}" "${CONFIG_subnets_project_CiSubnet_address_prefixes//[\[\]]/}"
 configure_nsg "{{project_servicebussubnet_address_prefixes}}" "${CONFIG_subnets_project_ServiceBusSubnet_address_prefixes//[\[\]]/}"
+configure_nsg "{{project_cosmosdbsubnet_address_prefixes}}" "${CONFIG_subnets_project_CosmosDbSubnet_address_prefixes//[\[\]]/}"
+configure_nsg "{{project_logicappsubnet_address_prefixes}}" "${CONFIG_subnets_project_LogicAppSubnet_address_prefixes//[\[\]]/}"
+configure_nsg "{{project_appservicesubnet_address_prefixes}}" "${CONFIG_subnets_project_AppServiceSubnet_address_prefixes//[\[\]]/}"
 
 
 # management
