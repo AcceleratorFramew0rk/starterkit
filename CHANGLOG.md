@@ -1,3 +1,18 @@
+# 0.0.9 (TBD)
+## COMPATIBLE WITH:
+* aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
+* azurerm: version 3.85
+* aaf: 0.0.5
+
+## FEATURES:
+* 
+
+## ENHANCEMENTS:
+* 
+
+## BUG FIXES:
+* 
+  
 # 0.0.8 (22 Jul 2024)
 ## COMPATIBLE WITH:
 * aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
