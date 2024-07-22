@@ -11,7 +11,8 @@
 * standard a single config.yaml file to be inside scripts folder
 
 ## BUG FIXES:
-* 
+* fixed deployment of cosmos db mongo
+* fixed app service private endpoint for api
   
 # 0.0.7 (19 Jul 2024)
 ## COMPATIBLE WITH:
