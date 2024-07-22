@@ -59,14 +59,19 @@ subnets:
     #     }
     #   ]                  
     # ApiSubnet: # DO NOT CHANGE subnet name
+    #   name: "ApiSubnet"    
     #   address_prefixes: ["100.64.0.160/27"]
     # SystemNodePoolSubnet: # DO NOT CHANGE subnet name
+    #   name: "ApiSubnet"    
     #   address_prefixes: ["100.64.0.192/27"]
     # UserNodePoolSubnet: # DO NOT CHANGE subnet name
+    #   name: "ApiSubnet"    
     #   address_prefixes: ["100.64.0.224/27"]
     # UserNodePoolWindowsSubnet: # DO NOT CHANGE subnet name
+    #   name: "ApiSubnet"    
     #   address_prefixes: ["100.64.1.192/27"]      
     # AiSubnet: # DO NOT CHANGE subnet name
+    #   name: "ApiSubnet"    
     #   address_prefixes: ["100.64.1.0/27"]   
     LogicAppSubnet: # DO NOT CHANGE subnet name
       name: "LogicAppSubnet"
@@ -81,6 +86,7 @@ subnets:
         }
       ]  
     # CiSubnet: # DO NOT CHANGE subnet name 
+    #   name: "ApiSubnet"    
     #   address_prefixes: ["100.64.1.64/27"]   
     #   delegations: [
     #     {
@@ -92,6 +98,7 @@ subnets:
     #     }
     #   ]  
     # ServiceBusSubnet: # DO NOT CHANGE subnet name
+    #   name: "ApiSubnet"    
     #   address_prefixes: ["100.64.1.96/27"]         
     CosmosDbSubnet: # DO NOT CHANGE subnet name 
       name: "CosmosDbSubnet"
@@ -125,42 +132,41 @@ subnets:
     # VpnSubnet:    
     #   name: "VpnSubnet"
     #   address_prefixes: ["100.127.4.128/25"]                             
-# ** IMPORTANT - DO NOT CHANGE BELOW
   hub_internet_ingress: 
     AzureFirewallSubnet: 
-      name: 
-      address_prefixes: 
-    AgwSubnet: 
-      name: 
-      address_prefixes: 
-  hub_internet_egress:
-    AzureFirewallSubnet:  
-      name: 
-      address_prefixes: 
-    AzureFirewallManagementSubnet:  
-      name: 
-      address_prefixes: 
-  hub_intranet_ingress:
-    AzureFirewallSubnet:  
-      name: 
-      address_prefixes: 
+      name: "AzureFirewallSubnet"
+      address_prefixes: ["100.127.0.0/26"]
     AgwSubnet:  
-      name: 
-      address_prefixes: 
-  hub_intranet_egress:
+      name: "AgwSubnet"
+      address_prefixes: ["100.127.0.64/26"]  
+  hub_internet_egress:
     AzureFirewallSubnet:   
-      name: 
-      address_prefixes: 
+      name: "AzureFirewallSubnet"
+      address_prefixes: ["100.127.1.0/26"]
     AzureFirewallManagementSubnet:   
-      name: 
-      address_prefixes: 
+      name: "AzureFirewallManagementSubnet"
+      address_prefixes: ["100.127.1.64/26"]  
+  hub_intranet_ingress:
+    AzureFirewallSubnet:   
+      name: "AzureFirewallSubnet"
+      address_prefixes: ["10.20.0.0/26"]
+    AgwSubnet:   
+      name: "AgwSubnet"
+      address_prefixes: ["10.20.0.64/26"]
+  hub_intranet_egress:
+    AzureFirewallSubnet:    
+      name: "AzureFirewallSubnet"
+      address_prefixes: ["10.20.1.0/26"]
+    AzureFirewallManagementSubnet:   
+      name: "AzureFirewallManagementSubnet"
+      address_prefixes: ["10.20.1.64/26"]  
   management:
-    InfraSubnet:     
-      name: 
-      address_prefixes: 
-    SecuritySubnet:     
-      name: 
-      address_prefixes: 
-    AzureBastionSubnet:    
-      name:  
-      address_prefixes: 
+    InfraSubnet:      
+      name: "InfraSubnet"
+      address_prefixes: ["100.127.3.0/26"]
+    SecuritySubnet:      
+      name: "SecuritySubnet"
+      address_prefixes: ["100.127.3.64/26"]
+    AzureBastionSubnet:      
+      name: "AzureBastionSubnet"
+      address_prefixes: ["100.127.3.128/26"]  

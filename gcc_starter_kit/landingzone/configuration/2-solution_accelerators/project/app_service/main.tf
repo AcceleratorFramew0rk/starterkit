@@ -1,5 +1,5 @@
 resource "azurerm_app_service_plan" "this" {
-  name                         = module.naming.app_service_plan.name
+  name                         = "${module.naming.app_service_plan.name}-appservice" # module.naming.app_service_plan.name
   location                     = azurerm_resource_group.this.location
   resource_group_name          = azurerm_resource_group.this.name
   kind                         = "Linux"
@@ -34,24 +34,6 @@ module "private_dns_zones" {
         }
       }
     }
-}
-
-module "private_endpoint" {
-  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
-  source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
- 
-  name                           = "${module.appservice.resource.name}PrivateEndpoint"
-  location                       = azurerm_resource_group.this.location
-  resource_group_name            = azurerm_resource_group.this.name
-  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id : var.subnet_id 
-  tags                           = {
-      environment = "dev"
-    }
-  private_connection_resource_id = module.appservice.resource.id
-  is_manual_connection           = false
-  subresource_name               = "sites"
-  private_dns_zone_group_name    = "default" 
-  private_dns_zone_group_ids     = [module.private_dns_zones.resource.id] 
 }
 
 module "appservice" {
@@ -196,6 +178,25 @@ module "appservice" {
 
 }
 
+
+module "private_endpoint" {
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
+ 
+  name                           = "${module.appservice.resource.name}-web-privateendpoint"
+  location                       = azurerm_resource_group.this.location
+  resource_group_name            = azurerm_resource_group.this.name
+  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id : var.subnet_id 
+  tags                           = {
+      environment = "dev"
+    }
+  private_connection_resource_id = module.appservice.resource.id
+  is_manual_connection           = false
+  subresource_name               = "sites"
+  private_dns_zone_group_name    = "default" 
+  private_dns_zone_group_ids     = [module.private_dns_zones.resource.id] 
+}
+
 # Tested with :  AzureRM version 2.55.0
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
@@ -237,6 +238,37 @@ module "appservice1" {
     "LZ"      = "CAF"
   }
 
+  backup = {
+    name                = "api_backup"
+    enabled             = true
+    # storage_account_key = "sa_backup"
+    // container_key       = "backup"
+    # storage_account = module.storageaccount.resource # to derive storage_account_url from the storage account module
+    # storage_account_url = module.storageaccount.resource.primary_blob_endpoint # "https://cindstsabackup.blob.core.windows.net/webapp-backup?sv=2018-11-09&sr=c&st=2021-02-08T07%3A07%3A42Z&se=2021-03-10T07%3A07%3A42Z&sp=racwdl&spr=https&sig=5LX%2ByDoE4YQsf%2F0L5f42eML9mk%2Fu5ejjZYVIs81Keng%3D"
+
+    sas_policy = {
+      expire_in_days = 30
+      rotation = {
+        #
+        # Set how often the sas token must be rotated. When passed the renewal time, running the terraform plan / apply will change to a new sas token
+        # Only set one of the value
+        #
+
+        # mins = 1 # only recommended for CI and demo
+        days = 7
+        # months = 1
+      }
+    }
+
+    schedule = {
+      frequency_interval       = 1
+      frequency_unit           = "Day"
+      keep_at_least_one_backup = true
+      retention_period_in_days = 1
+      start_time               = "2023-11-08T00:00:00Z"
+    }
+  }
+
   tags        = merge(
     local.global_settings.tags,
     {
@@ -250,10 +282,28 @@ module "appservice1" {
 
 }
 
+module "private_endpoint1" {
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
+ 
+  name                           = "${module.appservice.resource.name}-api-privateendpoint"
+  location                       = azurerm_resource_group.this.location
+  resource_group_name            = azurerm_resource_group.this.name
+  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id : var.subnet_id 
+  tags                           = {
+      environment = "dev"
+    }
+  private_connection_resource_id = module.appservice1.resource.id
+  is_manual_connection           = false
+  subresource_name               = "sites"
+  private_dns_zone_group_name    = "default" 
+  private_dns_zone_group_ids     = [module.private_dns_zones.resource.id] 
+}
+
 # Tested with :  AzureRM version 2.55.0
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config1" {
-  app_service_id = module.appservice.resource.id
+  app_service_id = module.appservice1.resource.id
   subnet_id      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AppServiceSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AppServiceSubnet"].resource.id : var.subnet_id 
 }
 

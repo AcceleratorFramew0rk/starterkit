@@ -15,6 +15,6 @@ locals {
 
   config = (local.config_file_extension == local.const_yaml ?
     yamldecode(templatefile("./../../scripts/${local.config_file_name}", local.config_template_file_variables)) :
-    jsondecode(templatefile("./../../scripts//${local.config_file_name}", local.config_template_file_variables))
+    jsondecode(templatefile("./../../scripts/${local.config_file_name}", local.config_template_file_variables))
   )
 }

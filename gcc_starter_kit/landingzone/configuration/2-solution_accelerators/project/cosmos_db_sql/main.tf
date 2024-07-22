@@ -66,9 +66,12 @@ module "cosmos_db" {
       is_manual_connection            = false
       name                            = "${module.naming.cosmosdb_account.name}-${random_string.this.result}-privateendpoint" # var.pe_name
       private_service_connection_name = "${module.naming.cosmosdb_account.name}-${random_string.this.result}-serviceconnection" # var.pe_connection_name
-      subnet_name                     = "CosmosDbSubnet" 
-      vnet_name                       = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.name, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.name : var.vnet_name  
-      vnet_rg_name                    = try(local.remote.resource_group.name, null) != null ? local.remote.resource_group.name : var.vnet_resource_group_name  
+      subnet_id                       = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["CosmosDbSubnet"].resource.id, null)
+      location                        = azurerm_resource_group.this.location 
+      resource_group_name              = azurerm_resource_group.this.name 
+      subnet_name                     = null # "CosmosDbSubnet" 
+      vnet_name                       = null # try(local.remote.networking.virtual_networks.spoke_project.virtual_network.name, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.name : var.vnet_name  
+      vnet_rg_name                    = null # try(local.remote.resource_group.name, null) != null ? local.remote.resource_group.name : var.vnet_resource_group_name  
     }
   }
 

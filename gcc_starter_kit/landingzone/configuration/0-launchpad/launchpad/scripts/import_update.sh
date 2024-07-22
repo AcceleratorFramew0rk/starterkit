@@ -26,7 +26,8 @@ parse_yaml() {
 echo "working directory:"
 CWD=$(pwd)
 echo $CWD
-CONFIG_FILE_PATH="${CWD}/config.yaml"
+# CONFIG_FILE_PATH="${CWD}/../scripts/config.yaml"
+CONFIG_FILE_PATH="./../scripts/config.yaml"
 echo $CONFIG_FILE_PATH
 eval $(parse_yaml $CONFIG_FILE_PATH "CONFIG_")
 # Define your variables

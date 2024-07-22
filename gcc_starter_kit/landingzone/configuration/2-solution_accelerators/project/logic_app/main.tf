@@ -1,5 +1,5 @@
 resource "azurerm_app_service_plan" "this" {
-  name                         = module.naming.app_service_plan.name
+  name                         = "${module.naming.app_service_plan.name}-logicapp"
   location                     = azurerm_resource_group.this.location
   resource_group_name          = azurerm_resource_group.this.name
   kind                         = "elastic" # "Linux"
@@ -44,7 +44,7 @@ module "private_endpoint" {
   # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
  
-  name                           = "${module.logicapp.resource.name}PrivateEndpoint"
+  name                           = "${module.logicapp.resource.name}-privateendpoint"
   location                       = azurerm_resource_group.this.location
   resource_group_name            = azurerm_resource_group.this.name
   subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id : var.service_subnet_id 
