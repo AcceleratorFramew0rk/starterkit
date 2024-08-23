@@ -195,21 +195,14 @@ echo "--------------------------------------------------------------------------
 # Update this path based on your environment (Git Bash/Cygwin or WSL)
 # DIRECTORY_PATH="/tf/avm/gcc_starter_kit/landingzone"      
 DIRECTORY_PATH="./../../../configuration"               
-configure_project_files "aoaiuat-rg-launchpad" "$RG_NAME"
-configure_project_files "aoaiuatstgtfstateahd" "$STG_NAME"
+configure_project_files "{{resource_group_name}}" "$RG_NAME"
+configure_project_files "{{storage_account_name}}" "$STG_NAME"
 configure_project_files "{{prefix}}" "$PROJECT_CODE"
-
-# find . -name '*.tf' -exec sed -i -e "s/{{prefix}}/$CONFIG_prefix/g" {} \;
 
 echo "-----------------------------------------------------------------------------"  
 echo "Start terraform import commands"  
 timestamp
 echo "-----------------------------------------------------------------------------"  
-
-#      resource_group_name  = "aoaiuat-rg-launchpad" # DO NOT CHANGE - codegen 
-#      storage_account_name = "aoaiuatstgtfstateahd" # DO NOT CHANGE - codegen       
-#      container_name       = "0-launchpad"
-#      key                  = "gcci-platform.tfstate"
 
 MSYS_NO_PATHCONV=1 terraform init  -reconfigure \
 -backend-config="resource_group_name=$RG_NAME" \
@@ -228,16 +221,15 @@ MSYS_NO_PATHCONV=1 terraform init  -reconfigure \
 #   management: "gcci-vnet-management"   
 #   devops: "gcci-vnet-devops" 
 
-# CONFIG_vnets_ingress_internet
 
 echo "vnets:" 
-echo $CONFIG_vnets_hub_ingress_internet
-echo $CONFIG_vnets_hub_egress_internet
-echo $CONFIG_vnets_hub_ingress_intranet
-echo $CONFIG_vnets_hub_egress_intranet
-echo $CONFIG_vnets_project
-echo $CONFIG_vnets_management
-echo $CONFIG_vnets_devops
+echo $CONFIG_vnets_hub_ingress_internet_name
+echo $CONFIG_vnets_hub_egress_internet_name
+echo $CONFIG_vnets_hub_ingress_intranet_name
+echo $CONFIG_vnets_hub_egress_intranet_name
+echo $CONFIG_vnets_project_name
+echo $CONFIG_vnets_management_name
+echo $CONFIG_vnets_devops_name
 
 # Replace the hardcoded subscription ID with the $SUBSCRIPTION_ID variable
 # resource group
