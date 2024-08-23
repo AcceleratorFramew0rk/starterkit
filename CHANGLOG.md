@@ -1,4 +1,19 @@
-# 0.0.8 (TBD)
+# 0.0.9 (TBD)
+## COMPATIBLE WITH:
+* aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
+* azurerm: version 3.85
+* aaf: 0.0.5
+
+## FEATURES:
+* 
+
+## ENHANCEMENTS:
+* 
+
+## BUG FIXES:
+* 
+  
+# 0.0.8 (22 Jul 2024)
 ## COMPATIBLE WITH:
 * aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
 * azurerm: version 3.85
@@ -11,7 +26,8 @@
 * standard a single config.yaml file to be inside scripts folder
 
 ## BUG FIXES:
-* 
+* fixed deployment of cosmos db mongo
+* fixed app service private endpoint for api
   
 # 0.0.7 (19 Jul 2024)
 ## COMPATIBLE WITH:
