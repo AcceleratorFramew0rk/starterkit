@@ -41,13 +41,16 @@ subnets:
       name: "WebSubnet"
       address_prefixes: ["100.64.0.0/27"]          
     # AppSubnet: # DO NOT CHANGE subnet name
+    #   name: "AppSubnet"    
     #   address_prefixes: ["100.64.0.32/27"]       
-    # DbSubnet: # DO NOT CHANGE subnet name
-    #   address_prefixes: ["100.64.0.64/27"]
+    DbSubnet: # DO NOT CHANGE subnet name
+      name: "DbSubnet"    
+      address_prefixes: ["100.64.0.64/27"]
     ServiceSubnet: # DO NOT CHANGE subnet name
       name: "ServiceSubnet"
       address_prefixes: ["100.64.0.96/27"]
     # FunctionAppSubnet: # DO NOT CHANGE subnet name
+    #   name: "FunctionAppSubnet"        
     #   address_prefixes: ["100.64.0.128/27"]
     #   delegations: [
     #     {
@@ -61,32 +64,32 @@ subnets:
     # ApiSubnet: # DO NOT CHANGE subnet name
     #   name: "ApiSubnet"    
     #   address_prefixes: ["100.64.0.160/27"]
-    # SystemNodePoolSubnet: # DO NOT CHANGE subnet name
-    #   name: "ApiSubnet"    
-    #   address_prefixes: ["100.64.0.192/27"]
-    # UserNodePoolSubnet: # DO NOT CHANGE subnet name
-    #   name: "ApiSubnet"    
-    #   address_prefixes: ["100.64.0.224/27"]
-    # UserNodePoolWindowsSubnet: # DO NOT CHANGE subnet name
-    #   name: "ApiSubnet"    
-    #   address_prefixes: ["100.64.1.192/27"]      
-    # AiSubnet: # DO NOT CHANGE subnet name
-    #   name: "ApiSubnet"    
-    #   address_prefixes: ["100.64.1.0/27"]   
-    LogicAppSubnet: # DO NOT CHANGE subnet name
-      name: "LogicAppSubnet"
-      address_prefixes: ["100.64.1.32/27"]   
-      delegations: [
-        {
-          name: "logicapp",
-          service_delegation: {
-            name: "Microsoft.Web/serverFarms", 
-            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
-            }
-        }
-      ]  
+    SystemNodePoolSubnet: # DO NOT CHANGE subnet name
+      name: "SystemNodePoolSubnet"    
+      address_prefixes: ["100.64.0.192/27"]
+    UserNodePoolSubnet: # DO NOT CHANGE subnet name
+      name: "UserNodePoolSubnet"    
+      address_prefixes: ["100.64.0.224/27"]
+    UserNodePoolWindowsSubnet: # DO NOT CHANGE subnet name
+      name: "UserNodePoolWindowsSubnet"    
+      address_prefixes: ["100.64.1.192/27"]      
+    AiSubnet: # DO NOT CHANGE subnet name
+      name: "AiSubnet"    
+      address_prefixes: ["100.64.1.0/27"]   
+    # LogicAppSubnet: # DO NOT CHANGE subnet name
+    #   name: "LogicAppSubnet"
+    #   address_prefixes: ["100.64.1.32/27"]   
+    #   delegations: [
+    #     {
+    #       name: "logicapp",
+    #       service_delegation: {
+    #         name: "Microsoft.Web/serverFarms", 
+    #         actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+    #         }
+    #     }
+    #   ]  
     # CiSubnet: # DO NOT CHANGE subnet name 
-    #   name: "ApiSubnet"    
+    #   name: "CiSubnet"    
     #   address_prefixes: ["100.64.1.64/27"]   
     #   delegations: [
     #     {
@@ -98,11 +101,11 @@ subnets:
     #     }
     #   ]  
     # ServiceBusSubnet: # DO NOT CHANGE subnet name
-    #   name: "ApiSubnet"    
+    #   name: "ServiceBusSubnet"    
     #   address_prefixes: ["100.64.1.96/27"]         
-    CosmosDbSubnet: # DO NOT CHANGE subnet name 
-      name: "CosmosDbSubnet"
-      address_prefixes: ["100.64.1.128/27"]    
+    # CosmosDbSubnet: # DO NOT CHANGE subnet name 
+    #   name: "CosmosDbSubnet"
+    #   address_prefixes: ["100.64.1.128/27"]    
     AppServiceSubnet: # DO NOT CHANGE subnet name
       name: "AppServiceSubnet"
       address_prefixes: ["100.64.1.160/27"]
