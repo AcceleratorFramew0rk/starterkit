@@ -36,7 +36,7 @@ variable "environment" {
 
 variable "image" {
   type        = string  
-  default = "nginx:latest"
+  default = "gccstarterkit/gccstarterkit-avm-sde:0.1"
 }
 
 variable "cpu" {
