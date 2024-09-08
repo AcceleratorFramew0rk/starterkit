@@ -8,7 +8,6 @@ Priority,Name,Port,Protocol,Source,Destination,DestinationPort,Action,Direction
 160,AllowHTTPSIntranetAgw,*,Tcp,{{hub_intranet_ingress_agwsubnet_address_prefixes}},{{project_usernodepoolsubnet_address_prefixes}},443,Allow,Inbound
 170,AllowHTTPInternetAgw,*,Tcp,{{hub_internet_ingress_agwsubnet_address_prefixes}},{{project_usernodepoolsubnet_address_prefixes}},80,Allow,Inbound
 180,AllowHTTPIntranetAgw,*,Tcp,{{hub_intranet_ingress_agwsubnet_address_prefixes}},{{project_usernodepoolsubnet_address_prefixes}},80,Allow,Inbound
-4060,DenyAllInbound,*,Tcp,*,*,*,Deny,Inbound
 100,AllowHTTPSMCR,*,Tcp,{{project_usernodepoolsubnet_address_prefixes}},MicrosoftContainerRegistry,53,Allow,Outbound
 110,Alow53MCR,*,Tcp,{{project_usernodepoolsubnet_address_prefixes}},MicrosoftContainerRegistry,443,Allow,Outbound
 120,AllowHTTPSAzureFrontDoorFirstParty,*,Tcp,{{project_usernodepoolsubnet_address_prefixes}},AzureFrontDoor.FirstParty,443,Allow,Outbound
@@ -31,4 +30,3 @@ Priority,Name,Port,Protocol,Source,Destination,DestinationPort,Action,Direction
 290,Allow1443Db,*,Tcp,{{project_usernodepoolsubnet_address_prefixes}},{{project_dbsubnet_address_prefixes}},1433,Allow,Outbound
 300,AllowEgressFirewallInternet,*,Tcp,{{project_usernodepoolsubnet_address_prefixes}},{{hub_internet_egress_firewallsubnet_address_prefixes}},*,Allow,Outbound
 310,AllowHTTPSVirtualNetwork,*,Tcp,VirtualNetwork,VirtualNetwork,443,Allow,Outbound
-4060,DenyAllOutbound,*,Tcp,*,*,*,Deny,Outbound
