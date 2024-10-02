@@ -1,5 +1,5 @@
 module "keyvault" {
-  # TODO: grant spn to be secret reader  
+  # grant spn to be secret reader  
   source  = "Azure/avm-res-keyvault-vault/azurerm"
   version = "0.5.2"  
 

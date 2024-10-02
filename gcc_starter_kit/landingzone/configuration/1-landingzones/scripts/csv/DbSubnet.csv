@@ -4,5 +4,7 @@ Priority,Name,Port,Protocol,Source,Destination,DestinationPort,Action,Direction
 120,AllowMSSQLApp,*,Tcp,VirtualNetwork,{{project_dbsubnet_address_prefixes}},1433,Allow,Inbound
 130,AllowHTTPSDevOpsRunner,*,Tcp,{{devops_runnersubnet_address_prefixes}},{{project_dbsubnet_address_prefixes}},443,Allow,Inbound
 140,AllowMSSQLVirtualNetwork,*,Tcp,VirtualNetwork,VirtualNetwork,1433,Allow,Inbound
+150,AllowRedisVirtualNetwork,*,Tcp,VirtualNetwork,VirtualNetwork,6380,Allow,Inbound
+160,AllowStorageVirtualNetwork,*,Tcp,VirtualNetwork,VirtualNetwork,443,Allow,Inbound
 4060,CustomDenyAllInbound,*,Tcp,*,*,*,Deny,Inbound
 4060,CustomDenyAllOutbound,*,Tcp,*,*,*,Deny,Outbound

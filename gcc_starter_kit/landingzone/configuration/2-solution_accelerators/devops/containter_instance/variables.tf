@@ -36,7 +36,7 @@ variable "environment" {
 
 variable "image" {
   type        = string  
-  default = "gccstarterkit/gccstarterkit-avm-sde:0.1"
+  default = "gccstarterkit/gccstarterkit-avm-sde:0.2"
 }
 
 variable "cpu" {

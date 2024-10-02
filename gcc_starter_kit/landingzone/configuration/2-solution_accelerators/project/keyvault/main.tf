@@ -1,6 +1,7 @@
 module "keyvault" {
-  source  = "Azure/avm-res-keyvault-vault/azurerm"
-  version = "0.5.2"  
+  source                        = "Azure/avm-res-keyvault-vault/azurerm"
+  version = "0.5.2" 
+  # version                       = "0.9.1" # this version not working for now - does not support Terraform version 1.7.5
 
   name                          = "${module.naming.key_vault.name_unique}${random_string.this.result}" 
   enable_telemetry              = var.enable_telemetry

@@ -1,5 +1,10 @@
 # NOTE: SystemNodePoolSubnet required NAT Gateway
 
+# Estimate time: 20 minutes to deploy
+system node: 10 minutes
+diagnostic setting 20 seconds
+user node: 10 minutes
+
 # 04 Jun 2024
 # if egress firewall is not deployed, make sure do not create the route table
 # Solution - ensure routetable is set correctly or remove it.
@@ -32,4 +37,5 @@ terraform apply -auto-approve \
 -var="storage_account_name={{storage_account_name}}" \
 -var="resource_group_name={{resource_group_name}}"
 
-
+# ** IMPORTANT
+# Add in deny all inbound and outbound after AKS is deployed

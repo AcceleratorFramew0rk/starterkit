@@ -1,6 +1,6 @@
 module "avm_res_keyvault_vault" {
   source              = "Azure/avm-res-keyvault-vault/azurerm"
-  version             = ">= 0.5.0"
+  version             = "0.6.1"
 
   tenant_id           = data.azurerm_client_config.current.tenant_id
   name                = "${module.naming.key_vault.name}${random_string.this.result}"  
@@ -41,6 +41,13 @@ locals {
     sku       = "2022-datacenter-g2"
     version   = "latest"
   }
+
+  source_image_reference_linux = {
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts-gen2"
+    version   = "latest"    
+  }
 }
 
 resource "random_integer" "region_index" {
@@ -66,14 +73,14 @@ module "virtualmachine1" {
   enable_telemetry                       = var.enable_telemetry
   location                               = azurerm_resource_group.this.location
   resource_group_name                    = azurerm_resource_group.this.name
-  virtualmachine_os_type                 = "Windows"
-  name                                   = "${module.naming.virtual_machine.name}${random_string.this.result}" 
+  virtualmachine_os_type                 = var.virtualmachine_os_type # default is "Windows"
+  name                                   = "${module.naming.virtual_machine.name}-${random_string.this.result}" 
   admin_credential_key_vault_resource_id = module.avm_res_keyvault_vault.resource_id # module.avm_res_keyvault_vault.resource.id
   virtualmachine_sku_size                = "Standard_D8s_v3" # "Standard_D8s_v3" 
   zone                                   = random_integer.zone_index.result 
 
   # use source_image_resource_id for gcc, else use default source_image_reference
-  source_image_reference = try(var.source_image_resource_id, null) == null ? local.source_image_reference : null
+  source_image_reference = try(var.source_image_resource_id, null) == null ? ( try(var.virtualmachine_os_type, "Windows") == "Windows" ? local.source_image_reference : local.source_image_reference_linux ) : null
 
   source_image_resource_id = try(var.source_image_resource_id, null) == null ? null : var.source_image_resource_id
 
@@ -83,7 +90,7 @@ module "virtualmachine1" {
       ip_configurations = {
         ip_configuration_1 = {
           name                          = "${module.naming.network_interface.name}-ipconfig1"
-          private_ip_subnet_resource_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AppSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AppSubnet"].resource.id : var.subnet_id 
+          private_ip_subnet_resource_id = try(var.subnet_id, null) != null ? var.subnet_id : local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AppSubnet"].resource.id 
           create_public_ip_address      = false # true
           public_ip_address_name        = module.naming.public_ip.name_unique
         }

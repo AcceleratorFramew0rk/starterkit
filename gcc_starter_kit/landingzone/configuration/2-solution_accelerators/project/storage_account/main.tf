@@ -123,11 +123,16 @@ module "storageaccount" {
       network_interface_name          = "nic-pe-${endpoint}-${module.naming.storage_account.name_unique}"
       inherit_lock                    = false
 
-      tags = {
-        env   = "Prod"
-        owner = "Matt "
-        dept  = "IT"
-      }
+      tags        = merge(
+        local.global_settings.tags,
+        {
+          purpose = "storage account private endpoint" 
+          project_code = try(local.global_settings.prefix, var.prefix) 
+          env = try(local.global_settings.environment, var.environment) 
+          zone = "project"
+          tier = "db"   
+        }
+      ) 
 
       role_assignments = {
         role_assignment_1 = {

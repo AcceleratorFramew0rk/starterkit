@@ -1,5 +1,5 @@
 resource "azurerm_route_table" "this" {
-  name                = module.naming.route_table.name_unique 
+  name                = "${module.naming.route_table.name}-egress" 
   location            = azurerm_resource_group.this.location
   resource_group_name = azurerm_resource_group.this.name
 }

@@ -17,7 +17,7 @@ module "container_group1" {
 
   containers = {
     container1 = { # container.key
-      image  = try(var.image, null) == null ? "gccstarterkit/gccstarterkit-avm-sde:0.1" : var.image  
+      image  = try(var.image, null) == null ? "gccstarterkit/gccstarterkit-avm-sde:0.2" : var.image  
       cpu    = try(var.cpu, 1)
       memory = try(var.memory, 2)
       ports = {

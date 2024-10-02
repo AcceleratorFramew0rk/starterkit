@@ -65,7 +65,7 @@ module "azure_bastion" {
   name                = "${module.naming.bastion_host.name}${random_string.this.result}" 
   copy_paste_enabled  = true
   file_copy_enabled   = false
-  sku                 = "Standard"
+  sku                 = "Standard" # "Premium" # for session recording preview
   ip_configuration    = {
       name                 = "${module.naming.bastion_host.name}ipconfig" # "bhipconfig" 
       subnet_id            = try(local.remote.networking.virtual_networks.spoke_management.virtual_subnets["AzureBastionSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_management.virtual_subnets["AzureBastionSubnet"].resource.id : var.subnet_id 

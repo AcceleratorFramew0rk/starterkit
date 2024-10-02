@@ -38,3 +38,10 @@ variable "source_image_resource_id" {
 
 }
 
+
+variable "virtualmachine_os_type" {
+  type        = string  
+  default = "Windows" # "Windows" or "Linux" 
+}
+
+
