@@ -1,7 +1,3 @@
-# claimsuatstsa1kfq.privatelink.blob.core.windows.net
-# claimsuatstsa1kfq.blob.core.windows.net
-
-
 
 #!/bin/bash
 storage_account=$AZ_STG_ACCOUNT
