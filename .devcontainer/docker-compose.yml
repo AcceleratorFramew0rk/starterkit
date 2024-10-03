@@ -6,7 +6,7 @@
   version: '3.7'
   services:
     avm:
-      image: gccstarterkit/gccstarterkit-avm-sde:0.1 # aztfmod/rover-agent:1.7.5-2403.1406-github # aztfmod/rover:1.6.4-2311.2003 # aztfmod/rover:1.6.0-rc1-2310.0211 # aztfmod/rover:1.5.2-2307.0508 # aztfmod/rover:1.5.1-2307.0308 # aztfmod/rover:1.5.0-rc1-2306.0205 # aztfmod/rover:1.2.5-2208.0208
+      image: gccstarterkit/gccstarterkit-avm-sde:0.2 # aztfmod/rover-agent:1.7.5-2403.1406-github # aztfmod/rover:1.6.4-2311.2003 # aztfmod/rover:1.6.0-rc1-2310.0211 # aztfmod/rover:1.5.2-2307.0508 # aztfmod/rover:1.5.1-2307.0308 # aztfmod/rover:1.5.0-rc1-2306.0205 # aztfmod/rover:1.2.5-2208.0208
       user: vscode
 
       # Uncomment to access Azure VPN and rebuild container
