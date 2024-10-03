@@ -40,7 +40,7 @@ Install **kubectl** and **kubelogin** to manage and authenticate Kubernetes clus
 
 You can follow the official tutorial to deploy sample applications to AKS: [Deploy AKS Sample Apps](https://learn.microsoft.com/en-us/azure/aks/learn/quick-kubernetes-deploy-cli).
 
-1. Copy the content from the file 
+1. Copy the content from the file (using vi editor in container instance console)
 
 `/tf/caf/gcc_starter_kit/validation/azure-vote-internet.yaml` into a local file `azure-vote-internet.yaml`.
 
@@ -74,8 +74,8 @@ To authenticate and manage your AKS cluster, you must retrieve the credentials.
    Example for private and public clusters:
    
    ```bash
-   az aks get-credentials --resource-group aoaiuat-rg-solution-accelerators-aks --name aks-private-cluster --admin
-   az aks get-credentials --resource-group aoaiuat-rg-solution-accelerators-aks --name aks-aoaiuat-aks-ran --admin
+   az aks get-credentials --resource-group glauat-rg-solution-accelerators-aks --name glauat-aks-private-cluster --admin
+   az aks get-credentials --resource-group aoaiuat-rg-solution-accelerators-aks --name glauat-aks-private-cluster --admin
    ```
 
 ---
@@ -100,7 +100,7 @@ To authenticate and manage your AKS cluster, you must retrieve the credentials.
 ### 6. Manually Link AKS Private DNS Zone to DevOps Virtual Network
 
 1. Open the **Azure Portal**.
-2. Navigate to **Private DNS Zones** and manually link the AKS private DNS zone to the DevOps virtual network.
+2. Navigate to **Private DNS Zones** under resource group "<PREFIX>-rg-solution-accelerators-aks-nodes" and manually link the AKS private DNS zone to the DevOps virtual network.
 
 ---
 
@@ -167,6 +167,11 @@ Deploy the applications to specific namespaces:
    ```bash
    kubectl apply -f azure-vote-internet.yaml -n nsinternet
    kubectl apply -f azure-vote-intranet.yaml -n nsintranet
+
+   # hello world
+   kubectl apply -f hello-world-internet.yaml -n nsinternet
+   kubectl apply -f hello-world-intranet.yaml -n nsintranet
+
    ```
 
 3. Verify deployment:
@@ -190,6 +195,10 @@ To remove the deployed applications, run:
 ```bash
 kubectl delete -f azure-vote-internet.yaml -n nsinternet
 kubectl delete -f azure-vote-intranet.yaml -n nsintranet
+
+kubectl delete -f hello-world-internet.yaml -n nsinternet
+kubectl delete -f hello-world-intranet.yaml -n nsintranet
+
 ```
 
 ---
@@ -198,12 +207,18 @@ kubectl delete -f azure-vote-intranet.yaml -n nsintranet
 
 - List pods and their nodes:
   ```bash
-  kubectl get pods -o wide
+  kubectl get pods -o wide -n nsinternet
+  # ensure all pods are in ez nodes
+
+  kubectl get pods -o wide -n nsintranet
+  # ensure all pods are in iz nodes
+  
   ```
 
 - List nodes:
   ```bash
-  kubectl get nodes
+  kubectl get nodes 
+    
   ```
 
 ---
@@ -213,6 +228,8 @@ kubectl delete -f azure-vote-intranet.yaml -n nsintranet
 Once the application is deployed, perform smoke testing from DevOps container instances or other machines where ingress/egress is configured:
 
 ```bash
+# ** IMPORTANT: Ensure no NSG is blocking devops container instance to the internal load balancer
+
 curl http://100.xx.xxx.xx/
 ```
 

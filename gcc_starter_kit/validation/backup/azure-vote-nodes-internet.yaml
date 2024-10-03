@@ -14,7 +14,7 @@ spec:
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
-        "agentnodepool": poolappsintranet        
+        "agentnodepool": poolappsinternet        
       containers:
       - name: azure-vote-back
         image: mcr.microsoft.com/oss/bitnami/redis:6.0.8
@@ -58,10 +58,10 @@ spec:
     spec:
       nodeSelector:
         "kubernetes.io/os": linux
-        "agentnodepool": poolappsintranet        
+        "agentnodepool": poolappsinternet        
       containers:
       - name: azure-vote-front
-        image: mcr.microsoft.com/azuredocs/azure-vote-front:v1
+        image: mcr.microsoft.com/azuredocs/azure-vote-front:v2
         resources:
           requests:
             cpu: 100m
@@ -81,7 +81,8 @@ metadata:
   name: azure-vote-front
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-internal: "true"
-    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "UserNodePoolIntranetSubnet"
+    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "WebInternetSubnet"    
+    # service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "UserNodePoolSubnet"   
 spec:
   type: LoadBalancer
   ports:
