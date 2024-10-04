@@ -100,7 +100,7 @@ resource "azurerm_role_assignment" "Azure_Kubernetes_Service_Contributor_Role" {
 module "aks_cluster" {
   # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/compute/terraform-azurerm-avm-ptn-aks-production"  
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/compute/terraform-azurerm-avm-ptn-aks-production" 
-  version = "0.0.7"
+  version = "0.0.8"
 
   kubernetes_version  = "1.30"
   enable_telemetry    = var.enable_telemetry # see variables.tf
