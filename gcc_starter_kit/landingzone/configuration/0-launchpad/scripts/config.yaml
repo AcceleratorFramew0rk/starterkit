@@ -37,12 +37,12 @@ vnets:
 subnets:
   # IMPORTANT ** comment off the below any project subnets if it is not used
   project:
-    WebInternetSubnet: # DO NOT CHANGE subnet name
-      name: "WebInternetSubnet"
-      address_prefixes: ["100.64.0.0/27"]          
-    WebIntranetSubnet: # DO NOT CHANGE subnet name
-      name: "WebIntranetSubnet"    
-      address_prefixes: ["100.64.0.32/27"]       
+    # WebInternetSubnet: # DO NOT CHANGE subnet name
+    #   name: "WebInternetSubnet"
+    #   address_prefixes: ["100.64.0.0/27"]          
+    # WebIntranetSubnet: # DO NOT CHANGE subnet name
+    #   name: "WebIntranetSubnet"    
+    #   address_prefixes: ["100.64.0.32/27"]       
     # WebSubnet: # DO NOT CHANGE subnet name
     #  name: "WebSubnet"
     #  address_prefixes: ["100.64.0.0/27"]          
