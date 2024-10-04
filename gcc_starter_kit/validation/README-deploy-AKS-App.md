@@ -143,7 +143,7 @@ To grant a specific user write access to a Kubernetes namespace, assign the **Az
 
    ```bash
    USER_EMAIL="xxxxxx@xxxxxxxxxxxx.onmicrosoft.com"
-   USER_EMAIL="avdthiamsoon@htxsandpit.onmicrosoft.com"
+   USER_EMAIL="xxxxxxxxxx@xxxxxxxxx.onmicrosoft.com"
    ```
 
 - Create role assignments for both the `nsinternet` and `nsintranet` namespaces:
