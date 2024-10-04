@@ -31,6 +31,21 @@ module "private_dns_zones" {
           }
         )
       }
+      vnetlink2 = {
+        vnetlinkname     = "vnetlink2"
+        vnetid           = try(local.remote.networking.virtual_networks.spoke_devops.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_devops.virtual_network.id : var.vnet_id  
+        autoregistration = false # true
+        tags = merge(
+          local.global_settings.tags,
+          {
+            purpose = "container registry vnet link" 
+            project_code = try(local.global_settings.prefix, var.prefix) 
+            env = try(local.global_settings.environment, var.environment) 
+            zone = "project"
+            tier = "service"   
+          }
+        )
+      }      
     }
 }
 
