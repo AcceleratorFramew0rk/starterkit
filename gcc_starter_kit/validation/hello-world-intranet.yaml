@@ -20,7 +20,7 @@ spec:
       - name: hello-world
         image: hashicorp/http-echo:0.2.3  # acr image: e.g. aoaiuatacrran33n.azurecr.io/http-echo:0.2.3
         args:
-        - "-text=Hello World"
+        - "-text=Hello World i am intranet"
         ports:
         - containerPort: 5678
 ---
