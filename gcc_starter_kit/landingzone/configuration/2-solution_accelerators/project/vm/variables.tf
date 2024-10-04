@@ -44,4 +44,8 @@ variable "virtualmachine_os_type" {
   default = "Windows" # "Windows" or "Linux" 
 }
 
+variable "vnet_type" {
+  type        = string  
+  default = "" # "" or "project" or "devops" 
+}
 
