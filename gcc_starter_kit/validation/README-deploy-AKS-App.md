@@ -76,6 +76,8 @@ To authenticate and manage your AKS cluster, you must retrieve the credentials.
    ```bash
    az aks get-credentials --resource-group glauat-rg-solution-accelerators-aks --name glauat-aks-private-cluster --admin
    az aks get-credentials --resource-group aoaiuat-rg-solution-accelerators-aks --name glauat-aks-private-cluster --admin
+   az aks get-credentials --resource-group glauat-rg-solution-accelerators-aks --name glauat-aks-private-cluster --admin
+   az aks get-credentials --resource-group aoaiuat-rg-solution-accelerators-aks --name aoaiuat-aks-private-cluster --admin
    ```
 
 ---
@@ -101,6 +103,11 @@ To authenticate and manage your AKS cluster, you must retrieve the credentials.
 
 1. Open the **Azure Portal**.
 2. Navigate to **Private DNS Zones** under resource group "<PREFIX>-rg-solution-accelerators-aks-nodes" and manually link the AKS private DNS zone to the DevOps virtual network.
+
+   OR run this script
+
+   az network private-dns link vnet create --resource-group myResourceGroup --zone-name example.com --name myVNetLink --virtual-network myVnet --registration-enabled false
+
 
 ---
 
@@ -136,6 +143,7 @@ To grant a specific user write access to a Kubernetes namespace, assign the **Az
 
    ```bash
    USER_EMAIL="xxxxxx@xxxxxxxxxxxx.onmicrosoft.com"
+   USER_EMAIL="avdthiamsoon@htxsandpit.onmicrosoft.com"
    ```
 
 - Create role assignments for both the `nsinternet` and `nsintranet` namespaces:
@@ -144,12 +152,12 @@ To grant a specific user write access to a Kubernetes namespace, assign the **Az
    az role assignment create \
        --assignee "${USER_EMAIL}" \
        --role "Azure Kubernetes Service RBAC Writer" \
-       --scope "$(az aks show --resource-group aoaiuat-rg-solution-accelerators-aks --name aks-private-cluster --query id -o tsv)/namespaces/nsinternet"
+       --scope "$(az aks show --resource-group aoaiuat-rg-solution-accelerators-aks --name aoaiuat-aks-private-cluster --query id -o tsv)/namespaces/nsinternet"
    
    az role assignment create \
        --assignee "${USER_EMAIL}" \
        --role "Azure Kubernetes Service RBAC Writer" \
-       --scope "$(az aks show --resource-group aoaiuat-rg-solution-accelerators-aks --name aks-private-cluster --query id -o tsv)/namespaces/nsintranet"
+       --scope "$(az aks show --resource-group aoaiuat-rg-solution-accelerators-aks --name aoaiuat-aks-private-cluster --query id -o tsv)/namespaces/nsintranet"
    ```
 
 ---
@@ -169,7 +177,7 @@ Deploy the applications to specific namespaces:
    kubectl apply -f azure-vote-intranet.yaml -n nsintranet
 
    # hello world
-   kubectl apply -f hello-world-internet.yaml -n nsinternet
+   kubectl apply -f hello-world-internet.yaml -n nsinternet 
    kubectl apply -f hello-world-intranet.yaml -n nsintranet
 
    ```
@@ -220,6 +228,47 @@ kubectl delete -f hello-world-intranet.yaml -n nsintranet
   kubectl get nodes 
     
   ```
+- login to pod bash:
+
+   # List all pods
+   kubectl get pods -n nsinternet
+
+   # Log in to the bash shell of the container in a specific pod
+   kubectl exec -it hello-world-755cb65678-hrlqj -- /bin/sh -n nsinternet
+
+   kubectl exec -it hello-world-755cb65678-cmjkx -- /bin/sh -n nsinternet
+
+   kubectl -n nsintranet describe pod   xxxxx
+
+   hello-world-755cb65678-hrlqj
+
+
+   # If the pod has multiple containers, specify the container name
+   kubectl exec -it my-pod -c my-container -- /bin/bash -n nsinternet
+
+
+
+<!-- 
+
+# ** IMPORTANT - Get the resource ID of the ACR
+
+ACR_ID=$(az acr show --name aoaiuatacrran33n --query "id" --output tsv)
+
+CLIENT_ID=$(az aks show --resource-group aoaiuat-rg-solution-accelerators-aks --name aoaiuat-aks-private-cluster --query "identityProfile.kubeletidentity.clientId" --output tsv)
+
+az role assignment create --assignee $CLIENT_ID --role AcrPull --scope $ACR_ID
+
+# ** IMPORTANT - VNET Link from ACR private DNS Zone to DevOps VNET
+Goto Azure Portal to do a vnet link
+
+kubectl create secret docker-registry acr-secret \
+    --docker-server=<acr name>.azurecr.io \
+    --docker-username=<acr name> \
+    --docker-password=<acr password> \
+    --docker-email=xxxxx@xxxxx.com 
+    
+-->
+
 
 ---
 

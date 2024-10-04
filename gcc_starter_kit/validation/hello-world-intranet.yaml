@@ -7,7 +7,7 @@ metadata:
 spec:
   # nodeSelector:
   #  "agentnodepool": poolappsintranet  
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: hello-world
@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: hashicorp/http-echo:0.2.3
+        image: hashicorp/http-echo:0.2.3  # acr image: e.g. aoaiuatacrran33n.azurecr.io/http-echo:0.2.3
         args:
         - "-text=Hello World"
         ports:
@@ -30,7 +30,7 @@ metadata:
   name: hello-world-service
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-internal: "true"  # This ensures the service is internal
-    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "WebIntranetSubnet" # this ensure front end ip is in a particular subnet     
+    service.beta.kubernetes.io/azure-load-balancer-internal-subnet: "UserNodePoolIntranetSubnet" # "WebIntranetSubnet" # this ensure front end ip is in a particular subnet. Default is SystemNodePoolSubnet    
   labels:
     app: hello-world
 spec:
