@@ -166,11 +166,32 @@ To grant a specific user write access to a Kubernetes namespace, assign the **Az
 
 Deploy the applications to specific namespaces:
 
-1. Edit the application YAML files to ensure they use **port 80** for testing:
+
+1. prepare and import sample hello world images to acr
+
+   ```bash
+   ACR_NAME=<your acr name> # e.g. aoaiuatacrran33n
+
+   az acr login --name $ACR_NAME 
+
+   az acr import \
+   --name $ACR_NAME \
+   --source docker.io/hashicorp/http-echo:0.2.3 \
+   --image http-echo:0.2.3
+
+   # # ** Optional
+   # az acr import \
+   # --name $ACR_NAME \
+   # --source mcr.microsoft.com/azuredocs/aci-helloworld:latest \
+   # --image aci-helloworld:latest
+
+   ```
+   
+2. Edit the application YAML files to ensure they use **port 80** for testing:
    - `azure-vote-internet.yaml`
    - `azure-vote-intranet.yaml`
 
-2. Apply the YAML files:
+3. Apply the YAML files:
 
    ```bash
    kubectl apply -f azure-vote-internet.yaml -n nsinternet
