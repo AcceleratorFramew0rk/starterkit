@@ -19,12 +19,12 @@ This repository provides the configuration and infrastructure for an Azure Kuber
      - **Internet Node Pool**: Dedicated to handling internet-facing workloads.
        - **Namespace**: `internet`
        - **Node Pool**: `poolappsinternet`
-       - **Private IP Listener**: Configured in `WebInternetSubnet`.
+       - **Private IP Listener**: Configured in `UserNodePoolInternetSubnet` or `WebInternetSubnet`.
        - **Node Labels**: `agentnodepool=poolappsinternet`
      - **Intranet Node Pool**: Handles internal-only workloads.
        - **Namespace**: `intranet`
        - **Node Pool**: `poolappsintranet`
-       - **Private IP Listener**: Configured in `WebIntranetSubnet`.
+       - **Private IP Listener**: Configured in `UserNodePoolIntranetSubnet` or `WebIntranetSubnet`.
        - **Node Labels**: `agentnodepool=poolappsintranet`
 
 ### 4. **Service Mesh - Istio**
