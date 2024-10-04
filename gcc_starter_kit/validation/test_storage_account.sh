@@ -1,8 +1,3 @@
-# claimsuatstsa1kfq.privatelink.blob.core.windows.net
-# claimsuatstsa1kfq.blob.core.windows.net
-
-
-
 #!/bin/bash
 storage_account=$AZ_STG_ACCOUNT
 container_name=$AZ_STG_CONTAINER
@@ -10,9 +5,9 @@ access_key=$AZ_STG_ACCESS_KEY
 blob_name=PSCR_230113_000000Fri.xml
 
 
-storage_account="claimsuatstsa1kfq"
+storage_account="<your storage account name>"
 container_name="test"
-access_key="vH9YaZKrCzbH5YjSbA7gLSMPj8Ui7ubup/IUM2vOj47geWXUdyWfvtNHaOeZvZh1PULyHlstJ8hD+AStNUMLMw=="
+access_key="<your access key>"
 blob_name=file1.jpeg
 
 
@@ -55,8 +50,4 @@ curl -v \
 # curl -i -X <HTTP Verb> -H "x-ms-version: 2019-12-12" "https://storageAccountName.blob.core.windows.net/containername/blobname?SASToken"
 
 # Example
-# curl -i -H "x-ms-version: 2019-12-12" "https://claimsuatstsa1kfq.blob.core.windows.net/test/file1.jpeg?sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2024-02-15T12:10:04Z&st=2024-02-15T04:10:04Z&spr=https&sig=5n%2F3ZqdQ0dxMkm%2FJu3Dc2Sx%2BiO%2F0HybQw%2F1Uo%2B%2FwJUo%3D"
-# curl -i -H "x-ms-version: 2019-12-12" "https://claimsuatstsa1kfq.blob.core.windows.net/test/file1.jpg?sp=r&st=2024-02-15T04:23:17Z&se=2024-02-15T12:23:17Z&spr=https&sv=2022-11-02&sr=b&sig=NBo6TI0ICfkUV5PLrbWBlb53%2F09FEV3GVU5ga7hcvIk%3D"
-
-# curl -i -H "x-ms-version: 2019-12-12" "https://claimsuatstsa1kfq.privatelink.blob.core.windows.net/test/file1.jpg?sp=r&st=2024-02-15T04:23:17Z&se=2024-02-15T12:23:17Z&spr=https&sv=2022-11-02&sr=b&sig=NBo6TI0ICfkUV5PLrbWBlb53%2F09FEV3GVU5ga7hcvIk%3D"
-
+# curl -i -H "x-ms-version: 2019-12-12" "https://claimsuatstsa1kfq.blob.core.windows.net/test/file1.jpeg?<your sas token>"

@@ -4,8 +4,8 @@ az login --identity
 
 # get the object id of container instance or app service managed identity or user managed identity through UI
 # e.g. 
-object_id="aa179867-d7f0-4f87-ae82-51ded479be87"
-keyvault_name="kv-shared-kv1-jkq"
+object_id="<your object id>"
+keyvault_name="<your keyvault name>"
 
 # grant container instance to key vault access policy
 # az keyvault set-policy --name kv-shared-kv1-jkq --object-id "aa179867-d7f0-4f87-ae82-51ded479be87" --secret-permissions get 
