@@ -314,7 +314,9 @@ find . -name '*.sh' -exec sed -i -e "s/$search/$replace/g" {} +
 # end rename gcc_starter_kit to folder name
 
 # goto nsg configuration folder
-cd /tf/avm/${replace}/landingzone/configuration/1-landingzones/scripts
+# goto nsg configuration folder
+# cd /tf/avm/${replace}/landingzone/configuration/1-landingzones/scripts
+cd ./landingzone/configuration/1-landingzones/scripts
 
 # create nsg yaml file from nsg csv files
 python3 csv_to_yaml.py 
