@@ -141,41 +141,79 @@ def load_yaml_file(file_path):
 def configure_nsg():
 
 		# set variables
+		default_string = "['*']"
+		# Clean the string and assign it to a list
+		cleaned_list = default_string.strip("[]'").split(",") 
 
 		# project
-		project_websubnet_address_prefixes = yaml_obj.get("subnets.project.WebSubnet.address_prefixes", "['*']")
-		project_appsubnet_address_prefixes = yaml_obj.get("subnets.project.AppSubnet.address_prefixes", "['*']")
-		project_dbsubnet_address_prefixes = yaml_obj.get("subnets.project.DbSubnet.address_prefixes", "['*']")
+		project_websubnet_address_prefixes = yaml_obj.get("subnets.project.WebSubnet.address_prefixes", cleaned_list)
+		project_appsubnet_address_prefixes = yaml_obj.get("subnets.project.AppSubnet.address_prefixes", cleaned_list)
+		project_dbsubnet_address_prefixes = yaml_obj.get("subnets.project.DbSubnet.address_prefixes", cleaned_list)
 
-		project_servicesubnet_address_prefixes = yaml_obj.get("subnets.project.ServiceSubnet.address_prefixes", "['*']")
-		project_functionappsubnet_address_prefixes = yaml_obj.get("subnets.project.FunctionAppSubnet.address_prefixes", "['*']")
-		project_apisubnet_address_prefixes = yaml_obj.get("subnets.project.ApiSubnet.address_prefixes", "['*']")
-		project_systemnodepoolsubnet_address_prefixes = yaml_obj.get("subnets.project.SystemNodePoolSubnet.address_prefixes", "['*']")
-		project_usernodepoolsubnet_address_prefixes = yaml_obj.get("subnets.project.UserNodePoolSubnet.address_prefixes", "['*']")
-		project_aisubnet_address_prefixes = yaml_obj.get("subnets.project.AiSubnet.address_prefixes", "['*']")
-		project_logicappsubnet_address_prefixes = yaml_obj.get("subnets.project.LogicAppSubnet.address_prefixes", "['*']")
-		project_cisubnet_address_prefixes = yaml_obj.get("subnets.project.CiSubnet.address_prefixes", "['*']")
-		project_servicebussubnet_address_prefixes = yaml_obj.get("subnets.project.ServiceBusSubnet.address_prefixes", "['*']")
-		project_cosmosdbsubnet_address_prefixes = yaml_obj.get("subnets.project.CosmosDbSubnet.address_prefixes", "['*']")
-		project_logicappsubnet_address_prefixes = yaml_obj.get("subnets.project.LogicAppSubnet.address_prefixes", "['*']")
-		project_appservicesubnet_address_prefixes = yaml_obj.get("subnets.project.AppServiceSubnet.address_prefixes", "['*']")
+		project_servicesubnet_address_prefixes = yaml_obj.get("subnets.project.ServiceSubnet.address_prefixes", cleaned_list)
+		project_functionappsubnet_address_prefixes = yaml_obj.get("subnets.project.FunctionAppSubnet.address_prefixes", cleaned_list)
+		project_apisubnet_address_prefixes = yaml_obj.get("subnets.project.ApiSubnet.address_prefixes", cleaned_list)
+		project_systemnodepoolsubnet_address_prefixes = yaml_obj.get("subnets.project.SystemNodePoolSubnet.address_prefixes", cleaned_list)
+		project_usernodepoolsubnet_address_prefixes = yaml_obj.get("subnets.project.UserNodePoolSubnet.address_prefixes", cleaned_list)
+		project_aisubnet_address_prefixes = yaml_obj.get("subnets.project.AiSubnet.address_prefixes", cleaned_list)
+		project_logicappsubnet_address_prefixes = yaml_obj.get("subnets.project.LogicAppSubnet.address_prefixes", cleaned_list)
+		project_cisubnet_address_prefixes = yaml_obj.get("subnets.project.CiSubnet.address_prefixes", cleaned_list)
+		project_servicebussubnet_address_prefixes = yaml_obj.get("subnets.project.ServiceBusSubnet.address_prefixes", cleaned_list)
+		project_cosmosdbsubnet_address_prefixes = yaml_obj.get("subnets.project.CosmosDbSubnet.address_prefixes", cleaned_list)
+		project_logicappsubnet_address_prefixes = yaml_obj.get("subnets.project.LogicAppSubnet.address_prefixes", cleaned_list)
+		project_appservicesubnet_address_prefixes = yaml_obj.get("subnets.project.AppServiceSubnet.address_prefixes", cleaned_list)
 
 		# management
-		management_infrasubnet_address_prefixes = yaml_obj.get("subnets.management.InfraSubnet.address_prefixes", "['*']")
-		management_securitysubnet_address_prefixes = yaml_obj.get("subnets.management.SecuritySubnet.address_prefixes", "['*']")
-		management_azurebastionsubnet_address_prefixes = yaml_obj.get("subnets.management.AzureBastionSubnet.address_prefixes", "['*']")
+		management_infrasubnet_address_prefixes = yaml_obj.get("subnets.management.InfraSubnet.address_prefixes", cleaned_list)
+		management_securitysubnet_address_prefixes = yaml_obj.get("subnets.management.SecuritySubnet.address_prefixes", cleaned_list)
+		management_azurebastionsubnet_address_prefixes = yaml_obj.get("subnets.management.AzureBastionSubnet.address_prefixes", cleaned_list)
 
 		# devops
-		devops_runnersubnet_address_prefixes = yaml_obj.get("subnets.devops.RunnerSubnet.address_prefixes", "['*']")
+		devops_runnersubnet_address_prefixes = yaml_obj.get("subnets.devops.RunnerSubnet.address_prefixes", cleaned_list)
 
 		# ingress/egress
-		hub_internet_egress_firewallsubnet_address_prefixes = yaml_obj.get("subnets_hub_internet_egress_AzureFirewallSubnet.address_prefixes", "['*']")
-		hub_internet_ingress_firewallsubnet_address_prefixes = yaml_obj.get("subnets.hub_internet_ingress.AzureFirewallSubnet.address_prefixes", "['*']")
-		hub_internet_ingress_agwsubnet_address_prefixes = yaml_obj.get("subnets.hub_internet_ingress.AgwSubnet.address_prefixes", "['*']")
+		hub_internet_egress_firewallsubnet_address_prefixes = yaml_obj.get("subnets_hub_internet_egress_AzureFirewallSubnet.address_prefixes", cleaned_list)
+		hub_internet_ingress_firewallsubnet_address_prefixes = yaml_obj.get("subnets.hub_internet_ingress.AzureFirewallSubnet.address_prefixes", cleaned_list)
+		hub_internet_ingress_agwsubnet_address_prefixes = yaml_obj.get("subnets.hub_internet_ingress.AgwSubnet.address_prefixes", cleaned_list)
 
-		hub_intranet_egress_firewallsubnet_address_prefixes = yaml_obj.get("subnets.hub_intranet_egress.AzureFirewallSubnet.address_prefixes", "['*']")
-		hub_intranet_ingress_firewallsubnet_address_prefixes = yaml_obj.get("subnets.hub_intranet_ingress.AzureFirewallSubnet.address_prefixes", "['*']")
-		hub_intranet_ingress_agwsubnet_address_prefixes = yaml_obj.get("subnets.hub_intranet_ingress.AgwSubnet.address_prefixes", "['*']")
+		hub_intranet_egress_firewallsubnet_address_prefixes = yaml_obj.get("subnets.hub_intranet_egress.AzureFirewallSubnet.address_prefixes", cleaned_list)
+		hub_intranet_ingress_firewallsubnet_address_prefixes = yaml_obj.get("subnets.hub_intranet_ingress.AzureFirewallSubnet.address_prefixes", cleaned_list)
+		hub_intranet_ingress_agwsubnet_address_prefixes = yaml_obj.get("subnets.hub_intranet_ingress.AgwSubnet.address_prefixes", cleaned_list)
+
+
+		# project
+		print(project_websubnet_address_prefixes[0])
+		print(project_appsubnet_address_prefixes[0])
+		print(project_dbsubnet_address_prefixes[0])
+		print(project_servicesubnet_address_prefixes[0])
+		print(project_functionappsubnet_address_prefixes[0])
+		print(project_apisubnet_address_prefixes[0])
+		print(project_systemnodepoolsubnet_address_prefixes[0])
+		print(project_usernodepoolsubnet_address_prefixes[0])
+		print(project_aisubnet_address_prefixes[0])
+		print(project_logicappsubnet_address_prefixes[0])
+		print(project_cisubnet_address_prefixes[0])
+		print(project_servicebussubnet_address_prefixes[0])
+		print(project_cosmosdbsubnet_address_prefixes[0])
+		print(project_logicappsubnet_address_prefixes[0])
+		print(project_appservicesubnet_address_prefixes[0])
+
+		# management
+		print(management_infrasubnet_address_prefixes[0])
+		print(management_securitysubnet_address_prefixes[0])
+		print(management_azurebastionsubnet_address_prefixes[0])
+
+		# devops
+		print(devops_runnersubnet_address_prefixes[0])
+
+		# ingress/egress
+		print(hub_internet_egress_firewallsubnet_address_prefixes[0])
+		print(hub_internet_ingress_firewallsubnet_address_prefixes[0])
+		print(hub_internet_ingress_agwsubnet_address_prefixes[0])
+
+		print(hub_intranet_egress_firewallsubnet_address_prefixes[0])
+		print(hub_intranet_ingress_firewallsubnet_address_prefixes[0])
+		print(hub_intranet_ingress_agwsubnet_address_prefixes[0])
 
 		# Read the file
 		file_path = 'config_nsg.yaml'
