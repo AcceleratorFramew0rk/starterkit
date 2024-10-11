@@ -11,7 +11,7 @@
 * 
 
 ## BUG FIXES:
-* 
+* fixed diagnostics settings issue with storage account - to prevent change to diagnostics settings when redeployed
   
 # 0.0.8 (22 Jul 2024)
 ## COMPATIBLE WITH:
