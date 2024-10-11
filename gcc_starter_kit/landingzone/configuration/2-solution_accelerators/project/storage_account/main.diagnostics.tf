@@ -16,7 +16,9 @@ module "diagnosticsetting1" {
       # ]
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["AllMetrics", true, false, 7],
+        # ["AllMetrics", true, false, 7],
+        ["Transaction", true, false, 0],
+        ["Capacity", true, false, 0],        
       ]
     }
   }
