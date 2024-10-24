@@ -1,171 +1,183 @@
-# 0.0.9 (TBD)
-## COMPATIBLE WITH:
-* aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
-* azurerm: version 3.85
-* aaf: 0.0.5
+### **Version 0.0.9 (TBD)**
+#### **Compatibility:**
+- **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.1`
+- **Azurerm:** Version 3.85
+- **AAF:** Version 0.0.5
 
-## FEATURES:
-* 
+#### **New Features:**
+- *No features added in this release.*
 
-## ENHANCEMENTS:
-* 
+#### **Enhancements:**
+- *No enhancements in this release.*
 
-## BUG FIXES:
-* 
-  
-# 0.0.8 (22 Jul 2024)
-## COMPATIBLE WITH:
-* aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
-* azurerm: version 3.85
-* aaf: 0.0.5
+#### **Bug Fixes:**
+- Resolved an issue with diagnostic settings on storage accounts to prevent changes upon redeployment.
 
-## FEATURES:
-* 
+---
 
-## ENHANCEMENTS:
-* standard a single config.yaml file to be inside scripts folder
+### **Version 0.0.8 (July 22, 2024)**
+#### **Compatibility:**
+- **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.1`
+- **Azurerm:** Version 3.85
+- **AAF:** Version 0.0.5
 
-## BUG FIXES:
-* fixed deployment of cosmos db mongo
-* fixed app service private endpoint for api
-  
-# 0.0.7 (19 Jul 2024)
-## COMPATIBLE WITH:
-* aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
-* azurerm: version 3.85
-* aaf: 0.0.5
+#### **New Features:**
+- *No features added in this release.*
 
-## FEATURES:
-* 
+#### **Enhancements:**
+- Standardized the configuration by moving the `config.yaml` file into the `scripts` folder.
 
-## ENHANCEMENTS:
-* refactor network security group codes
+#### **Bug Fixes:**
+- Fixed deployment issues with Cosmos DB Mongo.
+- Resolved private endpoint issues for App Service APIs.
 
-## BUG FIXES:
-* fixed issue of sed unable to flush to disk fast enough when executing in script file
-  
-# 0.0.6 (17 Jul 2024)
-## COMPATIBLE WITH:
-* aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
-* azurerm: version 3.85
-* aaf: 0.0.5
+---
 
-## FEATURES:
-* add logs and backup to solution accelerator app service
+### **Version 0.0.7 (July 19, 2024)**
+#### **Compatibility:**
+- **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.1`
+- **Azurerm:** Version 3.85
+- **AAF:** Version 0.0.5
 
-## ENHANCEMENTS:
-* change subnets creation using avm "Azure/avm-res-network-virtualnetwork/azurerm//modules/subnet"
+#### **New Features:**
+- *No features added in this release.*
 
-## BUG FIXES:
-* fixed cosmos db mongo deploy error
-* fixed cosmos db sql deploy error
+#### **Enhancements:**
+- Refactored the network security group (NSG) code for improved maintainability.
 
-# 0.0.5 (10 Jul 2024)
-## COMPATIBLE WITH:
-* aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
-* azurerm: version 3.85
-* aaf: 0.0.4
+#### **Bug Fixes:**
+- Addressed an issue where `sed` was unable to flush to disk fast enough during script execution.
 
-## FEATURES:
-* add launchpad for non gcc env with creation of virtual networks
-* add logic app solution accelerators
+---
 
-## ENHANCEMENTS:
-* remove modules from starter kit. all non avm modules exists in aaf
-* allow to set the source_image_resource_id for vm solution accelerator
-* gcc dev env to accept variables via -var in terraform plan/apply
-* rename script_launchpad to script
-* upgrade avm virtual networks to version = "0.2.3"
-* upgrade avm private dns zone to version = "0.1.2"
+### **Version 0.0.6 (July 17, 2024)**
+#### **Compatibility:**
+- **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.1`
+- **Azurerm:** Version 3.85
+- **AAF:** Version 0.0.5
 
-## BUG FIXES:
-* fix [This object does not have an attribute named "resource"] keyvault resource_id error for management vm
+#### **New Features:**
+- Added logging and backup functionalities for Solution Accelerator App Service.
 
-# 0.0.4 (20 Jun 2024)
-## COMPATIBLE WITH:
-* aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
-* azurerm: version 3.85
-* aaf: 0.0.3
+#### **Enhancements:**
+- Updated subnet creation to utilize AVM’s `Azure/avm-res-network-virtualnetwork/azurerm//modules/subnet`.
 
-## FEATURES:
-* add intranet egress firewall
-* add intranet ingress agw
-* add intranet ingress firewall
+#### **Bug Fixes:**
+- Fixed deployment errors for Cosmos DB Mongo and Cosmos DB SQL.
 
-## ENHANCEMENTS:
-* add global settings tags to all solution accelerators, 0-setup_gcc_dev_env
-* set custom module source to "AcceleratorFramew0rk/aaf/azurerm//modules/..."
-* remove hardcoding of virtual network name during import of terraform state in launchpad
-* remove un-used template folder to avoid duplication of codes
+---
 
-## BUG FIXES:
-* apim - verify environment to set to either Non Production [Developer1] or Production [Premium] sku
-* network - hub intranet egress - remove non valid diagnostics setting for public ip
-* ingress firewall - fixed duplicate resource_group_name variable
+### **Version 0.0.5 (July 10, 2024)**
+#### **Compatibility:**
+- **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.1`
+- **Azurerm:** Version 3.85
+- **AAF:** Version 0.0.4
 
-# 0.0.3 (13 Jun 2024)
-## COMPATIBLE WITH:
-* aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
-* azurerm: version 3.85
-* aaf: 0.0.1
+#### **New Features:**
+- Added a launchpad for non-GCC environments, including virtual network creation.
+- Introduced Logic App Solution Accelerators.
 
-## FEATURES:
-* standalone deployment for each solution accelerator with no dependencies to launchpad import.sh script and landing zones
+#### **Enhancements:**
+- Removed modules from the starter kit; all non-AVM modules now exist within AAF.
+- Enabled the ability to set the `source_image_resource_id` for VM Solution Accelerators.
+- Updated the GCC Dev environment to accept variables via `-var` in Terraform plan/apply.
+- Renamed `script_launchpad` to `script`.
+- Upgraded AVM virtual networks to version 0.2.3.
+- Upgraded AVM private DNS zones to version 0.1.2.
 
-## ENHANCEMENTS:
-* update avm "Azure/avm-res-network-bastionhost/azurerm" to version 0.2.0
-* add diagnostic settings for bastion host
-* add diagnostic settings for devops container instance 
-* standalone deployment for solution accelerator - mssql
-* add diagnoatics settings for apim, search service, service bus, storage account
+#### **Bug Fixes:**
+- Fixed KeyVault `resource_id` error for Management VM.
 
-## BUG FIXES:
-* fix network security group for application gateway
+---
 
-# 0.0.2 (May 29, 2024)
-## COMPATIBLE WITH:
-* aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
-* azurerm: version 3.85
-* aaf: 0.0.1
+### **Version 0.0.4 (June 20, 2024)**
+#### **Compatibility:**
+- **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.1`
+- **Azurerm:** Version 3.85
+- **AAF:** Version 0.0.3
 
-## FEATURES:
-* modules:
-  * api management
-* solution accelerators:
-  * api management (apim)
+#### **New Features:**
+- Added support for intranet egress firewall, ingress AGW, and ingress firewall.
 
-## ENHANCEMENTS:
-* update freamework.landingzone source to use registry.terraform.io "AcceleratorFramew0rk/aaf/azurerm" version 0.0.1
-* update avm "Azure/avm-res-network-virtualnetwork/azurerm" to version 0.1.4
-* update avm "Azure/avm-res-network-networksecuritygroup/azurerm" to version 0.2.0
-* setup gcc dev env - convert to using config.yaml for vnet name and cidr
-* add diagnostic settings for network security group for application/platform landing zone
+#### **Enhancements:**
+- Added global setting tags to all Solution Accelerators and the `0-setup_gcc_dev_env`.
+- Set custom module source to `AcceleratorFramew0rk/aaf/azurerm//modules/...`.
+- Removed hardcoded virtual network names during the import of Terraform state in the launchpad.
+- Removed unused template folders to avoid code duplication.
 
-## BUG FIXES:
-* fixed networksecuritygroup output "resource" and "security_rules" invalid attributes error
+#### **Bug Fixes:**
+- Verified APIM environment to ensure it is set to either Non-Production [Developer1] or Production [Premium] SKU.
+- Corrected diagnostics settings for the hub intranet egress Public IP.
+- Fixed duplicate `resource_group_name` variable in ingress firewall configurations.
 
-# 0.0.1 (May 23, 2024)
-## COMPATIBLE WITH:
-* aaf avm sde: gccstarterkit/gccstarterkit-avm-sde:0.1 
-* azurerm: version 3.85
-* aaf: 0.0.1
+---
 
-## FEATURES:
-* import gcci tfstate
-* platform common service landing zone
-* application landing zone
-* solution accelerators:
-  * aks
-  * sql server
-  * container registry
-  * app service
-  * key vault
-  * bastion host
-  * vm
-  * container instance 
+### **Version 0.0.3 (June 13, 2024)**
+#### **Compatibility:**
+- **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.1`
+- **Azurerm:** Version 3.85
+- **AAF:** Version 0.0.1
 
-## ENHANCEMENTS:
+#### **New Features:**
+- Enabled standalone deployment for each Solution Accelerator, eliminating dependencies on the `import.sh` script and landing zones.
 
-## BUG FIXES:
+#### **Enhancements:**
+- Updated AVM Bastion Host module to version 0.2.0.
+- Added diagnostic settings for the Bastion Host and DevOps Container Instance.
+- Introduced standalone deployment for the MSSQL Solution Accelerator.
+- Added diagnostic settings for APIM, Search Service, Service Bus, and Storage Account.
 
+#### **Bug Fixes:**
+- Fixed NSG configurations for Application Gateway.
+
+---
+
+### **Version 0.0.2 (May 29, 2024)**
+#### **Compatibility:**
+- **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.1`
+- **Azurerm:** Version 3.85
+- **AAF:** Version 0.0.1
+
+#### **New Features:**
+- Added modules:
+  - API Management
+- Introduced Solution Accelerators for:
+  - API Management (APIM)
+
+#### **Enhancements:**
+- Updated `framework.landingzone` source to `AcceleratorFramew0rk/aaf/azurerm` version 0.0.1.
+- Upgraded AVM Virtual Network to version 0.1.4.
+- Upgraded AVM Network Security Group to version 0.2.0.
+- Converted the GCC Dev environment to use `config.yaml` for VNet name and CIDR settings.
+- Added diagnostic settings for the Network Security Group for Application/Platform Landing Zone.
+
+#### **Bug Fixes:**
+- Fixed invalid attributes in the Network Security Group output for `resource` and `security_rules`.
+
+---
+
+### **Version 0.0.1 (May 23, 2024)**
+#### **Compatibility:**
+- **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.1`
+- **Azurerm:** Version 3.85
+- **AAF:** Version 0.0.1
+
+#### **New Features:**
+- Imported GCCI Terraform state.
+- Added Platform Common Service and Application Landing Zones.
+- Introduced Solution Accelerators for:
+  - AKS
+  - SQL Server
+  - Container Registry
+  - App Service
+  - Key Vault
+  - Bastion Host
+  - VM
+  - Container Instance
+
+#### **Enhancements:**
+- *No enhancements in this release.*
+
+#### **Bug Fixes:**
+- *No bug fixes in this release.*
 
