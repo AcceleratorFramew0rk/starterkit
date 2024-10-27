@@ -13,7 +13,7 @@ module "subnet_nat_gateway_association" {
 
   nat_gateway_id                = module.natgateway.resource.id
   subnet_ids          = {
-      subnet_id1 = module.virtual_subnet1.subnets["AzureFirewallSubnet"].id
+      subnet_id1 = module.virtual_subnet1.subnets["AzureFirewallSubnet"].resource.id
     }  
 }
 
