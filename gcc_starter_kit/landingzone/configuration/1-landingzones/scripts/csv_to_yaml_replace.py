@@ -118,11 +118,14 @@ class YamlObjectModel:
         keys = path.split(".")
         value = self._data
         for key in keys:
+            if value is None:
+                raise KeyError(f"Key '{key}' not found in the YAML data.")
             if key in value:
                 value = value[key]
             else:
                 raise KeyError(f"Key '{key}' not found in the YAML data.")
         return value
+
 
     def get(self, path, default=None):
         try:
