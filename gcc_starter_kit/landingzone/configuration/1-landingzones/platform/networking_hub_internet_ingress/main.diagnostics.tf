@@ -2,7 +2,7 @@
 module "diagnosticsetting1" {
   source  = "AcceleratorFramew0rk/aaf/azurerm//modules/diagnostics/terraform-azurerm-diagnosticsetting"
 
-  for_each = try(var.subnets.project, null) == null ? local.global_settings.subnets.project : var.subnets.project
+  for_each = try(var.subnets.hub_internet_ingress, null) == null ? local.global_settings.subnets.hub_internet_ingress : var.subnets.hub_internet_ingress
 
   name                = lower("${module.naming.monitor_diagnostic_setting.name_unique}-${each.value.name}")
   target_resource_id = module.network_security_groups[each.value.name].resource.id
