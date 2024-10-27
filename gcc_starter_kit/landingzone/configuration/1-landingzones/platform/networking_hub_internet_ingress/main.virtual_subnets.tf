@@ -19,7 +19,7 @@ module "virtual_subnet1" {
   # service_endpoint_policies                     = try(each.value.service_endpoint_policies, null)
   # role_assignments                              = try(each.value.role_assignments, null)
 
-  network_security_group                        = try(module.network_security_groups[each.value.name].resource, null)
+  network_security_group                        = try(each.value.name, null) == "AzureFirewallSubnet" ? null :  try(module.network_security_groups[each.value.name].resource, null)
 
   depends_on = [
     module.network_security_groups,
