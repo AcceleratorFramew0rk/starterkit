@@ -15,6 +15,7 @@
 - Resolved an issue with subnets missing in ingress/egress infra landing zone
 - Resolved an issue with key is NoneType when generating NSG config
 - Resolved an issue with natgateway unable to find subnets.id in infra landing zone
+- Resolved an issue with the diagnostic setting of internet ingress nsg
 
 ---
 
