@@ -5,7 +5,7 @@ module "virtual_subnet1" {
 
   for_each = try(var.subnets.management, null) == null ? local.global_settings.subnets.management : var.subnets.management
 
-  virtual_network                               = { resource_id = local.remote.networking.virtual_networks.spoke_mmanagement.virtual_network.id }
+  virtual_network                               = { resource_id = local.remote.networking.virtual_networks.spoke_management.virtual_network.id }
   name                                          = each.value.name
   address_prefixes                              = each.value.address_prefixes
   delegation                                    = try(each.value.delegations, null)
