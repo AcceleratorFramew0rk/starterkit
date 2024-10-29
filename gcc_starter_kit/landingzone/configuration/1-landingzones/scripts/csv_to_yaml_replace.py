@@ -186,7 +186,95 @@ def configure_nsg():
 		hub_intranet_ingress_agwsubnet_address_prefixes = yaml_obj.get("subnets.hub_intranet_ingress.AgwSubnet.address_prefixes", cleaned_list)
 
 
+
 		# project
+			
+		if project_websubnet_address_prefixes[0]== "":
+				project_websubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if project_appsubnet_address_prefixes[0]== "":
+			project_appsubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if project_dbsubnet_address_prefixes[0]== "":
+			project_dbsubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if project_servicesubnet_address_prefixes[0]== "":
+			project_servicesubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if project_functionappsubnet_address_prefixes[0]== "":
+			project_functionappsubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if project_apisubnet_address_prefixes[0]== "":
+			project_apisubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if project_systemnodepoolsubnet_address_prefixes[0]== "":
+			project_systemnodepoolsubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if project_usernodepoolsubnet_address_prefixes[0]== "":
+			project_usernodepoolsubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if project_aisubnet_address_prefixes[0]== "":
+			project_aisubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if project_logicappsubnet_address_prefixes[0]== "":
+			project_logicappsubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if project_cisubnet_address_prefixes[0]== "":
+			project_cisubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if project_servicebussubnet_address_prefixes[0]== "":
+			project_servicebussubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if project_cosmosdbsubnet_address_prefixes[0]== "":
+			project_cosmosdbsubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if project_logicappsubnet_address_prefixes[0]== "":
+			project_logicappsubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if project_appservicesubnet_address_prefixes[0]== "":
+			project_appservicesubnet_address_prefixes[0] = "VirtualNetwork"
+
+		# management
+					
+		if management_infrasubnet_address_prefixes[0]== "":
+			management_infrasubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if management_securitysubnet_address_prefixes[0]== "":
+			management_securitysubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if management_azurebastionsubnet_address_prefixes[0]== "":
+			management_azurebastionsubnet_address_prefixes[0] = "VirtualNetwork"
+
+
+		# devops
+							
+		if devops_runnersubnet_address_prefixes[0]== "":
+			devops_runnersubnet_address_prefixes[0] = "VirtualNetwork"
+
+		# ingress/egress
+							
+		if hub_internet_egress_firewallsubnet_address_prefixes[0]== "":
+			hub_internet_egress_firewallsubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if hub_internet_ingress_firewallsubnet_address_prefixes[0]== "":
+			hub_internet_ingress_firewallsubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if hub_internet_ingress_agwsubnet_address_prefixes[0]== "":
+			hub_internet_ingress_agwsubnet_address_prefixes[0] = "VirtualNetwork"
+
+
+		if hub_intranet_egress_firewallsubnet_address_prefixes[0]== "":
+			hub_intranet_egress_firewallsubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if hub_intranet_ingress_firewallsubnet_address_prefixes[0]== "":
+			hub_intranet_ingress_firewallsubnet_address_prefixes[0] = "VirtualNetwork"
+
+		if hub_intranet_ingress_agwsubnet_address_prefixes[0]== "":
+			hub_intranet_ingress_agwsubnet_address_prefixes[0] = "VirtualNetwork"
+
+
+		# project
+		print("project")		
 		print(project_websubnet_address_prefixes[0])
 		print(project_appsubnet_address_prefixes[0])
 		print(project_dbsubnet_address_prefixes[0])
@@ -204,14 +292,17 @@ def configure_nsg():
 		print(project_appservicesubnet_address_prefixes[0])
 
 		# management
+		print("management")				
 		print(management_infrasubnet_address_prefixes[0])
 		print(management_securitysubnet_address_prefixes[0])
 		print(management_azurebastionsubnet_address_prefixes[0])
 
 		# devops
+		print("devops")					
 		print(devops_runnersubnet_address_prefixes[0])
 
 		# ingress/egress
+		print("ingress/egress")					
 		print(hub_internet_egress_firewallsubnet_address_prefixes[0])
 		print(hub_internet_ingress_firewallsubnet_address_prefixes[0])
 		print(hub_internet_ingress_agwsubnet_address_prefixes[0])
