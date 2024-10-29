@@ -5,7 +5,10 @@
 - **AAF:** Version 0.0.5
 
 #### **New Features:**
-- *No features added in this release.*
+- Added Solution Accelerator IoT Hub.
+- Added Solution Accelerator Event Hubs.
+- Added Solution Accelerator Data Explorer.
+- Added Solution Accelerator Stream Analytics.
 
 #### **Enhancements:**
 - *No enhancements in this release.*
