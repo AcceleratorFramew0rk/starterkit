@@ -144,7 +144,9 @@ def load_yaml_file(file_path):
 def configure_nsg():
 
 		# set variables
-		default_string = "['*']"
+		# default_string = "['*']"
+		default_string = "['VirtualNetwork']"
+
 		# Clean the string and assign it to a list
 		cleaned_list = default_string.strip("[]'").split(",") 
 
