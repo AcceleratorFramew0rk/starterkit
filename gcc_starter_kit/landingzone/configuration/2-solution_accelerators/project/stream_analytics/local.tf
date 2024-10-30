@@ -1,14 +1,14 @@
 # # read current level terraform state - sqlserver
-# data "terraform_remote_state" "sqlserver" {
-#   backend = "azurerm"
+data "terraform_remote_state" "sqlserver" {
+  backend = "azurerm"
 
-#   config = {
-#     resource_group_name  = var.resource_group_name
-#     storage_account_name = var.storage_account_name
-#     container_name       = "2-solution-accelerators"
-#     key                  = "solution_accelerators-project-mssql.tfstate" 
-#   }
-# }
+  config = {
+    resource_group_name  = var.resource_group_name
+    storage_account_name = var.storage_account_name
+    container_name       = "2-solution-accelerators"
+    key                  = "solution_accelerators-project-mssql.tfstate" 
+  }
+}
 
 # read current level terraform state - data explorer
 data "terraform_remote_state" "dataexplorer" {
@@ -47,9 +47,12 @@ data "terraform_remote_state" "iothub" {
 }
 
 locals {
-  # sqlserver = try(data.terraform_remote_state.sqlserver.outputs.resource, null)     
+  sqlserver = try(data.terraform_remote_state.sqlserver.outputs.mssql_server_resource, null)     
   dataexplorer = try(data.terraform_remote_state.dataexplorer.outputs.resource, null)     
   eventhubs = try(data.terraform_remote_state.eventhubs.outputs.resource, null)     
-  iothub = try(data.terraform_remote_state.eventhubs.outputs.resource, null)     
+  iothub = try(data.terraform_remote_state.iothub.outputs.resource, null)     
+  # Check Resource Type: Ensure that the resource type is correctly specified. It should be Microsoft.Devices/IotHubs (case-sensitive).
+  iothub_id = replace(try(data.terraform_remote_state.iothub.outputs.resource.resource.id, null) , "iotHubs", "IotHubs")
+  eventhub_namespace_id  = try(data.terraform_remote_state.eventhubs.outputs.eventhub_namespace_id, null)     
 }
 

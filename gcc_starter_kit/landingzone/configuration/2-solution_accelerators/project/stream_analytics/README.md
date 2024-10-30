@@ -14,4 +14,7 @@ terraform apply -auto-approve \
 -var="storage_account_name=uatlitestgtfstate3a9" \
 -var="resource_group_name=uatlite-rg-launchpad"
 
-
+# Approved via Azure CLI
+az network private-endpoint-connection approve \
+  --id /subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.Devices/IotHubs/{iot-hub-name}/privateEndpointConnections/{private-connection-name} \
+  --description "Approving private endpoint for Stream Analytics"

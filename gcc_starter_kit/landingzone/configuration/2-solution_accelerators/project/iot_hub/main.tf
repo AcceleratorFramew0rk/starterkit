@@ -56,9 +56,9 @@ module "private_dns_zones" {
 
 module "iot_hub" {
   source = "./../../../../../../modules/terraform-azurerm-aaf/modules/iot/iot-hub"
-  # source = "AcceleratorFramew0rk/aaf/azurerm//modules/iot/iot-hubs" 
+  # source = "AcceleratorFramew0rk/aaf/azurerm//modules/iot/iot-hub" 
 
-  name                         = "${module.naming.iothub.name_unique}${random_string.this.result}"
+  name                         = "${module.naming.iothub.name}-iot"
   resource_group_name          = azurerm_resource_group.this.name
   location                     = azurerm_resource_group.this.location
 
@@ -77,6 +77,15 @@ module "iot_hub" {
     }
   ) 
 }
+
+# resource "null_resource" "register_device" {
+#   provisioner "local-exec" {
+#     command = <<EOT
+#       az iot hub device-identity create --hub-name ${module.iot_hub.name} --device-id myDevice1
+#     EOT
+#   }
+#   depends_on = [{module.iot_hub]
+# }
 
 module "private_endpoint" {
   # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
