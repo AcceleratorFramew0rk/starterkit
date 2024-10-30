@@ -55,8 +55,8 @@ module "private_dns_zones" {
 # }
 
 module "iot_hub" {
-  source = "./../../../../../../modules/terraform-azurerm-aaf/modules/iot/iot-hub"
-  # source = "AcceleratorFramew0rk/aaf/azurerm//modules/iot/iot-hub" 
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/iot/iot-hub"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/iot/iot-hub"
 
   name                         = "${module.naming.iothub.name}-iot"
   resource_group_name          = azurerm_resource_group.this.name

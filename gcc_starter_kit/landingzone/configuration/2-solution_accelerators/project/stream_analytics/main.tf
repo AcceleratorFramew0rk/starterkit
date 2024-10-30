@@ -1,7 +1,7 @@
 
 module "stream_analytics" {
-  source = "./../../../../../../modules/terraform-azurerm-aaf/modules/iot/stream-analytics"
-  # source = "AcceleratorFramew0rk/aaf/azurerm//modules/iot/stream-analyticss" 
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/iot/stream-analytics"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/iot/stream-analytics"
 
   # name                         = "${module.naming.iothub.name_unique}${random_string.this.result}"
   name                     = "${module.naming.stream_analytics_job.name}-iot"

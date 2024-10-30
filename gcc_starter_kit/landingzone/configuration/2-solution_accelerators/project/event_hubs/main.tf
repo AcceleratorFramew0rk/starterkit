@@ -1,6 +1,6 @@
 module "event_hubs" {
-  source = "./../../../../../../modules/terraform-azurerm-aaf/modules/iot/event-hubs"
-  # source = "AcceleratorFramew0rk/aaf/azurerm//modules/iot/event-hubs" 
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/iot/event-hubs"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/iot/event-hubs" 
 
   name                         = "${module.naming.eventhub.name}-iot"
   resource_group_name          = azurerm_resource_group.this.name

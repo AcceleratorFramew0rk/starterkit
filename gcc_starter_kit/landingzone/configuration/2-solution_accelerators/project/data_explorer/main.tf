@@ -1,6 +1,6 @@
 module "data_explorer" {
-  source = "./../../../../../../modules/terraform-azurerm-aaf/modules/iot/data-explorer"
-  # source = "AcceleratorFramew0rk/aaf/azurerm//modules/iot/data-explorer"
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/iot/data-explorer"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/iot/data-explorer"
 
   name                     = "${module.naming.kusto_cluster.name}-iot"
   resource_group_name          = azurerm_resource_group.this.name
