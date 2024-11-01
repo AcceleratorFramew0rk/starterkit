@@ -2,7 +2,7 @@ module "diagnosticsetting1" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/diagnostics/terraform-azurerm-diagnosticsetting"  
 
   name                = "${module.naming.monitor_diagnostic_setting.name_unique}-streamanalytics"
-  target_resource_id = module.stream_analytics.job_resource.id
+  target_resource_id = module.stream_analytics.stream_analytics_job_id
   log_analytics_workspace_id = try(local.remote.log_analytics_workspace.id, null) != null ? local.remote.log_analytics_workspace.id : var.log_analytics_workspace_id
   diagnostics = {
     categories = {
