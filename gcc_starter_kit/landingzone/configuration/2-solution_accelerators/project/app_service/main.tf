@@ -18,7 +18,7 @@ module "private_dns_zones" {
   source                = "Azure/avm-res-network-privatednszone/azurerm"   
   version = "0.1.2" 
 
-  # count = var.private_dns_zones_enabled ? 1 : 0
+  count = var.private_dns_zones_enabled ? 1 : 0
 
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
@@ -196,7 +196,7 @@ module "private_endpoint" {
   is_manual_connection           = false
   subresource_name               = "sites"
   private_dns_zone_group_name    = "default" 
-  private_dns_zone_group_ids     = [module.private_dns_zones.resource.id] 
+  private_dns_zone_group_ids     = [module.private_dns_zones[0].resource.id] 
 }
 
 # Tested with :  AzureRM version 2.55.0
@@ -299,7 +299,7 @@ module "private_endpoint1" {
   is_manual_connection           = false
   subresource_name               = "sites"
   private_dns_zone_group_name    = "default" 
-  private_dns_zone_group_ids     = [module.private_dns_zones.resource.id] 
+  private_dns_zone_group_ids     = [module.private_dns_zones[0].resource.id] 
 }
 
 # Tested with :  AzureRM version 2.55.0
