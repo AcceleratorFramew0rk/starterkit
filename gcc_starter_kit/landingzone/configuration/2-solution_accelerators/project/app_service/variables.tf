@@ -28,3 +28,8 @@ variable "environment" {
   type        = string  
   default = "sandpit"
 }
+
+variable "private_dns_zones_enabled" {
+  type        = bool  
+  default = true
+}

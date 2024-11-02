@@ -18,6 +18,8 @@ module "private_dns_zones" {
   source                = "Azure/avm-res-network-privatednszone/azurerm"   
   version = "0.1.2" 
 
+  count = var.private_dns_zones_enabled ? 1 : 0
+
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
   domain_name           = "privatelink.azurewebsites.net"
