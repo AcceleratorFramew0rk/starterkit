@@ -34,7 +34,7 @@ variable "private_dns_zones_enabled" {
   default = true
 }
 
-variable "private_dns_zones_id" {
-  type        = string  
-  default = null
-}
+# variable "private_dns_zones_id" {
+#   type        = string  
+#   default = null
+# }

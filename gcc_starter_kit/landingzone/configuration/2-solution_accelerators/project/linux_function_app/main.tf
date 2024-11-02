@@ -3,7 +3,8 @@ module "private_dns_zones" {
   source                = "Azure/avm-res-network-privatednszone/azurerm"   
   version = "0.1.2" 
 
-  count = var.private_dns_zones_enabled ? 1 : 0
+  # count = var.private_dns_zones_enabled ? 1 : 0
+  count = try(local.privatednszone.id, null) == null ? 1 : 0   
 
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
@@ -120,7 +121,9 @@ module "linux_function_app" {
     # Use of private endpoints requires Standard SKU
     primary = {
       name                          = "primary-interfaces"
-      private_dns_zone_resource_ids =  [try(var.private_dns_zones_id, null) != null ? var.private_dns_zones_id : module.private_dns_zones[0].resource.id] 
+      # private_dns_zone_resource_ids =  [try(var.private_dns_zones_id, null) != null ? var.private_dns_zones_id : module.private_dns_zones[0].resource.id] 
+      private_dns_zone_resource_ids =  [[try(local.privatednszone.id, null) == null ? module.private_dns_zones.0.resource.id : local.privatednszone.id ] ] 
+
       subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["FunctionAppSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["FunctionAppSubnet"].resource.id : var.subnet_id 
       inherit_lock = true
       inherit_tags = true
