@@ -33,3 +33,8 @@ variable "private_dns_zones_enabled" {
   type        = bool  
   default = true
 }
+
+variable "private_dns_zones_id" {
+  type        = string  
+  default = null
+}

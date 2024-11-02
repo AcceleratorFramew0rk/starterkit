@@ -120,7 +120,7 @@ module "linux_function_app" {
     # Use of private endpoints requires Standard SKU
     primary = {
       name                          = "primary-interfaces"
-      private_dns_zone_resource_ids =  [module.private_dns_zones.resource.id] 
+      private_dns_zone_resource_ids =  [try(var.private_dns_zones_id, null) != null ? var.private_dns_zones_id : module.private_dns_zones.resource.id] 
       subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["FunctionAppSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["FunctionAppSubnet"].resource.id : var.subnet_id 
       inherit_lock = true
       inherit_tags = true
