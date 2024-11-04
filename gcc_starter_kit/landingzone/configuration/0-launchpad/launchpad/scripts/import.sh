@@ -137,6 +137,7 @@ LOC="${CONFIG_location}" # "southeastasia"
 # Generate storage acc name to store state file
 RND_NUM=$(env LC_CTYPE=C tr -dc 'a-z' </dev/urandom | fold -w 3 | head -n 1)
 STG_NAME="${PROJECT_CODE}stgtfstate${RND_NUM}"
+STG_NAME="${STG_NAME//-/}"
 CONTAINER1="0-launchpad"
 CONTAINER2="1-landingzones"
 CONTAINER3="2-solution-accelerators"
