@@ -9,6 +9,7 @@
 - Added Solution Accelerator Event Hubs.
 - Added Solution Accelerator Data Explorer.
 - Added Solution Accelerator Stream Analytics.
+- Added Solution Accelerator Azure Frontdoor.
 
 #### **Enhancements:**
 - *No enhancements in this release.*
