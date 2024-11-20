@@ -2,7 +2,8 @@
 
 This repository provides the configuration and infrastructure for an Azure Kubernetes Service (AKS) cluster with a set of enterprise-grade features aimed at ensuring high availability, security, and scalability. This setup integrates with Microsoft Entra ID for authentication and authorization and supports both internet and intranet workloads with isolated networking configurations.
 
-
+✅
+☑️
 ---
 
 ## **Architecture Overview**
