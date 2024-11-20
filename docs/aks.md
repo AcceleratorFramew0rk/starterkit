@@ -8,6 +8,8 @@ This repository provides the configuration and infrastructure for an Azure Kuber
 
 ## **Architecture Overview**
 
+![My Image](./images/aks.png "This is an image")
+
 ### **Components**
 1. **AKS Private Cluster**
    - Managed Kubernetes service for running containerized microservices.
