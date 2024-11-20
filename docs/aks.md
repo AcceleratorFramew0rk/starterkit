@@ -38,11 +38,11 @@ This repository provides the configuration and infrastructure for an Azure Kuber
 ## AKS Private Cluster Key Features
 
 ### 1. **Private Cluster**
-   - **Enabled**: The AKS cluster is deployed as a private cluster, which restricts the API server's access to authorized private endpoints only, enhancing security.
+   - ✅The AKS cluster is deployed as a private cluster, which restricts the API server's access to authorized private endpoints only, enhancing security.
 
 ### 2. **Authentication and Authorization**
-   - **Microsoft Entra ID (Azure AD) authentication**: AKS is integrated with Microsoft Entra ID for user authentication.
-   - **Kubernetes RBAC**: Role-based access control (RBAC) is enforced within the cluster, providing fine-grained access control.
+   - **Microsoft Entra ID (Azure AD) authentication**: ✅AKS is integrated with Microsoft Entra ID for user authentication.
+   - **Kubernetes RBAC**: ✅Role-based access control (RBAC) is enforced within the cluster, providing fine-grained access control.
 
 ### 3. **Node Pools**
    - **Max Pods per Node**: Each node supports up to 250 pods to allow for high-density pod usage.
@@ -61,24 +61,24 @@ This repository provides the configuration and infrastructure for an Azure Kuber
        - **Node Labels**: `agentnodepool=poolappsintranet`
 
 ### 4. **Service Mesh - Istio**
-   - **Enabled**: The Istio service mesh is used for traffic management, observability, security, and policy enforcement within the cluster.
+   - ✅The Istio service mesh is used for traffic management, observability, security, and policy enforcement within the cluster.
 
 ### 5. **Container Insights**
-   - **Enabled**: Azure Monitor’s Container Insights is enabled to provide monitoring, logging, and alerting for cluster and container-level metrics.
+   - ✅Azure Monitor’s Container Insights is enabled to provide monitoring, logging, and alerting for cluster and container-level metrics.
 
 ### 6. **Network Configuration**
-   - **Network Configuration**: The cluster is using Azure CNI Overlay networking mode for pod-to-pod and pod-to-service networking, allowing for better scalability and IP address management.
-   - **Network Policy**: The cluster is using Calico for secure pod communication.  
-   - **Load Balancer**: The cluster is using Standard SKU load balancer.  
+   - **Network Configuration**: ✅The cluster is using Azure CNI Overlay networking mode for pod-to-pod and pod-to-service networking, allowing for better scalability and IP address management.
+   - **Network Policy**: ✅The cluster is using Calico for secure pod communication.  
+   - **Load Balancer**: ✅The cluster is using Standard SKU load balancer.  
 
 ### 7. **Encryption**
-   - **Encryption at-rest**: All data within the cluster is encrypted at rest using Azure's platform-managed encryption keys, ensuring data protection.
+   - **Encryption at-rest**: ✅All data within the cluster is encrypted at rest using Azure's platform-managed encryption keys, ensuring data protection.
 
 ### 8. **Diagnostic Settings**
-   - **Enabled**: Azure diagnostic settings are configured to capture logs and metrics for monitoring and troubleshooting.
+   - ✅Azure diagnostic settings are configured to capture logs and metrics for monitoring and troubleshooting.
 
 ### 9. **Defender for Cloud**
-   - **Enabled**: The cluster is secured using Microsoft Defender for Containers, providing advanced security features such as vulnerability assessments, runtime protection, and threat detection.
+   - ✅The cluster is secured using Microsoft Defender for Containers, providing advanced security features such as vulnerability assessments, runtime protection, and threat detection.
 
 ### 10. **Secrets Management**:  
-   - **Enabled**: Integrate Azure Key Vault with AKS using the CSI driver to securely manage secrets.
+   - ✅Integrate Azure Key Vault with AKS using the CSI driver to securely manage secrets.
