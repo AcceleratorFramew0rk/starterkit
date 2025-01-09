@@ -51,7 +51,8 @@ terraform apply -auto-approve \
 -var="resource_group_name={{resource_group_name}}"
 
 # cosmos db
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/cosmos_db_mongo
+# cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/cosmos_db_mongo
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/cosmos_db_sql
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name={{resource_group_name}}" \
