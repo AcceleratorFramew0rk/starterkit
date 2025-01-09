@@ -37,11 +37,6 @@ az account set --subscription xxxxxxxx-xxxxxx-xxxx-xxxx-xxxxxxxxxxxx # subscript
 
 az account show # to show the current login account
 ```
-## Quick Start
-## Deploy AKS Architype
-```bash
-TBD
-```
 
 ## To continue, goto README.md file /tf/avm/gcc_starter_kit/README.md
 ```bash

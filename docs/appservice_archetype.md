@@ -6,7 +6,7 @@ This repository provides the configuration and infrastructure for an App Service
 
 ## **Architecture Overview**
 
-![Architecture Overview](./images/aks.png "This is an image")
+![Architecture Overview](./images/appservice.png "This is an image")
 
 ### **Components**
 
