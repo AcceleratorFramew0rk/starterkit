@@ -23,3 +23,8 @@ cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
 
 # application app service logic app architype - app service + logic app + cosmosdb, keyvaule, storage account
 ./deploy_pattern_appservice_logicapp_architype.sh
+
+# OR 
+
+# application iot architype - iot hub, stream analytics, event hub, data explorer, app service, apim, sql server
+./deploy_pattern_iot_archetype.sh
