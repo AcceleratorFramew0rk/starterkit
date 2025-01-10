@@ -49,3 +49,8 @@ variable "vnet_type" {
   default = "" # "" or "project" or "devops" 
 }
 
+# allow cusomization of the private endpoint subnet name
+variable "subnet_name" {
+  type        = string  
+  default = "AppSubnet"
+}

@@ -114,7 +114,9 @@ module "storageaccount" {
       # the name must be set to avoid conflicting resources.
       name                          = "pe-${endpoint}-${module.naming.storage_account.name_unique}"
       # subnet_resource_id            = azurerm_subnet.private.id
-      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["DbSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["DbSubnet"].resource.id : var.subnet_id  
+      # subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["DbSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["DbSubnet"].resource.id : var.subnet_id  
+      # subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id : var.subnet_id  
+      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id  
       subresource_name              = endpoint
       # private_dns_zone_resource_ids = [azurerm_private_dns_zone.this[endpoint].id]
       private_dns_zone_resource_ids = [module.private_dns_zones.resource.id] 

@@ -28,3 +28,9 @@ variable "environment" {
   type        = string  
   default = "sandpit"
 }
+
+# allow cusomization of the private endpoint subnet name
+variable "subnet_name" {
+  type        = string  
+  default = "ServiceSubnet"
+}
