@@ -38,6 +38,14 @@ az account set --subscription xxxxxxxx-xxxxxx-xxxx-xxxx-xxxxxxxxxxxx # subscript
 az account show # to show the current login account
 ```
 
+## ** OPTIONAL: Setup GCC Simulator Environment (if required for testing and non gcc environment)
+```bash
+cd /tf/avm/gcc_starter_kit/0-setup_gcc_dev_env
+terraform init -reconfigure
+terraform plan
+terraform apply -auto-approve
+```
+
 ## AKS Architype
 ```bash
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/level0/gcci_platform/import.sh
