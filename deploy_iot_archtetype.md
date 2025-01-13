@@ -69,7 +69,7 @@ cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
 
 # application iot architype - iot hub, stream analytics, event hub data explorer, sql server, function app, app services etc...
-./deploy_pattern_iot_architype_script.sh
+./deploy_pattern_iot_archetype_script.sh
 
 # devops service - runner container instance (if required)
 ./deploy_pattern_devops_runner_script.sh
