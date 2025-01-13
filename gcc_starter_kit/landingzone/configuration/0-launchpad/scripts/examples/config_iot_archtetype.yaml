@@ -2,7 +2,7 @@ resource_group_name: "gcci-platform" # DO NOT CHANGE
 log_analytics_workspace_resource_group_name: "gcci-agency-law"  # DO NOT CHANGE
 log_analytics_workspace_name: "gcci-agency-workspace"  # DO NOT CHANGE
 # # virtual network - leave empty if there is no such virtual network  
-prefix: "iot1uat"
+prefix: "iotauat"
 location: "southeastasia"
 environment: "uat"
 app_config:
