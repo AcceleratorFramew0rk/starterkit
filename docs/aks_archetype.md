@@ -46,14 +46,14 @@ This repository provides the configuration and infrastructure for an AKS archety
 ## Key Features
 ### Integrated Private AKS Cluster: 
 - The Private AKS Cluster is a core component of Azure AKS that centralizes project management, enabling collaborative development and efficient resource allocation of microservices design.
-- #### 1. **Private Cluster**
+- #### **Private Cluster**
    - The AKS cluster is deployed as a private cluster, restricting API server access to authorized private endpoints only, enhancing security.
 
-- #### 2. **Authentication and Authorization**
+- #### **Authentication and Authorization**
    - **Microsoft Entra ID Authentication**: Integrates with Microsoft Entra ID for user authentication.
    - **Kubernetes RBAC**: Enforces role-based access control (RBAC) for fine-grained access control.
 
-#### 3. **Node Pools**
+- #### **Node Pools**
    - **Max Pods per Node**: Supports up to 250 pods per node for high-density pod usage.
    - **Autoscaling**: Automatically adjusts the number of nodes based on resource demands for cost-efficiency.
    - **System Node Pool**: Reserved for system workloads.
@@ -69,27 +69,27 @@ This repository provides the configuration and infrastructure for an AKS archety
        - Private IP Listener: Configured in `UserNodePoolIntranetSubnet` or `WebIntranetSubnet`.
        - Node Labels: `agentnodepool=poolappsintranet`
 
-#### 4. **Service Mesh - Istio**
+- #### **Service Mesh - Istio**
    - The Istio service mesh is used for traffic management, observability, security, and policy enforcement.
 
-#### 5. **Container Insights**
+- #### **Container Insights**
    - Azure Monitor’s Container Insights provides monitoring, logging, and alerting for cluster and container-level metrics.
 
-#### 6. **Network Configuration**
+- #### **Network Configuration**
    - **Azure CNI Overlay**: Supports scalable pod-to-pod and pod-to-service networking with efficient IP address management.
    - **Network Policy**: Uses Calico for secure pod communication.
    - **Load Balancer**: Utilizes a Standard SKU load balancer.
 
-#### 7. **Encryption**
+- #### **Encryption**
    - **At-rest Encryption**: All data is encrypted at rest using Azure's platform-managed encryption keys for robust data protection.
 
-#### 8. **Diagnostic Settings**
+- #### **Diagnostic Settings**
    - Configured to capture logs and metrics for comprehensive monitoring and troubleshooting.
 
-#### 9. **Defender for Cloud**
+- #### **Defender for Cloud**
    - Secures the cluster with Microsoft Defender for Containers, offering advanced features such as vulnerability assessments, runtime protection, and threat detection.
 
-#### 10. **Secrets Management**
+- #### **Secrets Management**
    - Integrates Azure Key Vault with AKS using the CSI driver for secure secrets management.
 
 ### **Security and Compliance**
