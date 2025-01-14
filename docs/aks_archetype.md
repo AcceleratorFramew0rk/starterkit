@@ -46,10 +46,10 @@ This repository provides the configuration and infrastructure for an AKS archety
 ## Key Features
 ### Integrated Private AKS Cluster: 
 - The Private AKS Cluster is a core component of Azure AKS that centralizes project management, enabling collaborative development and efficient resource allocation of microservices design.
-#### 1. **Private Cluster**
+- #### 1. **Private Cluster**
    - The AKS cluster is deployed as a private cluster, restricting API server access to authorized private endpoints only, enhancing security.
 
-#### 2. **Authentication and Authorization**
+- #### 2. **Authentication and Authorization**
    - **Microsoft Entra ID Authentication**: Integrates with Microsoft Entra ID for user authentication.
    - **Kubernetes RBAC**: Enforces role-based access control (RBAC) for fine-grained access control.
 
