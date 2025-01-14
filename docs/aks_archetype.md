@@ -105,12 +105,12 @@ This repository provides the configuration and infrastructure for an AKS archety
 - Facilitates efficient access control through streamlined deployment of networking and identity resources.
 
 ### **Azure Service Integration**
-- Provides seamless compatibility with Azure services such as Azure Container Registry, Azure Cognitive Services, and Azure Storage, enhancing functionality and operational synergy.
+- Provides seamless compatibility with Azure services such as Azure Container Registry, Azure SQL Server, and Azure Storage Account, enhancing functionality and operational synergy.
 
 ### **Modular Deployment**
 - Enables selective deployment of solution layers based on specific requirements, while considering interdependencies:
   - Full deployment ensures an end-to-end solution incorporating best practices like network isolation, managed identities, and RBAC.
-  - Flexible configuration allows the exclusion of certain layers, such as the identity layer, with options to customize the module as needed.
+  - Flexible configuration allows the exclusion of certain layers, such as the networking layer and individual azure resources, with options to customize the module as needed.
   - Supports deployment into existing Virtual Networks (VNETs) for seamless integration with Azure Landing Zones, enhancing adaptability to established infrastructures.
 
 ---
