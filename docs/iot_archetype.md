@@ -24,5 +24,5 @@ This repository provides the configuration and infrastructure for an IoT archety
 - **AzureRM Provider**: `4.11.0` or later
 - **AzAPI Provider**: `Azure/azapi`
 
-This solution accelerator can be deployed standalone or integrated into an Azure Landing Zone strategy, offering a flexible and secure foundation for an AKS Cluster on Azure.
+This solution accelerator can be deployed standalone or integrated into an Azure Landing Zone strategy, offering a flexible and secure foundation for an IoT solution on Azure.
 
