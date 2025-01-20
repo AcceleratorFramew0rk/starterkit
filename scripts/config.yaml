@@ -1,0 +1,44 @@
+resource_group_name: gcci-platform
+log_analytics_workspace_resource_group_name: gcci-agency-law
+log_analytics_workspace_name: gcci-agency-workspace
+subscription_id: 00000000-0000-0000-0000-000000000000
+prefix: iotzdev
+location: southeastasia
+environment: dev
+app_config:
+  private_dns_zones:
+    internet_ingress_domain_name: internet.gov.sg
+    intranet_ingress_domain_name: intranet.gra.gov.sg
+vnets:
+  project:
+    name: gcci-vnet-project
+    cidr: 100.64.0.0/23
+  devops:
+    name: gcci-vnet-devops
+    cidr: 100.127.4.0/24
+subnets:
+  project:
+    AppSubnet:
+      name: AppSubnet
+      address_prefixes:
+      - 100.64.0.32/27
+    ServiceSubnet:
+      name: ServiceSubnet
+      address_prefixes:
+      - 100.64.0.0/27
+  devops:
+    RunnerSubnet:
+      name: RunnerSubnet
+      address_prefixes:
+      - 100.127.4.0/27
+      delegations:
+      - name: runner
+        service_delegation:
+          name: Microsoft.ContainerInstance/containerGroups
+          actions:
+          - Microsoft.Network/virtualNetworks/subnets/action
+  hub_internet_ingress: null
+  hub_internet_egress: null
+  hub_intranet_ingress: null
+  hub_intranet_egress: null
+  management: null

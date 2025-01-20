@@ -1,0 +1,325 @@
+resource_group_name: "gcci-platform" # DO NOT CHANGE
+log_analytics_workspace_resource_group_name: "gcci-agency-law"  # DO NOT CHANGE
+log_analytics_workspace_name: "gcci-agency-workspace"  # DO NOT CHANGE
+subscription_id: "{{subscription_id}}" 
+# # virtual network - leave empty if there is no such virtual network   
+prefix: "{{prefix}}" 
+location: "southeastasia"
+environment: "{{environment}}" 
+app_config:
+  private_dns_zones: # to replace with your application domain name
+    internet_ingress_domain_name: internet.gov.sg 
+    intranet_ingress_domain_name: intranet.gra.gov.sg 
+# virtual networks name configuration - change the below if you are using different vnets name
+vnets:
+  # IMPORTANT: leave empty if there is no such virtual network  
+{% if hub_ingress_internet_vnet_cidr | trim != 'None' and hub_ingress_internet_vnet_cidr | trim != '' -%} 
+# -----------------
+  hub_ingress_internet:   
+    name: "gcci-vnet-ingress-internet"    
+    cidr: "{{hub_ingress_internet_vnet_cidr}}"
+{% endif -%}
+{% if hub_egress_internet_vnet_cidr | trim != 'None' and hub_egress_internet_vnet_cidr | trim != '' -%}
+# -----------------
+  hub_egress_internet:    
+    name: "gcci-vnet-egress-internet"    
+    cidr: "{{hub_egress_internet_vnet_cidr}}"
+{% endif -%}
+{% if hub_ingress_intranet_vnet_cidr | trim != 'None' and hub_ingress_intranet_vnet_cidr | trim != '' -%}
+# -----------------
+  hub_ingress_intranet:  
+    name: "gcci-vnet-ingress-intranet"    
+    cidr: "{{hub_ingress_intranet_vnet_cidr}}"
+{% endif -%}
+{% if hub_egress_intranet_vnet_cidr | trim != 'None' and hub_egress_intranet_vnet_cidr | trim != '' -%}
+# -----------------
+  hub_egress_intranet:  
+    name: "gcci-vnet-egress-intranet"    
+    cidr: "{{hub_egress_intranet_vnet_cidr}}"
+{% endif -%}
+{% if management_vnet_cidr | trim != 'None' and management_vnet_cidr | trim != '' -%}
+# -----------------
+  management:  
+    name: "gcci-vnet-management"        
+    cidr: "{{management_vnet_cidr}}"  
+{% endif -%}
+{% if project_vnet_cidr | trim != 'None' and project_vnet_cidr | trim != '' -%}
+# -----------------
+  project:  
+    name: "gcci-vnet-project"     
+    cidr: "{{project_vnet_cidr}}" 
+{% endif -%}
+{% if devops_vnet_cidr | trim != 'None' and devops_vnet_cidr | trim != '' -%}
+# -----------------
+  devops:  
+    name: "gcci-vnet-devops"   
+    cidr: "{{devops_vnet_cidr}}" 
+{% endif -%}
+# subnets cidr configuration
+subnets:
+  # IMPORTANT ** comment off the below any project subnets if it is not used
+# -----------------   
+  project: 
+# -----------------   
+{% if WebInternetSubnet_address_prefixes | trim != 'None' and WebInternetSubnet_address_prefixes | trim != '' -%} 
+    WebInternetSubnet: # DO NOT CHANGE subnet name
+      name: "WebInternetSubnet"
+      address_prefixes: ["{{ WebInternetSubnet_address_prefixes }}"]
+{% endif -%}
+{% if WebIntranetSubnet_address_prefixes | trim != 'None' and WebIntranetSubnet_address_prefixes | trim != '' -%} 
+# -----------------
+    WebIntranetSubnet: # DO NOT CHANGE subnet name
+      name: "WebIntranetSubnet"
+      address_prefixes: ["{{ WebIntranetSubnet_address_prefixes }}"]
+{% endif -%}
+{% if WebSubnet_address_prefixes | trim != 'None' and WebSubnet_address_prefixes | trim != '' -%} 
+# -----------------
+    WebSubnet: # DO NOT CHANGE subnet name
+     name: "WebSubnet"
+     address_prefixes: ["{{WebSubnet_address_prefixes}}"]
+{% endif -%}
+{% if AppSubnet_address_prefixes | trim != 'None' and AppSubnet_address_prefixes | trim != '' -%}  
+# -----------------
+    AppSubnet: # DO NOT CHANGE subnet name
+      name: "AppSubnet"    
+      address_prefixes: ["{{AppSubnet_address_prefixes}}"]
+{% endif -%}
+{% if DbSubnet_address_prefixes | trim != 'None' and DbSubnet_address_prefixes | trim != '' -%}  
+# ----------------- 
+    DbSubnet: # DO NOT CHANGE subnet name
+      name: "DbSubnet"    
+      address_prefixes: ["{{DbSubnet_address_prefixes}}"]
+{% endif -%}
+{% if ServiceSubnet_address_prefixes | trim != 'None' and ServiceSubnet_address_prefixes | trim != '' -%}  
+# -----------------
+    ServiceSubnet: # DO NOT CHANGE subnet name
+      name: "ServiceSubnet"
+      address_prefixes: ["{{ServiceSubnet_address_prefixes}}"]
+{% endif -%}
+{% if FunctionAppSubnet_address_prefixes | trim != 'None' and FunctionAppSubnet_address_prefixes | trim != '' -%} 
+# ----------------- 
+    FunctionAppSubnet: # DO NOT CHANGE subnet name
+      name: "FunctionAppSubnet"        
+      address_prefixes: ["{{FunctionAppSubnet_address_prefixes}}"]
+      delegations: [
+        {
+          name: "functionapp",
+          service_delegation: {
+            name: "Microsoft.Web/serverFarms", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ]
+{% endif -%}
+{% if ApiSubnet_address_prefixes | trim != 'None' and ApiSubnet_address_prefixes | trim != '' -%} 
+# -----------------               
+    ApiSubnet: # DO NOT CHANGE subnet name
+      name: "ApiSubnet"    
+      address_prefixes: ["{{ApiSubnet_address_prefixes}}"]
+{% endif -%}
+{% if SystemNodePoolSubnet_address_prefixes | trim != 'None' and SystemNodePoolSubnet_address_prefixes | trim != '' -%} 
+# -----------------
+    SystemNodePoolSubnet: # DO NOT CHANGE subnet name
+      name: "SystemNodePoolSubnet"    
+      address_prefixes: ["{{SystemNodePoolSubnet_address_prefixes}}"]
+{% endif -%}
+{% if UserNodePoolSubnet_address_prefixes | trim != 'None' and UserNodePoolSubnet_address_prefixes | trim != '' -%} 
+# -----------------
+    UserNodePoolSubnet: # DO NOT CHANGE subnet name
+      name: "UserNodePoolSubnet"    
+      address_prefixes: ["{{UserNodePoolSubnet_address_prefixes}}"]
+{% endif -%}
+{% if UserNodePoolIntranetSubnet_address_prefixes | trim != 'None' and UserNodePoolIntranetSubnet_address_prefixes | trim != '' -%} 
+# -----------------
+    UserNodePoolIntranetSubnet: # DO NOT CHANGE subnet name
+      name: "UserNodePoolIntranetSubnet"    
+      address_prefixes: ["{{UserNodePoolIntranetSubnet_address_prefixes}}"] 
+{% endif -%}  
+{% if UserNodePoolWindowsSubnet_address_prefixes | trim != 'None' and UserNodePoolWindowsSubnet_address_prefixes | trim != '' -%}   
+# -----------------    
+    UserNodePoolWindowsSubnet: # DO NOT CHANGE subnet name
+      name: "UserNodePoolWindowsSubnet"    
+      address_prefixes: ["{{UserNodePoolWindowsSubnet_address_prefixes}}"]  
+{% endif -%}   
+{% if AiSubnet_address_prefixes | trim != 'None' and AiSubnet_address_prefixes | trim != '' -%}  
+# -----------------
+    AiSubnet: # DO NOT CHANGE subnet name
+      name: "AiSubnet"    
+      address_prefixes: ["{{AiSubnet_address_prefixes}}"]   
+{% endif -%}
+{% if LogicAppSubnet_address_prefixes | trim != 'None' and LogicAppSubnet_address_prefixes | trim != '' -%} 
+# -----------------
+    LogicAppSubnet: # DO NOT CHANGE subnet name
+      name: "LogicAppSubnet"
+      address_prefixes: ["{{LogicAppSubnet_address_prefixes}}"]   
+      delegations: [
+        {
+          name: "logicapp",
+          service_delegation: {
+            name: "Microsoft.Web/serverFarms", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ]  
+{% endif -%}
+{% if CiSubnet_address_prefixes | trim != 'None' and CiSubnet_address_prefixes | trim != '' -%} 
+# -----------------
+    CiSubnet: # DO NOT CHANGE subnet name 
+      name: "CiSubnet"    
+      address_prefixes: ["{{CiSubnet_address_prefixes}}"]   
+      delegations: [
+        {
+          name: "ci",
+          service_delegation: {
+            name: "Microsoft.ContainerInstance/containerGroups", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ]  
+{% endif -%}
+{% if ServiceBusSubnet_address_prefixes | trim != 'None' and ServiceBusSubnet_address_prefixes | trim != '' -%} 
+# -----------------
+    ServiceBusSubnet: # DO NOT CHANGE subnet name
+      name: "ServiceBusSubnet"    
+      address_prefixes: ["{{ServiceBusSubnet_address_prefixes}}"]   
+{% endif -%}  
+{% if CosmosDbSubnet_address_prefixes | trim != 'None' and CosmosDbSubnet_address_prefixes | trim != '' -%} 
+# -----------------    
+    CosmosDbSubnet: # DO NOT CHANGE subnet name 
+      name: "CosmosDbSubnet"
+      address_prefixes: ["{{CosmosDbSubnet_address_prefixes}}"]    
+{% endif -%}
+{% if AppServiceSubnet_address_prefixes | trim != 'None' and AppServiceSubnet_address_prefixes | trim != '' -%} 
+# -----------------
+    AppServiceSubnet: # DO NOT CHANGE subnet name
+      name: "AppServiceSubnet"
+      address_prefixes: ["{{AppServiceSubnet_address_prefixes}}"]
+      delegations: [ 
+        {
+          name: "AppServiceSubnet",
+          service_delegation: {
+            name: "Microsoft.Web/serverFarms", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ] 
+{% endif -%}
+{% if AppServiceIntranetSubnet_address_prefixes | trim != 'None' and AppServiceIntranetSubnet_address_prefixes | trim != '' -%} 
+# -----------------
+    AppServiceIntranetSubnet: # DO NOT CHANGE subnet name
+      name: "AppServiceIntranetSubnet"
+      address_prefixes: ["{{AppServiceIntranetSubnet_address_prefixes}}"]
+      delegations: [ 
+        {
+          name: "AppServiceIntranetSubnet",
+          service_delegation: {
+            name: "Microsoft.Web/serverFarms", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ] 
+{% endif -%}
+  # IMPORTANT ** comment off the below any devops subnets if it is not used  
+# -----------------           
+  devops:
+# -----------------   
+{% if RunnerSubnet_address_prefixes | trim != 'None' and RunnerSubnet_address_prefixes | trim != '' -%} 
+# -----------------    
+    RunnerSubnet:    
+      name: "RunnerSubnet"
+      address_prefixes: ["{{RunnerSubnet_address_prefixes}}"]
+      delegations: [
+        {
+          name: "runner",
+          service_delegation: {
+            name: "Microsoft.ContainerInstance/containerGroups", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ] 
+{% endif -%}
+  # VpnSubnet:    
+  #   name: "VpnSubnet"
+  #   address_prefixes: ["100.127.4.128/25"]    
+# -----------------                            
+  hub_internet_ingress: 
+# -----------------     
+{% if hub_internet_ingress_AzureFirewallSubnet_address_prefixes | trim != 'None' and hub_internet_ingress_AzureFirewallSubnet_address_prefixes | trim != '' -%}   
+# -----------------    
+    AzureFirewallSubnet: 
+      name: "AzureFirewallSubnet"
+      address_prefixes: ["{{hub_internet_ingress_AzureFirewallSubnet_address_prefixes}}"]
+{% endif -%}
+{% if hub_internet_ingress_AgwSubnet_address_prefixes | trim != 'None' and hub_internet_ingress_AgwSubnet_address_prefixes | trim != '' -%}   
+# -----------------    
+    AgwSubnet:  
+      name: "AgwSubnet"
+      address_prefixes: ["{{hub_internet_ingress_AgwSubnet_address_prefixes}}"]
+{% endif -%}
+# -----------------   
+  hub_internet_egress:
+# -----------------     
+{% if hub_internet_egress_AzureFirewallSubnet_address_prefixes | trim != 'None' and hub_internet_egress_AzureFirewallSubnet_address_prefixes | trim != '' -%}   
+# -----------------    
+    AzureFirewallSubnet:   
+      name: "AzureFirewallSubnet"
+      address_prefixes: ["{{hub_internet_egress_AzureFirewallSubnet_address_prefixes}}"]
+{% endif -%}
+{% if hub_internet_egress_AzureFirewallManagementSubnet_address_prefixes | trim != 'None' and hub_internet_egress_AzureFirewallManagementSubnet_address_prefixes | trim != '' -%} 
+# -----------------      
+    AzureFirewallManagementSubnet:   
+      name: "AzureFirewallManagementSubnet"
+      address_prefixes: ["{{hub_internet_egress_AzureFirewallManagementSubnet_address_prefixes}}"]
+{% endif -%}
+# -----------------   
+  hub_intranet_ingress:
+# -----------------   
+{% if hub_intranet_ingress_AzureFirewallSubnet_address_prefixes | trim != 'None' and hub_intranet_ingress_AzureFirewallSubnet_address_prefixes | trim != '' -%}  
+# -----------------     
+    AzureFirewallSubnet:   
+      name: "AzureFirewallSubnet"
+      address_prefixes: ["{{hub_intranet_ingress_AzureFirewallSubnet_address_prefixes}}"]
+{% endif -%}
+{% if hub_intranet_ingress_AgwSubnet_address_prefixes | trim != 'None' and hub_intranet_ingress_AgwSubnet_address_prefixes | trim != '' -%}   
+# -----------------    
+    AgwSubnet:   
+      name: "AgwSubnet"
+      address_prefixes: ["{{hub_intranet_ingress_AgwSubnet_address_prefixes}}"]
+{% endif -%}
+# -----------------   
+  hub_intranet_egress:
+# -----------------   
+{% if hub_intranet_egress_AzureFirewallSubnet_address_prefixes | trim != 'None' and hub_intranet_egress_AzureFirewallSubnet_address_prefixes | trim != '' -%}   
+# -----------------    
+    AzureFirewallSubnet:    
+      name: "AzureFirewallSubnet"
+      address_prefixes: ["{{hub_intranet_egress_AzureFirewallSubnet_address_prefixes}}"]
+{% endif -%}
+{% if hub_intranet_egress_AzureFirewallManagementSubnet_address_prefixes | trim != 'None' and hub_intranet_egress_AzureFirewallManagementSubnet_address_prefixes | trim != '' -%}  
+# -----------------     
+    AzureFirewallManagementSubnet:   
+      name: "AzureFirewallManagementSubnet"
+      address_prefixes: ["{{hub_intranet_egress_AzureFirewallManagementSubnet_address_prefixes}}"]
+{% endif -%}
+# -----------------   
+  management:
+# -----------------   
+{% if management_InfraSubnet_address_prefixes | trim != 'None' and management_InfraSubnet_address_prefixes | trim != '' -%}   
+# -----------------    
+    InfraSubnet:      
+      name: "InfraSubnet"
+      address_prefixes: ["{{management_InfraSubnet_address_prefixes}}"]
+{% endif -%}
+{% if management_SecuritySubnet_address_prefixes | trim != 'None' and management_SecuritySubnet_address_prefixes | trim != '' -%}   
+# -----------------    
+    SecuritySubnet:      
+      name: "SecuritySubnet"
+      address_prefixes: ["{{management_SecuritySubnet_address_prefixes}}"]
+{% endif -%}
+{% if management_AzureBastionSubnet_address_prefixes | trim != 'None' and management_AzureBastionSubnet_address_prefixes | trim != '' -%}   
+# -----------------    
+    AzureBastionSubnet:      
+      name: "AzureBastionSubnet"
+      address_prefixes: ["{{management_AzureBastionSubnet_address_prefixes}}"]
+{% endif -%}
+

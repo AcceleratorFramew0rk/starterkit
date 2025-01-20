@@ -1,0 +1,43 @@
+
+# aks archetype
+hub_internet_ingress:
+  agw: false
+  firewall_ingress: false
+  frontdoor: false
+hub_internet_egress:
+  firewall_egress: false
+hub_intranet_ingress:
+  agw: false
+  firewall_ingress: false
+hub_intranet_egress:
+  firewall_egress: false
+management:
+  bastion_host: false
+  vm: false
+devops:
+  containter_instance: true
+project:
+  acr: true
+  ai_foundry_enterprise: false
+  aks_avm_ptn: false
+  apim: false
+  app_service: false
+  app_service_intranet: false
+  app_service_windows: false
+  azure_open_ai: false
+  container_instance: false
+  cosmos_db_mongo: false
+  cosmos_db_sql: false
+  data_explorer: false
+  event_hubs: false
+  iot_hub: false
+  keyvault: false
+  linux_function_app: false
+  logic_app: false
+  mssql: true
+  redis_cache: false
+  search_service: false
+  service_bus: false
+  storage_account: true
+  stream_analytics: false
+  vm: false

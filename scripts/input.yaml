@@ -1,0 +1,27 @@
+subscription_id: "00000000-0000-0000-0000-000000000000"
+prefix: "iotzdev" 
+environment: "dev"
+# virtual networks name configuration - change the below if you are using different vnets name
+vnets:
+  # IMPORTANT: leave empty if there is no such virtual network   
+  hub_ingress_internet: 
+    name:   
+    cidr: 
+  hub_egress_internet:  
+    name:   
+    cidr: 
+  hub_ingress_intranet:  
+    name:  
+    cidr: 
+  hub_egress_intranet:  
+    name:    
+    cidr: 
+  management:  
+    name:     
+    cidr: 
+  project:  
+    name: "gcci-vnet-project"     
+    cidr: "100.64.0.0/23" 
+  devops:  
+    name: "gcci-vnet-devops"   
+    cidr: "100.127.4.0/24" 
