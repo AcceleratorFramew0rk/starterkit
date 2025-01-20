@@ -1,4 +1,4 @@
-# IoT Setup - Deployment Overview
+# AI Foundry Setup - Deployment Overview
 
 This repository provides the configuration and infrastructure for an Azure AI Foundry archetype with enterprise-grade features, ensuring high availability, security, and scalability. The setup integrates with Microsoft Entra ID for authentication and authorization, supporting both internet and intranet workloads with isolated networking configurations.
 
