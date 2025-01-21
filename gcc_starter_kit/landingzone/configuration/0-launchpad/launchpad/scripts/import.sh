@@ -325,9 +325,10 @@ python3 csv_to_yaml.py
 # replace subnet cidr range from config.yaml file in launchpad
 ./replace.sh
 
+
 echo "-----------------------------------------------------------------------------"  
 echo "End creating NSG yaml configuration file"  
 timestamp
 echo "-----------------------------------------------------------------------------"
 
-read -p "Press enter to continue..."
+# read -p "Press enter to continue..."

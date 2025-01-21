@@ -9,9 +9,10 @@ Priority,Name,Port,Protocol,Source,Destination,DestinationPort,Action,Direction
 130,AllowHTTPSAzureActiveDirectory,*,Tcp,VirtualNetwork,AzureActiveDirectory,443,Allow,Outbound
 140,Allow1433SSQL,*,Tcp,VirtualNetwork,SQL,1433,Allow,Outbound
 150,AllowHTTPSAzureKeyVaultSouthEastAsia,*,Tcp,VirtualNetwork,AzureKeyVault.SouthEastAsia,443,Allow,Outbound
-160,Allow5671-5672Storage,*,Tcp,VirtualNetwork,EventHub,5671-5672,Allow,Outbound
+160,Allow5671-5672EventHub,*,Tcp,VirtualNetwork,EventHub,5671-5672,Allow,Outbound
 170,AllowHTTPSEventHub,*,Tcp,VirtualNetwork,EventHub,443,Allow,Outbound
 180,Allow445Storage,*,Tcp,VirtualNetwork,Storage,445,Allow,Outbound
 190,AllowHTTPSAzureCloudSouthEastAsia,*,Tcp,VirtualNetwork,AzureCloud.SouthEastAsia,443,Allow,Outbound
 200,Allow1886AzureMonitor,*,Tcp,VirtualNetwork,AzureMonitor,1886,Allow,Outbound
+210,Allow1886AzureConnectors,*,Tcp,VirtualNetwork,AzureConnectors,443,Allow,Outbound
 4060,CustomDenyAllOutbound,*,Tcp,*,*,*,Deny,Outbound

@@ -99,8 +99,8 @@ ApiSubnet:
     destination_port_range: "443"
     access: "Allow"
     direction: "Outbound"
-  Allow5671-5672Storage:
-    name: "Allow5671-5672Storage"
+  Allow5671-5672EventHub:
+    name: "Allow5671-5672EventHub"
     priority: "160"
     source_port_range: "*"
     protocol: "Tcp"
@@ -147,6 +147,16 @@ ApiSubnet:
     source_address_prefix: "VirtualNetwork"
     destination_address_prefix: "AzureMonitor"
     destination_port_range: "1886"
+    access: "Allow"
+    direction: "Outbound"
+  Allow1886AzureConnectors:
+    name: "Allow1886AzureConnectors"
+    priority: "210"
+    source_port_range: "*"
+    protocol: "Tcp"
+    source_address_prefix: "VirtualNetwork"
+    destination_address_prefix: "AzureConnectors"
+    destination_port_range: "443"
     access: "Allow"
     direction: "Outbound"
   CustomDenyAllOutbound:

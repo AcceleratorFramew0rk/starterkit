@@ -2,7 +2,7 @@ resource_group_name: "gcci-platform" # DO NOT CHANGE
 log_analytics_workspace_resource_group_name: "gcci-agency-law"  # DO NOT CHANGE
 log_analytics_workspace_name: "gcci-agency-workspace"  # DO NOT CHANGE
 # # virtual network - leave empty if there is no such virtual network  
-prefix: "iotauat"
+prefix: "iot1uat" # change accourding to your application code
 location: "southeastasia"
 environment: "uat"
 app_config:
@@ -123,7 +123,7 @@ subnets:
     #   name: "ApiSubnet"    
     #   address_prefixes: ["100.64.1.192/27"]      
     # AiSubnet: # DO NOT CHANGE subnet name
-    #   name: "ApiSubnet"    
+    #   name: "AiSubnet"    
     #   address_prefixes: ["100.64.1.0/27"]   
     # CiSubnet: # DO NOT CHANGE subnet name 
     #   name: "ApiSubnet"    

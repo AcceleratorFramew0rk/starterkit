@@ -1,43 +1,15 @@
 #!/bin/bash
 
-#------------------------------------------------------------------------
-# functions
-#------------------------------------------------------------------------
-parse_yaml() {
-   local prefix=$2
-   local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
-   sed -ne "s|^\($s\)\($w\)$s:$s\"\(.*\)\"$s\$|\1$fs\2$fs\3|p" \
-        -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
-   awk -F$fs '{
-      indent = length($1)/2;
-      vname[indent] = $2;
-      for (i in vname) {if (i > indent) {delete vname[i]}}
-      if (length($3) > 0) {
-         vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
-         printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
-      }
-   }'
-}
-
-#------------------------------------------------------------------------
-# get configuration file path, resource group name, storage account name, subscription id, subscription name
-#------------------------------------------------------------------------
-CONFIG_FILE_PATH="/tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml"
-echo $CONFIG_FILE_PATH
-eval $(parse_yaml $CONFIG_FILE_PATH "CONFIG_")
-# Define your variables
-PROJECT_CODE="${CONFIG_prefix}" 
-PREFIX="${CONFIG_prefix}" 
-# Generate resource group name to store state file
-RG_NAME="${PROJECT_CODE}-rg-launchpad"
-
-STORAGE_ACCOUNT_NAME_PREFIX="${PROJECT_CODE}stgtfstate"
-STORAGE_ACCOUNT_INFO=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '$STORAGE_ACCOUNT_NAME_PREFIX')]" 2> /dev/null)
-if [[ $? -ne 0 ]]; then
-    echo "no storage account"
+# #------------------------------------------------------------------------
+# # get configuration file path, resource group name, storage account name, subscription id, subscription name
+# #------------------------------------------------------------------------
+PREFIX=$(yq  -r '.prefix' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
+RG_NAME="${PREFIX}-rg-launchpad"
+STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '${PREFIX}stgtfstate')].[name]" -o tsv 2>/dev/null | head -n 1)
+if [[ -z "$STG_NAME" ]]; then
+    echo "No storage account found matching the prefix."
     exit
 else
-    STG_NAME=$(echo "$STORAGE_ACCOUNT_INFO" | jq ".[0].name" -r)
     ACCOUNT_INFO=$(az account show 2> /dev/null)
     if [[ $? -ne 0 ]]; then
         echo "no subscription"
@@ -47,18 +19,17 @@ else
     SUB_NAME=$(echo "$ACCOUNT_INFO" | jq ".name" -r)
     USER_NAME=$(echo "$ACCOUNT_INFO" | jq ".user.name" -r)
     SUBSCRIPTION_ID="${SUB_ID}" 
-
 fi
-#------------------------------------------------------------------------
-# end get configuration file path, resource group name, storage account name, subscription id, subscription name
-#------------------------------------------------------------------------
-
 
 echo "PREFIX: ${PREFIX}"
 echo "Subscription Id: ${SUB_ID}"
 echo "Subscription Name: ${SUB_NAME}"
 echo "Storage Account Name: ${STG_NAME}"
 echo "Resource Group Name: ${RG_NAME}"
+
+#------------------------------------------------------------------------
+# end get configuration file path, resource group name, storage account name, subscription id, subscription name
+#------------------------------------------------------------------------
 
 # keyvault - is the first resource to be deployed in the solution accelerators. 
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/keyvault

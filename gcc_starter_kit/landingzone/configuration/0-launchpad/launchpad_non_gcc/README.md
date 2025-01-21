@@ -6,7 +6,8 @@ sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad_non_gcc
 
 # define your prefix or project code
-PREFIX=aoaiuat
+# PREFIX=<your project prefix>
+PREFIX=$(yq  -r '.prefix' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
 
 # create launchpad storage account
 ./scripts/launchpad.sh $PREFIX
