@@ -43,6 +43,11 @@ configure_nsg () {
   # replace="100.64.0.32/27"
   local search="$1"
   local replace=$(echo "$2" | sed 's/ //g') # "$2"
+
+  # Check if the value is empty or "none" and set it to "VirtualNetwork" if true
+   if [[ -z "${replace}" || "${replace}" == "none" ]]; then
+      replace="VirtualNetwork"
+   fi
   
   # Escape slashes in the search variable
   search_escaped=$(echo "$search" | sed 's/[\/&]/\\&/g')

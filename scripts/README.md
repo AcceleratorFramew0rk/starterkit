@@ -14,6 +14,10 @@
 - Execute the install script:
 
 ```bash
+
+sudo chmod -R -f 777 /tf/avm/scripts
+sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration
+
 # 0-1-2: 0-launchpad, landing zone and solution accelerator
 cd /tf/avm/scripts
 
