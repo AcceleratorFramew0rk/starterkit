@@ -1,26 +1,32 @@
-# Deployment
 
-- Clone this repository in the local machine:
+# Cloning the starter repository
 
-  - git clone 
+The starter repository contains the basic configuration files and scenarios. It will allow you to compose your configuration files in the integrated environment.
+Clone the repository using the following command:
 
-  - and change into the newly created directory:
+```bash
+git clone https://github.com/AcceleratorFramew0rk/starterkit.git
+```
+OR
 
-  - cd ccslurm4ai
+Download the repo as a zip file.
+
+* Open working folder with Visual Studio Code (Note: Reopen in container when prompt in VS Code)
+  * (if required) Install VS Code Extension - Dev Containers
+* Add a zsh terminal from VS Code
+* Follow the steps in README.md file
+  
+# Deployment - For NEW deployment only.
 
 - Edit the input.yaml file with the required and optional parameters you collect in the checklist.xlsx 
 - Edit the settings.yaml file to select which azure resources you want to deployed 
 
 - Execute the install script:
-
 ```bash
-
 sudo chmod -R -f 777 /tf/avm/scripts
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration
-
 # 0-1-2: 0-launchpad, landing zone and solution accelerator
 cd /tf/avm/scripts
-
 ./install.sh
 ```
 

@@ -1,6 +1,65 @@
 #!/bin/bash
 
 #------------------------------------------------------------------------
+# functions
+#------------------------------------------------------------------------
+exec_terraform() {
+
+  local tf_state_name=$1
+  local path=$2
+  local rgname=$3
+  local stgname=$4
+  local containername=$5
+
+  if [[ -z "$containername" ]]; then
+      containername = "2-solution-accelerators"
+  fi
+
+  cd $path
+  pwd
+
+  terraform init  -reconfigure \
+  -backend-config="resource_group_name=${rgname}" \
+  -backend-config="storage_account_name=${stgname}" \
+  -backend-config="container_name=${containername}" \
+  -backend-config="key=${tf_state_name}.tfstate"
+
+  if [ $? -ne 0 ]; then
+    echo "Terraform init failed. Exiting."
+    echo -e "\e[31mTerraform init failed for ${tf_state_name}. Exiting.\e[0m"
+    exit 1
+  fi
+
+
+  terraform plan \
+  -var="storage_account_name=${stgname}" \
+  -var="resource_group_name=${rgname}"
+
+  if [ $? -ne 0 ]; then
+    # echo "Terraform plan failed. Exiting."
+    echo -e "\e[31mTerraform plan failed for ${tf_state_name}. Exiting.\e[0m"
+    exit 1
+  fi
+
+
+  terraform apply -auto-approve \
+  -var="storage_account_name=${stgname}" \
+  -var="resource_group_name=${rgname}"   
+
+  if [ $? -ne 0 ]; then
+    # echo "Terraform apply failed. Exiting."
+    echo -e "\e[31mTerraform apply failed for ${tf_state_name}. Exiting.\e[0m"
+    exit 1
+  fi
+
+
+}
+
+#------------------------------------------------------------------------
+# end functions
+#------------------------------------------------------------------------
+
+#------------------------------------------------------------------------
 # move current config.yaml to working directory ".../0-launchpad/scripts/config.yaml"
 #------------------------------------------------------------------------
 
@@ -19,10 +78,10 @@ cp "./config.yaml" "/tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpa
 # end move current config.yaml to working directory ".../0-launchpad/scripts/config.yaml"
 #------------------------------------------------------------------------
 
+
 # #------------------------------------------------------------------------
 # # get configuration file path, resource group name, storage account name, subscription id, subscription name
 # #------------------------------------------------------------------------
-
 
 # get current subscription id and name
 ACCOUNT_INFO=$(az account show 2> /dev/null)
@@ -46,12 +105,18 @@ echo "Subscription Name: ${SUB_NAME}"
 echo "Storage Account Name: ${STG_NAME}"
 echo "Resource Group Name: ${RG_NAME}"
 
+# #------------------------------------------------------------------------
+# # end get configuration file path, resource group name, storage account name, subscription id, subscription name
+# #------------------------------------------------------------------------
+
+#------------------------------------------------------------------------
+# 0-launchpad
+#------------------------------------------------------------------------
+
 if [[ -z "$STG_NAME" ]]; then
     # execute the import script
     cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad
     ./scripts/import.sh
-    # echo "No storage account found matching the prefix."
-    # exit
 else
     # execute the import script    
     cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad
@@ -61,67 +126,37 @@ fi
 
 cd /tf/avm/scripts
 
-#------------------------------------------------------------------------
-# end get configuration file path, resource group name, storage account name, subscription id, subscription name
-#------------------------------------------------------------------------
 
 #------------------------------------------------------------------------
-# functions
-#------------------------------------------------------------------------
-exec_terraform() {
-
-  local tf_state_name=$1
-  local path=$2
-
-  cd $path
-  pwd
-
-  terraform init  -reconfigure \
-  -backend-config="resource_group_name=${RG_NAME}" \
-  -backend-config="storage_account_name=${STG_NAME}" \
-  -backend-config="container_name=2-solution-accelerators" \
-  -backend-config="key=${tf_state_name}.tfstate"
-
-  terraform plan \
-  -var="storage_account_name=${STG_NAME}" \
-  -var="resource_group_name=${RG_NAME}"
-
-  terraform apply -auto-approve \
-  -var="storage_account_name=${STG_NAME}" \
-  -var="resource_group_name=${RG_NAME}"   
-
-}
-
-#------------------------------------------------------------------------
-# end functions
+# end 0-launchpad
 #------------------------------------------------------------------------
 
 # # #------------------------------------------------------------------------
 # # # get configuration file path, resource group name, storage account name, subscription id, subscription name
 # # #------------------------------------------------------------------------
-# PREFIX=$(yq  -r '.prefix' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
-# RG_NAME="${PREFIX}-rg-launchpad"
-# STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '${PREFIX}stgtfstate')].[name]" -o tsv 2>/dev/null | head -n 1)
-# if [[ -z "$STG_NAME" ]]; then
-#     echo "No storage account found matching the prefix."
-#     exit
-# else
-#     ACCOUNT_INFO=$(az account show 2> /dev/null)
-#     if [[ $? -ne 0 ]]; then
-#         echo "no subscription"
-#         exit
-#     fi
-#     SUB_ID=$(echo "$ACCOUNT_INFO" | jq ".id" -r)
-#     SUB_NAME=$(echo "$ACCOUNT_INFO" | jq ".name" -r)
-#     USER_NAME=$(echo "$ACCOUNT_INFO" | jq ".user.name" -r)
-#     SUBSCRIPTION_ID="${SUB_ID}" 
-# fi
+PREFIX=$(yq  -r '.prefix' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
+RG_NAME="${PREFIX}-rg-launchpad"
+STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '${PREFIX}stgtfstate')].[name]" -o tsv 2>/dev/null | head -n 1)
+if [[ -z "$STG_NAME" ]]; then
+    echo "No storage account found matching the prefix."
+    exit
+else
+    ACCOUNT_INFO=$(az account show 2> /dev/null)
+    if [[ $? -ne 0 ]]; then
+        echo "no subscription"
+        exit
+    fi
+    SUB_ID=$(echo "$ACCOUNT_INFO" | jq ".id" -r)
+    SUB_NAME=$(echo "$ACCOUNT_INFO" | jq ".name" -r)
+    USER_NAME=$(echo "$ACCOUNT_INFO" | jq ".user.name" -r)
+    SUBSCRIPTION_ID="${SUB_ID}" 
+fi
 
-# echo "PREFIX: ${PREFIX}"
-# echo "Subscription Id: ${SUB_ID}"
-# echo "Subscription Name: ${SUB_NAME}"
-# echo "Storage Account Name: ${STG_NAME}"
-# echo "Resource Group Name: ${RG_NAME}"
+echo "PREFIX: ${PREFIX}"
+echo "Subscription Id: ${SUB_ID}"
+echo "Subscription Name: ${SUB_NAME}"
+echo "Storage Account Name: ${STG_NAME}"
+echo "Resource Group Name: ${RG_NAME}"
 
 # #------------------------------------------------------------------------
 # # end get configuration file path, resource group name, storage account name, subscription id, subscription name
@@ -135,17 +170,17 @@ exec_terraform() {
 # spoke project 
 backend_config_key="network-spoke-project"
 working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/application/networking_spoke_project"
-exec_terraform $backend_config_key $working_path
+exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "1-landingzones"
 
 # spoke devops 
-backend_config_key="network-peering-project-devops"
+backend_config_key="network-spoke-devops"
 working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/application/networking_spoke_devops"
-exec_terraform $backend_config_key $working_path
+exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "1-landingzones" 
 
 # peering project-devops
 backend_config_key="network-peering-project-devops"
 working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/application/networking_peering_project_devops"
-exec_terraform $backend_config_key $working_path
+exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "1-landingzones" 
 
 #------------------------------------------------------------------------
 # end 1-landing zone
@@ -183,7 +218,7 @@ for section in $(yq 'keys | .[]' "$yaml_file" -r); do
       working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/${section}/${key}"
       echo "backend_config_key: $backend_config_key"
       echo "working_path: $working_path"
-      exec_terraform $backend_config_key $working_path
+      exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "2-solution-accelerators" 
 
     else
       echo "skip ${section} ${key}"

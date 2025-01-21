@@ -1,5 +1,5 @@
 subscription_id: "00000000-0000-0000-0000-000000000000"
-prefix: "iotzdev" 
+prefix: "lite1dev" 
 environment: "dev"
 # virtual networks name configuration - change the below if you are using different vnets name
 vnets:

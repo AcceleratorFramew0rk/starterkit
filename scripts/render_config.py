@@ -1,14 +1,5 @@
 
 
-# import os
-# import json
-# import ipaddress
-# import base64
-# from datetime import datetime
-# from jinja2 import Environment, FileSystemLoader, select_autoescape
-# import zipfile
-# import uuid
-# import time
 
 import csv
 import sys
@@ -544,12 +535,19 @@ def main():
 
     print(config_yaml)
 
-    # Parse the string into a Python dictionary
-    yaml_data = yaml.safe_load(config_yaml)
 
-    # Write to config.yaml with improved formatting
+    # Open the file in write mode ('w') and print to it
     with open('config.yaml', 'w') as file:
-        yaml.dump(yaml_data, file, default_flow_style=False, sort_keys=False, indent=2)    
+        print(config_yaml, file=file)
+
+    # save_yaml(config_yaml, "config.yaml")
+
+    # # Parse the string into a Python dictionary
+    # yaml_data = yaml.safe_load(config_yaml)
+
+    # # Write to config.yaml with improved formatting
+    # with open('config.yaml', 'w') as file:
+    #     yaml.dump(yaml_data, file, default_flow_style=False, sort_keys=False, indent=2)    
 
   
 if __name__ == '__main__':

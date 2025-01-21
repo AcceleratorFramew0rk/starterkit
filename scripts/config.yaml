@@ -1,44 +1,87 @@
-resource_group_name: gcci-platform
-log_analytics_workspace_resource_group_name: gcci-agency-law
-log_analytics_workspace_name: gcci-agency-workspace
-subscription_id: 00000000-0000-0000-0000-000000000000
-prefix: iotzdev
-location: southeastasia
-environment: dev
+resource_group_name: "gcci-platform" # DO NOT CHANGE
+log_analytics_workspace_resource_group_name: "gcci-agency-law"  # DO NOT CHANGE
+log_analytics_workspace_name: "gcci-agency-workspace"  # DO NOT CHANGE
+subscription_id: "00000000-0000-0000-0000-000000000000" 
+# # virtual network - leave empty if there is no such virtual network   
+prefix: "lite1dev" 
+location: "southeastasia"
+environment: "dev" 
 app_config:
-  private_dns_zones:
-    internet_ingress_domain_name: internet.gov.sg
-    intranet_ingress_domain_name: intranet.gra.gov.sg
+  private_dns_zones: # to replace with your application domain name
+    internet_ingress_domain_name: internet.gov.sg 
+    intranet_ingress_domain_name: intranet.gra.gov.sg 
+# virtual networks name configuration - change the below if you are using different vnets name
 vnets:
-  project:
-    name: gcci-vnet-project
-    cidr: 100.64.0.0/23
-  devops:
-    name: gcci-vnet-devops
-    cidr: 100.127.4.0/24
+  # IMPORTANT: leave empty if there is no such virtual network  
+# -----------------
+  project:  
+    name: "gcci-vnet-project"     
+    cidr: "100.64.0.0/23" 
+# -----------------
+  devops:  
+    name: "gcci-vnet-devops"   
+    cidr: "100.127.4.0/24" 
+# subnets cidr configuration
 subnets:
-  project:
-    AppSubnet:
-      name: AppSubnet
-      address_prefixes:
-      - 100.64.0.32/27
-    ServiceSubnet:
-      name: ServiceSubnet
-      address_prefixes:
-      - 100.64.0.0/27
+  # IMPORTANT ** comment off the below any project subnets if it is not used
+# -----------------   
+  project: 
+# -----------------   
+# -----------------
+    WebIntranetSubnet: # DO NOT CHANGE subnet name
+      name: "WebIntranetSubnet"
+      address_prefixes: ["100.64.0.64/27"]
+# -----------------
+    AppSubnet: # DO NOT CHANGE subnet name
+      name: "AppSubnet"    
+      address_prefixes: ["100.64.0.96/27"]
+# -----------------
+    ServiceSubnet: # DO NOT CHANGE subnet name
+      name: "ServiceSubnet"
+      address_prefixes: ["100.64.0.0/27"]
+# -----------------
+    AppServiceIntranetSubnet: # DO NOT CHANGE subnet name
+      name: "AppServiceIntranetSubnet"
+      address_prefixes: ["100.64.0.32/27"]
+      delegations: [ 
+        {
+          name: "AppServiceIntranetSubnet",
+          service_delegation: {
+            name: "Microsoft.Web/serverFarms", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ] 
+# IMPORTANT ** comment off the below any devops subnets if it is not used  
+# -----------------           
   devops:
-    RunnerSubnet:
-      name: RunnerSubnet
-      address_prefixes:
-      - 100.127.4.0/27
-      delegations:
-      - name: runner
-        service_delegation:
-          name: Microsoft.ContainerInstance/containerGroups
-          actions:
-          - Microsoft.Network/virtualNetworks/subnets/action
-  hub_internet_ingress: null
-  hub_internet_egress: null
-  hub_intranet_ingress: null
-  hub_intranet_egress: null
-  management: null
+# -----------------   
+# -----------------    
+    RunnerSubnet:    
+      name: "RunnerSubnet"
+      address_prefixes: ["100.127.4.0/27"]
+      delegations: [
+        {
+          name: "runner",
+          service_delegation: {
+            name: "Microsoft.ContainerInstance/containerGroups", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ] 
+# -----------------                            
+  hub_internet_ingress: 
+# -----------------     
+# -----------------   
+  hub_internet_egress:
+# -----------------     
+# -----------------   
+  hub_intranet_ingress:
+# -----------------   
+# -----------------   
+  hub_intranet_egress:
+# -----------------   
+# -----------------   
+  management:
+# -----------------   
+
