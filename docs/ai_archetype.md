@@ -60,7 +60,6 @@ This repository provides the configuration and infrastructure for an Azure AI Fo
 - A comprehensive platform for building, deploying, and operationalizing AI solutions across various use cases.  
 - Enables seamless collaboration between data scientists, developers, and business stakeholders with tools for experiment tracking, model versioning, and deployment management.  
 - Offers prebuilt AI services, such as natural language processing and image recognition, along with support for custom models built in Azure Machine Learning.  
-- Facilitates integration with other Azure services like Data Explorer, Event Hub, and Stream Analytics for advanced data analysis and decision-making pipelines.  
 
 ### **Security and Compliance**  
 - Offers advanced network isolation, role-based access control (RBAC), and integration with Azure Key Vault to securely manage sensitive information.  
