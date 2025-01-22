@@ -113,7 +113,7 @@ cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
 ```
 
 
-## To continue, goto README.md file /tf/avm/gcc_starter_kit/README.md
+## To continue with detail of each solution accelerators, goto README.md file /tf/avm/gcc_starter_kit/README.md
 ```bash
 cd /tf/avm/gcc_starter_kit
 ```
