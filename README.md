@@ -46,10 +46,13 @@ terraform plan
 terraform apply -auto-approve
 ```
 
-## AKS Architype
+
+## 1. AKS Architype
 ```bash
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/level0/gcci_platform/import.sh
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration
+
+## Edit your configuration in **config.yaml** file "/tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml"
 
 # 1. launchpad
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad
@@ -63,6 +66,48 @@ cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
 ./deploy_pattern_aks_architype.sh
 ```
+
+## 2. App Service Architype
+```bash
+sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/level0/gcci_platform/import.sh
+sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration
+
+## Edit your configuration in **config.yaml** file "/tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml"
+
+# 1. launchpad
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad
+./scripts/import.sh
+
+# 2. application landing zone
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones
+./deploy_application_landingzone.sh
+
+# 3. solution accelerators
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
+./deploy_pattern_appservice_architype.sh
+```
+
+
+## 3. IoT Architype
+```bash
+sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/level0/gcci_platform/import.sh
+sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration
+
+## Edit your configuration in **config.yaml** file "/tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml"
+
+# 1. launchpad
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad
+./scripts/import.sh
+
+# 2. application landing zone
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones
+./deploy_application_landingzone.sh
+
+# 3. solution accelerators
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
+./deploy_pattern_iot_architype.sh
+```
+
 
 ## To continue, goto README.md file /tf/avm/gcc_starter_kit/README.md
 ```bash
