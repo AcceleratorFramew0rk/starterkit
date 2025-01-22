@@ -88,7 +88,7 @@ cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones
 
 # 3. solution accelerators
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
-./deploy_pattern_appservice_architype.sh
+./deploy_pattern_appservice_internet_intranet_architype.sh
 ```
 
 
