@@ -1,4 +1,4 @@
-# IoT Setup - Deployment Overview
+# IoT Archetype Setup - Deployment Overview
 
 This repository provides the configuration and infrastructure for an IoT archetype with enterprise-grade features, ensuring high availability, security, and scalability. The setup integrates with Microsoft Entra ID for authentication and authorization, supporting data ingestion from IoT devices from the internet with isolated networking configurations.
 
