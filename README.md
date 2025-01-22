@@ -50,7 +50,7 @@ terraform apply -auto-approve
 
 - Open an **zsh** terminal from your visual studio code.
 
-### 1. AKS Architype [view architecture diagram](./docs/aks_archetype.md){:target="_blank"}
+### 1. AKS Architype [architecture diagram](./docs/aks_archetype.md)
 
 ```bash
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/level0/gcci_platform/import.sh
@@ -71,7 +71,7 @@ cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
 ./deploy_pattern_aks_architype.sh
 ```
 
-### 2. App Service Architype
+### 2. App Service Architype [architecture diagram](./docs/appservice_archetype.md)
 ```bash
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/level0/gcci_platform/import.sh
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration
@@ -92,7 +92,7 @@ cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
 ```
 
 
-### 3. IoT Architype
+### 3. IoT Architype [architecture diagram](./docs/iot_archetype.md)
 ```bash
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/level0/gcci_platform/import.sh
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration
