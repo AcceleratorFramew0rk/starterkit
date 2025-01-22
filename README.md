@@ -46,8 +46,11 @@ terraform plan
 terraform apply -auto-approve
 ```
 
+## Deploy Archetype via script
 
-## 1. AKS Architype
+- Open an **zsh** terminal from your visual studio code.
+
+### 1. AKS Architype
 ```bash
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/level0/gcci_platform/import.sh
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration
@@ -67,7 +70,7 @@ cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
 ./deploy_pattern_aks_architype.sh
 ```
 
-## 2. App Service Architype
+### 2. App Service Architype
 ```bash
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/level0/gcci_platform/import.sh
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration
@@ -88,7 +91,7 @@ cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
 ```
 
 
-## 3. IoT Architype
+### 3. IoT Architype
 ```bash
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/level0/gcci_platform/import.sh
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration
