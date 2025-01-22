@@ -10,8 +10,6 @@ This repository provides the configuration and infrastructure for an Azure AI Fo
 
 ### **Components**
 
-### **Components**
-
 1. **AI Foundry Hub**  
    - A centralized platform for developing, training, and deploying AI and machine learning models at scale.  
    - Integrates seamlessly with Azure Machine Learning, enabling collaboration, experiment tracking, and model versioning.  
