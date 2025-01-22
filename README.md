@@ -50,7 +50,8 @@ terraform apply -auto-approve
 
 - Open an **zsh** terminal from your visual studio code.
 
-### 1. AKS Architype
+### 1. AKS Architype [view architecture diagram](./docs/aks_archetype.md){:target="_blank"}
+
 ```bash
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/level0/gcci_platform/import.sh
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration
