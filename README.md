@@ -36,6 +36,9 @@ az login --tenant xxxxxxxx-xxxxxx-xxxx-xxxx-xxxxxxxxxxxx # azure tenant id
 az account set --subscription xxxxxxxx-xxxxxx-xxxx-xxxx-xxxxxxxxxxxx # subscription id
 
 az account show # to show the current login account
+
+SUBSCRIPTION_ID="xxxxxxxx-xxxxxx-xxxx-xxxx-xxxxxxxxxxxx"
+export ARM_SUBSCRIPTION_ID="${SUBSCRIPTION_ID}"
 ```
 
 ## ** OPTIONAL: Setup GCC Simulator Environment (if required for testing and non gcc environment)
