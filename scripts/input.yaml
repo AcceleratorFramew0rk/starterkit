@@ -1,9 +1,7 @@
-subscription_id: "00000000-0000-0000-0000-000000000000"
-prefix: "lite1dev" 
+subscription_id: "0b5b13b8-0ad7-4552-936f-8fae87e0633f"
+prefix: "lite4dev"
 environment: "dev"
-# virtual networks name configuration - change the below if you are using different vnets name
 vnets:
-  # IMPORTANT: leave empty if there is no such virtual network   
   hub_ingress_internet: 
     name:   
     cidr: 
@@ -20,8 +18,8 @@ vnets:
     name:     
     cidr: 
   project:  
-    name: "gcci-vnet-project"     
-    cidr: "100.64.0.0/23" 
+    name: "gcci-vnet-project"
+    cidr: "100.64.0.0/23"
   devops:  
-    name: "gcci-vnet-devops"   
-    cidr: "100.127.4.0/24" 
+    name: "gcci-vnet-devops"  
+    cidr: "100.127.4.0/24"  

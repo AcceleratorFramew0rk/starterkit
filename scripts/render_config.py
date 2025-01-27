@@ -9,7 +9,7 @@ import ipaddress
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 
-def get_config(input, solution_accelerator):
+def get_config(input, solution_accelerator, landingzone_type):
     """
     Generate configuration details for a given architecture type and VNet CIDR blocks.
 
@@ -21,7 +21,11 @@ def get_config(input, solution_accelerator):
     """
 
     # default architype = "type7"
-    architype = "type7" # custom solution accelerator
+    if landingzone_type == "application" or landingzone_type == "1":
+        architype = "type7" # custom solution accelerator
+    else:
+        architype = "type1" # infra landing zone hub and management
+
     subscription_id = input.get("subscription_id")
     tenant_id = "00000000-0000-0000-0000-000000000000"
     prefix = input.get("prefix")
@@ -250,7 +254,7 @@ def get_config(input, solution_accelerator):
             current_value = solution_accelerator_data.get("project", {}).get("aks_avm_ptn", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
-                if AiSubnet_address_prefixes == "":
+                if SystemNodePoolSubnet_address_prefixes == "":
                     SystemNodePoolSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
                 if UserNodePoolSubnet_address_prefixes == "":
@@ -519,9 +523,23 @@ def save_yaml(content, output_path):
 
 def main():
 
+    # Ensure the script is called with the YAML file path as an argument
+    if len(sys.argv) < 2:
+        print("Usage: python3 render_config.py <settings_yaml_file_path> <landingzone_type>")
+        sys.exit(1)
+
     # Path to the YAML file
-    input_yaml_file_path = '/tf/avm/scripts/input.yaml'
-    solution_accelerator_yaml_file_path = '/tf/avm/scripts/settings.yaml'
+    input_yaml_file_path = './input.yaml' # '/tf/avm/scripts/input.yaml'
+    solution_accelerator_yaml_file_path =  sys.argv[1] # '/tf/avm/scripts/settings.yaml'
+
+    landingzone_type =  sys.argv[2] # application or infrastrucutre'
+    print("landingzone type: ", landingzone_type)
+    if landingzone_type not in ["application", "infrastructure", "1", "2"]:
+        print("Usage: python3 render_config.py <settings_yaml_file_path> <landingzone_type>")
+        sys.exit(1)
+
+    if landingzone_type == "1":
+        landingzone_type = "application"
 
     # Read and parse the YAML file
     with open(input_yaml_file_path, 'r') as file:
@@ -531,23 +549,13 @@ def main():
     with open(solution_accelerator_yaml_file_path, 'r') as file1:
         solution_accelerator = yaml.safe_load(file1)
 
-    config_yaml = get_config(input_config, solution_accelerator)
+    config_yaml = get_config(input_config, solution_accelerator, landingzone_type)
 
     print(config_yaml)
 
-
     # Open the file in write mode ('w') and print to it
-    with open('config.yaml', 'w') as file:
+    with open('output_config.yaml', 'w') as file:
         print(config_yaml, file=file)
-
-    # save_yaml(config_yaml, "config.yaml")
-
-    # # Parse the string into a Python dictionary
-    # yaml_data = yaml.safe_load(config_yaml)
-
-    # # Write to config.yaml with improved formatting
-    # with open('config.yaml', 'w') as file:
-    #     yaml.dump(yaml_data, file, default_flow_style=False, sort_keys=False, indent=2)    
 
   
 if __name__ == '__main__':

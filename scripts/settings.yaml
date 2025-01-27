@@ -1,5 +1,29 @@
 
-# aks archetype
+# -------------------------------------------------------------------
+# Azure Resource Deployment Configuration
+# -------------------------------------------------------------------
+# This YAML file is used to specify which Azure resources should be 
+# deployed for a given archetype or solution. 
+#
+# Instructions:
+# - Set a resource's value to `true` if you want it to be deployed.
+# - Set a resource's value to `false` if you do not want it to be deployed.
+#
+# Sections:
+# - `hub_internet_ingress`: Configuration for internet ingress resources in the hub (e.g., Application Gateway, Firewall, Front Door).
+# - `hub_internet_egress`: Configuration for internet egress resources in the hub (e.g., Firewall).
+# - `hub_intranet_ingress`: Configuration for intranet ingress resources in the hub (e.g., Application Gateway, Firewall).
+# - `hub_intranet_egress`: Configuration for intranet egress resources in the hub (e.g., Firewall).
+# - `management`: Management-related resources (e.g., Bastion Host, VMs).
+# - `devops`: DevOps-related resources (e.g., Container Instances).
+# - `project`: Project-specific resources (e.g., AKS, App Services, Key Vault, Storage Accounts, etc.).
+#
+# Example:
+# To deploy Application Gateway in the `hub_internet_ingress` section, set `agw` to `true`:
+# hub_internet_ingress:
+#   agw: true
+# -------------------------------------------------------------------
+
 hub_internet_ingress:
   agw: false
   firewall_ingress: false
@@ -34,10 +58,10 @@ project:
   keyvault: false
   linux_function_app: false
   logic_app: false
-  mssql: true
+  mssql: false
   redis_cache: false
   search_service: false
   service_bus: false
-  storage_account: true
+  storage_account: false
   stream_analytics: false
   vm: false

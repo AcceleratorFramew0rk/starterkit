@@ -1,9 +1,9 @@
 resource_group_name: "gcci-platform" # DO NOT CHANGE
 log_analytics_workspace_resource_group_name: "gcci-agency-law"  # DO NOT CHANGE
 log_analytics_workspace_name: "gcci-agency-workspace"  # DO NOT CHANGE
-subscription_id: "00000000-0000-0000-0000-000000000000" 
+subscription_id: "0b5b13b8-0ad7-4552-936f-8fae87e0633f" 
 # # virtual network - leave empty if there is no such virtual network   
-prefix: "lite1dev" 
+prefix: "lite4dev" 
 location: "southeastasia"
 environment: "dev" 
 app_config:
@@ -28,30 +28,9 @@ subnets:
   project: 
 # -----------------   
 # -----------------
-    WebIntranetSubnet: # DO NOT CHANGE subnet name
-      name: "WebIntranetSubnet"
-      address_prefixes: ["100.64.0.64/27"]
-# -----------------
-    AppSubnet: # DO NOT CHANGE subnet name
-      name: "AppSubnet"    
-      address_prefixes: ["100.64.0.96/27"]
-# -----------------
     ServiceSubnet: # DO NOT CHANGE subnet name
       name: "ServiceSubnet"
       address_prefixes: ["100.64.0.0/27"]
-# -----------------
-    AppServiceIntranetSubnet: # DO NOT CHANGE subnet name
-      name: "AppServiceIntranetSubnet"
-      address_prefixes: ["100.64.0.32/27"]
-      delegations: [ 
-        {
-          name: "AppServiceIntranetSubnet",
-          service_delegation: {
-            name: "Microsoft.Web/serverFarms", 
-            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
-            }
-        }
-      ] 
 # IMPORTANT ** comment off the below any devops subnets if it is not used  
 # -----------------           
   devops:
