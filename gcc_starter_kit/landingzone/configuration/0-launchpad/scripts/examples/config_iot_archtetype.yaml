@@ -2,9 +2,9 @@ resource_group_name: "gcci-platform" # DO NOT CHANGE
 log_analytics_workspace_resource_group_name: "gcci-agency-law"  # DO NOT CHANGE
 log_analytics_workspace_name: "gcci-agency-workspace"  # DO NOT CHANGE
 # # virtual network - leave empty if there is no such virtual network  
-prefix: "iot1uat" # change accourding to your application code
+prefix: "iot1dev" # change accourding to your application code
 location: "southeastasia"
-environment: "uat"
+environment: "dev"
 app_config:
   private_dns_zones: # to replace with your application domain name
     internet_ingress_domain_name: lite-uat.xxx.gov.sg 
