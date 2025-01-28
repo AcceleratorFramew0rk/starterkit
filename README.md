@@ -71,7 +71,7 @@ cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones
 
 # 3. solution accelerators
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators
-./deploy_pattern_aks_architype.sh
+./deploy_pattern_aks_archetype.sh
 ```
 
 ### 2. App Service Architype [[architecture diagram](./docs/appservice_archetype.md)]
