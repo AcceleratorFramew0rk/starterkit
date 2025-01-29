@@ -2,11 +2,11 @@ module "event_hubs" {
   # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/iot/event-hubs"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/iot/event-hubs" 
 
-  name                         = "${module.naming.eventhub.name}-iot"
+  name                         = "${module.naming.eventhub.name}-iot-${random_string.this.result}"
   resource_group_name          = azurerm_resource_group.this.name
   location                     = azurerm_resource_group.this.location
 
-  namespace_name      = "iotehnamespace"
+  namespace_name      = "${module.naming.eventhub_namespace.name}-iot-${random_string.this.result}"  #  "iotehnamespace"
   partition_count     = 2 # 4
   message_retention   = 7
 
