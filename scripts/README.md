@@ -25,12 +25,12 @@ Download the repo as a zip file.
 sudo chmod -R -f 777 /tf/avm/scripts
 sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration
 # 0-1-2: 0-launchpad, landing zone and solution accelerator
-cd /tf/avm/scripts
+cd /tf/avm/scripts/bin
 ./install.sh
 # follow the instruction to enter PREFIX, PROJECT_VNET, DEVOPS VNET, ENVIRONMENT, Landingzone Type (app or infra)
 ```
 
-  - If ran without options, the install script will first perform the infrastructure deployment through terraform using aks archetype by default.
+  - If ran without options, the install script will first perform the infrastructure deployment through terraform using configuration in settings.yaml by default.
 
 
 

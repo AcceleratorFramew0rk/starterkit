@@ -1,6 +1,6 @@
 #!/bin/bash
 # Source the prompt.sh file to include its functions and variables
-source ./prompt.sh
+# source ./prompt.sh
 
 # Now you can access variables like PREFIX, VNET_PROJECT_NAME, and VNET_DEVOPS_NAME
 echo "Using values from prompt.sh:"

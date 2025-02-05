@@ -3,7 +3,13 @@
 # prepare the environment
 #------------------------------------------------------------------------
 # Source the prompt.sh file to include its functions and variables
-source ./prepare_environment.sh
+# Source the prompt.sh file to include its functions and variables
+# source ./prompt.sh
+# source ./prepare_environment.sh
+
+# Source utility scripts
+source "$(dirname "$0")/../lib/prompt.sh"
+source "$(dirname "$0")/../lib/prepare_environment.sh"
 
 echo "PREFIX: $PREFIX"
 echo "VNET Project Name: $VNET_PROJECT_NAME"
@@ -42,15 +48,15 @@ echo "Resource Group Name: ${RG_NAME}"
 
 export ARM_SUBSCRIPTION_ID="${SUBSCRIPTION_ID}"
 
-# #------------------------------------------------------------------------
-# # end get configuration file path, resource group name, storage account name, subscription id, subscription name
-# #------------------------------------------------------------------------
+#------------------------------------------------------------------------
+# end get configuration file path, resource group name, storage account name, subscription id, subscription name
+#------------------------------------------------------------------------
 
 
 if [[ "$LANDINGZONE_TYPE" == "application"  || "$LANDINGZONE_TYPE" == "1" ]]; then
 
 # Output the variables to a text file (input.yaml)
-cat <<EOF > input.yaml
+cat <<EOF > ./../config/input.yaml
 subscription_id: "${SUB_ID}"
 prefix: "${PREFIX}"
 environment: "${ENVIRONMENT}"
@@ -80,7 +86,7 @@ EOF
 
 else
 # Output the variables to a text file (input.yaml)
-cat <<EOF > input.yaml
+cat <<EOF > ./../config/input.yaml
 subscription_id: "${SUB_ID}"
 prefix: "${PREFIX}"
 environment: "${ENVIRONMENT}"
@@ -115,7 +121,7 @@ fi
 echo "render config.yaml"
 
 # "Usage: python3 render_config.py <settings_yaml_file_path>
-python3 render_config.py $SETTINGS_YAML_FILE_PATH $LANDINGZONE_TYPE
+python3 ./../lib/render_config.py $SETTINGS_YAML_FILE_PATH $LANDINGZONE_TYPE
 if [ $? -ne 0 ]; then
   echo "Terraform init failed. Exiting."
   echo -e "\e[31mrender_config execution failed. Exiting.\e[0m"
@@ -123,8 +129,10 @@ if [ $? -ne 0 ]; then
 fi
 # perform copy
 echo "copy output_config.yaml to working directory"
-cp "./output_config.yaml" "/tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml"
+cp "$(dirname "$0")/../config/output_config.yaml" "/tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml"
 
 
 # process terraform based on settings.yaml
-source ./exec_terraform.sh
+# source ./exec_terraform.sh
+pwd
+source "$(dirname "$0")/../lib/exec_terraform.sh"

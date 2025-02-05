@@ -208,7 +208,7 @@ exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "1-landingzo
 cd /tf/avm/scripts
 
 # Define the YAML file
-yaml_file="/tf/avm/scripts/settings.yaml"
+yaml_file="/tf/avm/scripts/config/settings.yaml"
 
 # Check if the file exists
 if [[ ! -f "$yaml_file" ]]; then

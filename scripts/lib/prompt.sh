@@ -33,7 +33,7 @@ VNET_PROJECT_NAME=$(prompt_for_input "Enter the VNET Project Name" "gcci-vnet-pr
 VNET_DEVOPS_NAME=$(prompt_for_input "Enter the VNET DevOps Name" "gcci-vnet-devops")
 
 # Prompt for settings.yaml path with a default value
-SETTINGS_YAML_FILE_PATH=$(prompt_for_input "Enter the settings.yaml path" "./settings.yaml")
+SETTINGS_YAML_FILE_PATH=$(prompt_for_input "Enter the settings.yaml path" "./../config/settings.yaml")
 
 # Prompt for settings.yaml path with a default value
 LANDINGZONE_TYPE=$(prompt_for_input "Enter the Landing Zone Type (1: application or 2: infrastructure)" "1")

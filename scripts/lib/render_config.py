@@ -502,7 +502,7 @@ def render_config_yaml(template_name: str, context: dict):
     print(os.getcwd())
 
     env = Environment(
-        loader=FileSystemLoader(searchpath="./templates"),
+        loader=FileSystemLoader(searchpath="./../templates"),
         autoescape=select_autoescape(['jinja', 'html', 'xml'])
     )
 
@@ -529,7 +529,7 @@ def main():
         sys.exit(1)
 
     # Path to the YAML file
-    input_yaml_file_path = './input.yaml' # '/tf/avm/scripts/input.yaml'
+    input_yaml_file_path = './../config/input.yaml' # '/tf/avm/scripts/input.yaml'
     solution_accelerator_yaml_file_path =  sys.argv[1] # '/tf/avm/scripts/settings.yaml'
 
     landingzone_type =  sys.argv[2] # application or infrastrucutre'
@@ -554,7 +554,7 @@ def main():
     print(config_yaml)
 
     # Open the file in write mode ('w') and print to it
-    with open('output_config.yaml', 'w') as file:
+    with open('./../config/output_config.yaml', 'w') as file:
         print(config_yaml, file=file)
 
   
