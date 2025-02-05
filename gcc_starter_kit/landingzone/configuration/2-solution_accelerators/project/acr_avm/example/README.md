@@ -8,13 +8,13 @@ sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchp
 
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts
 
-PREFIX="aaf"
+PREFIX="aoaiuat"
 echo $PREFIX
 
 ./launchpad.sh $PREFIX
 
 # goto solution accelerator folder
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/ai_foundry_enterprise
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/acr_avm
 
 # get subscription id
 ACCOUNT_INFO=$(az account show 2> /dev/null)
@@ -30,7 +30,7 @@ STG_NAME=$(echo "$STORAGE_ACCOUNT_INFO" | jq ".[0].name" -r)
 echo $RG_NAME
 echo $STG_NAME
 
-# ** IMPORTANT - find out the random code from the storage account name and replace xxx for RND_NUM 
+# set the variables
 PROJECT_CODE="${PREFIX}"
 ENV="sandpit"
 VNET_NAME="gcci-vnet-project"
@@ -44,14 +44,14 @@ LAW_ID="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/gcci-agency-law/provide
 # terraform init, plan and apply
 
 terraform init  -reconfigure \
--backend-config="resource_group_name=${PROJECT_CODE}-rg-launchpad" \
+-backend-config="resource_group_name=${RG_NAME}" \
 -backend-config="storage_account_name=${STG_NAME}" \
 -backend-config="container_name=2-solution-accelerators" \
 -backend-config="key=solution_accelerators-project-acr.tfstate"
 
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
--var="resource_group_name=${PROJECT_CODE}-rg-launchpad" \
+-var="resource_group_name=${RG_NAME}" \
 -var="vnet_id=${VNET_ID}" \
 -var="subnet_id=${SUBNET_ID}" \
 -var="log_analytics_workspace_id=${LAW_ID}"  \
@@ -60,9 +60,39 @@ terraform plan \
 
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
--var="resource_group_name=${PROJECT_CODE}-rg-launchpad" \
+-var="resource_group_name=${RG_NAME}" \
 -var="vnet_id=${VNET_ID}" \
 -var="subnet_id=${SUBNET_ID}" \
 -var="log_analytics_workspace_id=${LAW_ID}" \
 -var="prefix=${PROJECT_CODE}"  \
 -var="environment=${ENV}" 
+
+# ------------------------------------------------------------------
+# OR using terraform.tfvars file
+# ------------------------------------------------------------------
+
+# create terraform.tfvars file
+cat <<EOF | sudo tee /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/acr/example/terraform.tfvars
+storage_account_name="${STG_NAME}"
+resource_group_name="${RG_NAME}"
+vnet_id="${VNET_ID}"
+subnet_id="${SUBNET_ID}"
+log_analytics_workspace_id="${LAW_ID}"
+prefix="${PROJECT_CODE}"
+environment="${ENV}"
+EOF
+
+sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/acr/example/terraform.tfvars
+
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-acr.tfstate"
+
+terraform plan \
+-var-file="/tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/acr/example/terraform.tfvars" 
+
+terraform apply -auto-approve \
+-var-file="/tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/acr/example/terraform.tfvars" 
+

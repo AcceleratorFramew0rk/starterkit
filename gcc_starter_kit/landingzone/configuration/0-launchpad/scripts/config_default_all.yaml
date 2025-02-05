@@ -55,7 +55,7 @@ subnets:
             actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
             }
         }
-      ]                  
+      ]
     ApiSubnet: # DO NOT CHANGE subnet name
       address_prefixes: ["100.64.0.160/27"]
     SystemNodePoolSubnet: # DO NOT CHANGE subnet name
@@ -102,7 +102,9 @@ subnets:
             actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
             }
         }
-      ]                          
+      ]               
+    # ContainerAppSubnet: # DO NOT CHANGE subnet name - this subnet required /23
+    #  address_prefixes: ["100.64.2.0/23"]              
 # ** IMPORTANT - DO NOT CHANGE BELOW
   hub_internet_ingress: 
     AzureFirewallSubnet: 

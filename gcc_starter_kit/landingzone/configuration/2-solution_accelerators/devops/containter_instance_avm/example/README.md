@@ -14,7 +14,7 @@ echo $PREFIX
 ./launchpad.sh $PREFIX
 
 # goto solution accelerator folder
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/ai_foundry_enterprise
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/container_instance_avm
 
 # get subscription id
 ACCOUNT_INFO=$(az account show 2> /dev/null)
@@ -33,8 +33,8 @@ echo $STG_NAME
 # ** IMPORTANT - find out the random code from the storage account name and replace xxx for RND_NUM 
 PROJECT_CODE="${PREFIX}"
 ENV="sandpit"
-VNET_NAME="gcci-vnet-project"
-SUBNET_NAME="ServiceSubnet"
+VNET_NAME="gcci-vnet-devops"
+SUBNET_NAME="RunnerSubnet"
 
 # enter your vnet , subnet id and log analytic workspace id from azure portal resource properties page
 VNET_ID="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/${VNET_NAME}"
@@ -47,7 +47,7 @@ terraform init  -reconfigure \
 -backend-config="resource_group_name=${PROJECT_CODE}-rg-launchpad" \
 -backend-config="storage_account_name=${STG_NAME}" \
 -backend-config="container_name=2-solution-accelerators" \
--backend-config="key=solution_accelerators-project-acr.tfstate"
+-backend-config="key=solution_accelerators-devops-runner.tfstate"
 
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
