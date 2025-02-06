@@ -63,7 +63,8 @@ module "storageaccount" {
   account_tier                  = "Standard"
   account_kind                  = "StorageV2"
   location                      = azurerm_resource_group.this.location
-  name                          = "${module.naming.storage_account.name_unique}${random_string.this.result}"
+  # name                          = "${module.naming.storage_account.name_unique}${random_string.this.result}"
+  name                          = replace(replace("${module.naming.storage_account.name_unique}${random_string.this.result}", "-", ""), "_", "")
   resource_group_name           = azurerm_resource_group.this.name
   min_tls_version               = "TLS1_2"
   shared_access_key_enabled     = true
