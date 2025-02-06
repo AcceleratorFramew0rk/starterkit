@@ -35,14 +35,14 @@ Each component of the naming convention provides meaningful context:
 ## **Example Naming Conventions**
 Following the structure above, here are examples for different Azure resources:
 
-- **Virtual Machine (VM) for an ERP system in production (East US)**  
+- **Virtual Machine (VM) for an ERP system in production (Southeast Asia)**  
   ```
-  vm-erp-prod-eastus-001
+  vm-erp-prod-southeastasia-001
   ```
 
-- **Public IP (PIP) for a SharePoint workload in production (West US)**  
+- **Public IP (PIP) for a SharePoint workload in production (Southeast Asia)**  
   ```
-  pip-sharepoint-prod-westus-001
+  pip-sharepoint-prod-southeastasia-001
   ```
 
 - **SQL Database for a finance application in development (Southeast Asia)**  
@@ -50,30 +50,30 @@ Following the structure above, here are examples for different Azure resources:
   sql-finance-dev-southeastasia
   ```
 
-- **Storage Account for a data lake in staging (North Europe)**  
+- **Storage Account for a data lake in staging (Southeast Asia)**  
   ```
-  st-datalake-stg-northeurope
+  st-datalake-stg-southeastasia
   ```
 
 ## **Applying Naming Conventions in Azure Acceleration Framework (AAF)**
 In the **Azure Acceleration Framework (AAF)**, naming conventions can be further standardized using **prefixes** or **suffixes**. These approaches help in identifying workloads and environments while maintaining flexibility.
 
-- **Using a Prefix/Suffix-Based Naming Convention:**  
+- **Using Prefix Based Naming Convention:**  
   ```
   [resource-type]-[workload, application, or project]-[environment]-[location]-[custom string]
   ```
-  Example:
+  Example: set "[workload, application, or project]-[environment]" as suffix e.g. "crm-prod-southeastasia".
   ```
-  vm-crm-prod-westus-001
+  crm-prod-southeastasia-vm-001
   ```
 
 - **Using a Suffix-Based Naming Convention:**  
   ```
   [workload, application, or project]-[environment]-[location]
   ```
-  Example:
+  Example: set "[workload, application, or project]-[environment]" as suffix e.g. "abc-dev-southeastasia"
   ```
-  abc-dev-southeastasia
+  vm-abc-dev-southeastasia-001
   ```
 
 ### **Considerations for Naming Conventions**
