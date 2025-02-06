@@ -58,22 +58,22 @@ Following the structure above, here are examples for different Azure resources:
 ## **Applying Naming Conventions in Azure Acceleration Framework (AAF)**
 In the **Azure Acceleration Framework (AAF)**, naming conventions can be further standardized using **prefixes** or **suffixes**. These approaches help in identifying workloads and environments while maintaining flexibility.
 
-- **Using Prefix Based Naming Convention:**  
-  ```
-  [resource-type]-[workload, application, or project]-[environment]-[location]-[custom string]
-  ```
-  Example: set "[workload, application, or project]-[environment]" as suffix e.g. "crm-prod-southeastasia".
-  ```
-  crm-prod-southeastasia-vm-001
-  ```
-
 - **Using a Suffix-Based Naming Convention:**  
   ```
-  [workload, application, or project]-[environment]-[location]
+  [resource-type]-[workload, application, or project]-[environment]-[location]
   ```
   Example: set "[workload, application, or project]-[environment]" as suffix e.g. "abc-dev-southeastasia"
   ```
   vm-abc-dev-southeastasia-001
+  ```
+  
+- **Using Prefix Based Naming Convention:**  
+  ```
+  [workload, application, or project]-[environment]-[location]-[resource-type]-[custom string]
+  ```
+  Example: set "[workload, application, or project]-[environment]" as suffix e.g. "crm-prod-southeastasia".
+  ```
+  crm-prod-southeastasia-vm-001
   ```
 
 ### **Considerations for Naming Conventions**
