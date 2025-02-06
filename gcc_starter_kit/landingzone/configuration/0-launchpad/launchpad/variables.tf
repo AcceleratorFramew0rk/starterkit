@@ -25,3 +25,9 @@ variable "location" {
   default     = "southeastasia"
   nullable    = true
 }
+
+variable "is_prefix" {
+  description = "(Optional) A prefix flag. true if prefix is used. false if suffix is used."
+  type        = bool
+  default     = true
+}

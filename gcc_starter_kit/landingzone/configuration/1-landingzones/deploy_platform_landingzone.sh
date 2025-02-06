@@ -5,7 +5,7 @@
 # #------------------------------------------------------------------------
 PREFIX=$(yq  -r '.prefix' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
 RG_NAME="${PREFIX}-rg-launchpad"
-STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '${PREFIX}stgtfstate')].[name]" -o tsv 2>/dev/null | head -n 1)
+STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '${PREFIX//-/}stgtfstate')].[name]" -o tsv 2>/dev/null | head -n 1)
 if [[ -z "$STG_NAME" ]]; then
     echo "No storage account found matching the prefix."
     exit

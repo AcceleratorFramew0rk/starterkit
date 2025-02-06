@@ -4,7 +4,7 @@ module "stream_analytics" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/iot/stream-analytics"
 
   # name                         = "${module.naming.iothub.name_unique}${random_string.this.result}"
-  name                     = "${module.naming.stream_analytics_job.name}-iot"
+  name                     = "${module.naming.stream_analytics_job.name}-iot-${random_string.this.result}"
   resource_group_name          = azurerm_resource_group.this.name
   location                     = azurerm_resource_group.this.location
 

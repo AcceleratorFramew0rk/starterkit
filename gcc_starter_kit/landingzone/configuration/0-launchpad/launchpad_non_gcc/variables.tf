@@ -50,6 +50,12 @@ variable "global_tags" {
   }
 }
 
+variable "is_prefix" {
+  description = "(Optional) A prefix flag. true if prefix is used. false if suffix is used."
+  type        = bool
+  default     = true
+}
+
 # ----------------------------------------------------
 # config virtual networks
 # ----------------------------------------------------

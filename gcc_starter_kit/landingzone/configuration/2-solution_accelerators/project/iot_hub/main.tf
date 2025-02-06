@@ -1,6 +1,6 @@
 module "private_dns_zones" {
   source                = "Azure/avm-res-network-privatednszone/azurerm"  
-  version = "0.1.2"
+  version = "0.1.2" 
 
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
@@ -36,8 +36,8 @@ module "private_dns_zones" {
 }
 
 module "private_dns_zones_dps" {
-  source                = "Azure/avm-res-network-privatednszone/azurerm"  
-  version = "0.1.2"
+  source                = "Azure/avm-res-network-privatednszone/azurerm"    
+  version = "0.1.2" 
 
   enable_telemetry      = true
   resource_group_name   = azurerm_resource_group.this.name
@@ -76,7 +76,7 @@ module "iot_hub" {
   # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/iot/iot-hub"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/iot/iot-hub"
 
-  name                         = "${module.naming.iothub.name}-iot"
+  name                         = "${module.naming.iothub.name}-iot-${random_string.this.result}"
   resource_group_name          = azurerm_resource_group.this.name
   location                     = azurerm_resource_group.this.location
 

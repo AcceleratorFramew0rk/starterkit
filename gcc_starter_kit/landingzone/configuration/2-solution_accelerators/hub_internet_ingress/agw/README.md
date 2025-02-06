@@ -4,7 +4,7 @@
 
 PREFIX=$(yq  -r '.prefix' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
 RG_NAME="${PREFIX}-rg-launchpad"
-STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '${PREFIX}stgtfstate')].[name]" -o tsv 2>/dev/null | head -n 1)
+STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '${PREFIX//-/}stgtfstate')].[name]" -o tsv 2>/dev/null | head -n 1)
 echo $RG_NAME
 echo $STG_NAME
 
@@ -25,21 +25,3 @@ terraform plan \
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
-
-# ----------------------------------------------------------------------------------------
-
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/hub_internet_ingress/agw
-
-terraform init  -reconfigure \
--backend-config="resource_group_name={{resource_group_name}}" \
--backend-config="storage_account_name={{storage_account_name}}" \
--backend-config="container_name=2-solution-accelerators" \
--backend-config="key=solution_accelerators-hub-internet-ingress-agw.tfstate"
-
-terraform plan \
--var="storage_account_name={{storage_account_name}}" \
--var="resource_group_name={{resource_group_name}}"
-
-terraform apply -auto-approve \
--var="storage_account_name={{storage_account_name}}" \
--var="resource_group_name={{resource_group_name}}"

@@ -44,7 +44,7 @@ module "cosmos_db" {
   
   resource_group_name = azurerm_resource_group.this.name
   location            = azurerm_resource_group.this.location
-  cosmos_account_name = "${module.naming.cosmosdb_account.name_unique}-${random_string.this.result}" 
+  cosmos_account_name = "${module.naming.cosmosdb_account.name}-${random_string.this.result}" 
   cosmos_api          = "mongo" # var.cosmos_api
   
   # sql_dbs             = null # var.sql_dbs

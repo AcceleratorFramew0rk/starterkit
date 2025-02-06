@@ -25,7 +25,7 @@ module "containerapp_frontend" {
   version = "0.3.0"
 
   container_app_environment_resource_id = azurerm_container_app_environment.this.id
-  name                                  = "${module.naming.container_app.name_unique}${random_string.this.result}1" # local.counting_app_name
+  name                                  = "${module.naming.container_app.name}-${random_string.this.result}1" # local.counting_app_name
   resource_group_name                   = azurerm_resource_group.this.name
   revision_mode                         = "Single"
   template = {
@@ -60,7 +60,7 @@ module "containerapp_backend" {
   version = "0.3.0"
 
   container_app_environment_resource_id = azurerm_container_app_environment.this.id
-  name                                  = "${module.naming.container_app.name_unique}${random_string.this.result}2" #   local.dashboard_app_name
+  name                                  = "${module.naming.container_app.name}-${random_string.this.result}2" #   local.dashboard_app_name
   resource_group_name                   = azurerm_resource_group.this.name
   revision_mode                         = "Single"
   template = {

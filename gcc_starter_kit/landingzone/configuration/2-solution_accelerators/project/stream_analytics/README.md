@@ -4,7 +4,7 @@
 
 PREFIX=$(yq  -r '.prefix' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
 RG_NAME="${PREFIX}-rg-launchpad"
-STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '${PREFIX}stgtfstate')].[name]" -o tsv 2>/dev/null | head -n 1)
+STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '${PREFIX//-/}stgtfstate')].[name]" -o tsv 2>/dev/null | head -n 1)
 echo $RG_NAME
 echo $STG_NAME
 
@@ -41,7 +41,7 @@ PREFIX=$(yq  -r '.prefix' /tf/avm/gcc_starter_kit/landingzone/configuration/0-la
 # --------------------------------
 
 TYPE="Microsoft.Devices/IotHubs"
-RESOURCE_GROUP_NAME="${PREFIX}-rg-solution-accelerators-iothub"
+RESOURCE_GROUP_NAME=$(az group list --query "[?ends_with(name, 'solution-accelerators-iothub')].[name] | [0]"   -o tsv)
 RESOURCE_NAME=$(az resource list   --resource-group  "${RESOURCE_GROUP_NAME}"   --resource-type "${TYPE}"  --query "[0].name"   --output tsv)
 CONNECTION_NAME=$(az network private-endpoint-connection list -g "${RESOURCE_GROUP_NAME}" -n "${RESOURCE_NAME}" --type "${TYPE}" --query "[0].name" -o tsv)
 echo $PREFIX
@@ -56,7 +56,7 @@ az network private-endpoint-connection approve -g "${RESOURCE_GROUP_NAME}" -n ${
 # --------------------------------
 
 TYPE="Microsoft.EventHub/namespaces"
-RESOURCE_GROUP_NAME="${PREFIX}-rg-solution-accelerators-eventhub"
+RESOURCE_GROUP_NAME=$(az group list --query "[?ends_with(name, 'solution-accelerators-eventhub')].[name] | [0]"   -o tsv)
 RESOURCE_NAME=$(az resource list   --resource-group  "${RESOURCE_GROUP_NAME}"   --resource-type "${TYPE}"   --query "[0].name"   --output tsv)
 CONNECTION_NAME=$(az network private-endpoint-connection list -g "${RESOURCE_GROUP_NAME}" -n "${RESOURCE_NAME}" --type "${TYPE}" --query "[0].name" -o tsv)
 echo $PREFIX
@@ -71,7 +71,7 @@ az network private-endpoint-connection approve -g "${RESOURCE_GROUP_NAME}" -n ${
 # --------------------------------
 
 TYPE="Microsoft.Kusto/clusters"
-RESOURCE_GROUP_NAME="${PREFIX}-rg-solution-accelerators-dataexplorer"
+RESOURCE_GROUP_NAME=$(az group list --query "[?ends_with(name, 'solution-accelerators-dataexplorer')].[name] | [0]"   -o tsv)
 RESOURCE_NAME=$(az resource list   --resource-group  "${RESOURCE_GROUP_NAME}"   --resource-type "${TYPE}"   --query "[0].name"   --output tsv)
 CONNECTION_NAME=$(az network private-endpoint-connection list -g "${RESOURCE_GROUP_NAME}" -n "${RESOURCE_NAME}" --type "${TYPE}" --query "[0].name" -o tsv)
 
@@ -87,9 +87,8 @@ az network private-endpoint-connection approve -g "${RESOURCE_GROUP_NAME}" -n ${
 # sql server
 # --------------------------------
 
-# saprivateendpointsqlserver-a5906ba6-b366-439e-a7f8-0837f1c5a467
 TYPE="Microsoft.Sql/servers"
-RESOURCE_GROUP_NAME="${PREFIX}-rg-solution-accelerators-mssql"
+RESOURCE_GROUP_NAME=$(az group list --query "[?ends_with(name, 'solution-accelerators-mssql')].[name] | [0]"   -o tsv)
 RESOURCE_NAME=$(az resource list   --resource-group  "${RESOURCE_GROUP_NAME}"   --resource-type Microsoft.Sql/servers   --query "[0].name"   --output tsv)
 CONNECTION_NAME=$(az network private-endpoint-connection list   -g "${RESOURCE_GROUP_NAME}"   -n "${RESOURCE_NAME}"   --type  "${TYPE}"    --query "[?starts_with(name, 'saprivateendpoint')].[name] | [0]"   -o tsv)
 
@@ -105,7 +104,7 @@ az network private-endpoint-connection approve -g "${RESOURCE_GROUP_NAME}" -n ${
 # --------------------------------
 
 TYPE="Microsoft.Storage/storageAccounts"
-RESOURCE_GROUP_NAME="${PREFIX}-rg-solution-accelerators-streamanalytics"
+RESOURCE_GROUP_NAME=$(az group list --query "[?ends_with(name, 'solution-accelerators-streamanalytics')].[name] | [0]"   -o tsv)
 RESOURCE_NAME=$(az resource list  --resource-group $RESOURCE_GROUP_NAME  --resource-type "${TYPE}"  --query "[0].name"  --output tsv)
 CONNECTION_NAME=$(az network private-endpoint-connection list -g "${RESOURCE_GROUP_NAME}" -n $RESOURCE_NAME --type "${TYPE}"  --query "[?starts_with(name, '$RESOURCE_NAME')].[name] | [0]" -o tsv)
 

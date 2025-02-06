@@ -46,7 +46,7 @@ module "azureopenai" {
 
   kind                = "OpenAI"
   location            = azurerm_resource_group.eastus.location 
-  name                = "${module.naming.cognitive_account.name_unique}-${random_string.this.result}-openai"
+  name                = "${module.naming.cognitive_account.name}-openai-${random_string.this.result}"
   resource_group_name = azurerm_resource_group.eastus.name  # location east us resource group
   sku_name            = "S0"
 

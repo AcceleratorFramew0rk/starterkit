@@ -74,7 +74,7 @@ module "linux_function_app" {
   version = "0.1.0"
 
   enable_telemetry = var.enable_telemetry 
-  name                = "${module.naming.function_app.name}${random_string.this.result}"  # module.naming.function_app.name_unique
+  name                = "${module.naming.function_app.name}-${random_string.this.result}"  # module.naming.function_app.name_unique
   resource_group_name = azurerm_resource_group.this.name
   location            = azurerm_resource_group.this.location
   os_type = azurerm_service_plan.this.os_type

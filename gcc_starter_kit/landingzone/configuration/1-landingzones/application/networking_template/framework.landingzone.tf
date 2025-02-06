@@ -37,14 +37,15 @@ module "landingzone" {
   # source="./../../../../../../modules/terraform-azurerm-aaf"
   source = "AcceleratorFramew0rk/aaf/azurerm"
 
-  resource_group_name  = var.resource_group_name # "{{resource_group_name}}" # DO NOT CHANGE - codegen
-  storage_account_name = var.storage_account_name # "{{storage_account_name}}" # DO NOT CHANGE - codegen 
+  resource_group_name  = var.resource_group_name # "wx2-dev-sea-rg-launchpad" # DO NOT CHANGE - codegen
+  storage_account_name = var.storage_account_name # "wx2devseastgtfstatekvy" # DO NOT CHANGE - codegen 
 }
 
 module "naming" {
   source  = "Azure/naming/azurerm"
   version = ">= 0.3.0"
-  prefix                 = ["${local.global_settings.prefix}"] 
+  prefix = local.global_settings.is_prefix == true ? ["${try(local.global_settings.prefix, var.prefix)}"] : []
+  suffix = local.global_settings.is_prefix == true ? [] : ["${try(local.global_settings.prefix, var.prefix)}"] 
   unique-seed            = "random"
   unique-length          = 3
   unique-include-numbers = false  

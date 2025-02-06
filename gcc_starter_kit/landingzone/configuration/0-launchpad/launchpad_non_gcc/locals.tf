@@ -58,6 +58,7 @@ locals {
     inherit_tags = true
     passthrough = false
     prefix = local.config.prefix 
+    is_prefix = try(local.config.is_prefix, var.is_prefix) 
     prefix_with_hyphen = local.config.prefix 
     prefixes = [
       local.config.prefix 

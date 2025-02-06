@@ -54,7 +54,7 @@ module "container_registry" {
   source  = "Azure/avm-res-containerregistry-registry/azurerm"
   version = "0.4.0"
 
-  name                          = "${module.naming.container_registry.name_unique}${random_string.this.result}" # module.naming.container_registry.name_unique
+  name                          = replace("${module.naming.container_registry.name}${random_string.this.result}", "-", "") # "${module.naming.container_registry.name_unique}${random_string.this.result}" # module.naming.container_registry.name_unique
   location                      = azurerm_resource_group.this.location
   resource_group_name           = azurerm_resource_group.this.name
   public_network_access_enabled = false

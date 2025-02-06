@@ -4,7 +4,7 @@
 
 PREFIX=$(yq  -r '.prefix' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
 RG_NAME="${PREFIX}-rg-launchpad"
-STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '${PREFIX}stgtfstate')].[name]" -o tsv 2>/dev/null | head -n 1)
+STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '${PREFIX//-/}stgtfstate')].[name]" -o tsv 2>/dev/null | head -n 1)
 echo $RG_NAME
 echo $STG_NAME
 
@@ -26,21 +26,3 @@ terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
 
-
-# ----------------------------------------------------------------------------------------
-
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/application/networking_spoke_project
-
-terraform init  -reconfigure \
--backend-config="resource_group_name={{resource_group_name}}" \
--backend-config="storage_account_name={{storage_account_name}}" \
--backend-config="container_name=1-landingzones" \
--backend-config="key=network-spoke-project.tfstate"
-
-terraform plan \
--var="storage_account_name={{storage_account_name}}" \
--var="resource_group_name={{resource_group_name}}"
-
-terraform apply -auto-approve \
--var="storage_account_name={{storage_account_name}}" \
--var="resource_group_name={{resource_group_name}}"

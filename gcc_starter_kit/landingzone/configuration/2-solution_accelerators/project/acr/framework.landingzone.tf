@@ -39,11 +39,24 @@ module "landingzone" {
 module "naming" {
   source  = "Azure/naming/azurerm"
   version = ">= 0.3.0"
-  prefix                 = ["${try(local.global_settings.prefix, var.prefix)}"] 
+ 
+  prefix = local.global_settings.is_prefix == true ? ["${try(local.global_settings.prefix, var.prefix)}"] : []
+  suffix = local.global_settings.is_prefix == true ? [] : ["${try(local.global_settings.prefix, var.prefix)}"]
+
   unique-seed            = "random"
   unique-length          = 3
   unique-include-numbers = false  
 }
+
+# module "short_naming" {
+#   source  = "Azure/naming/azurerm"
+#   version = ">= 0.3.0"
+#   # prefix                 = ["${try(local.global_settings.prefix, var.prefix)}"] 
+#   suffix                 = ["${try(local.global_settings.prefix, var.prefix)}"] 
+#   unique-seed            = "random"
+#   unique-length          = 3
+#   unique-include-numbers = false  
+# }
 
 # This allow use to randomize the name of resources
 resource "random_string" "this" {

@@ -53,7 +53,7 @@ module "container_registry" {
   # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/compute/terraform-azurerm-containerregistry"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/compute/terraform-azurerm-containerregistry" 
 
-  name                         = "${module.naming.container_registry.name_unique}${random_string.this.result}"
+  name = replace("${module.naming.container_registry.name}-${random_string.this.result}", "-", "")
   resource_group_name          = azurerm_resource_group.this.name
   location                     = azurerm_resource_group.this.location
   sku                          = "Premium" # ["Basic", "Standard", "Premium"]

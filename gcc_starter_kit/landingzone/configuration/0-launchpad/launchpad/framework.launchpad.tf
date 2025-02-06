@@ -1,7 +1,7 @@
 module "naming" {
   source  = "Azure/naming/azurerm"
   version = ">= 0.3.0"
-  prefix                 = ["${local.config.prefix}"] 
+  prefix                 = ["${local.config.prefix}"] # always use prefix here.
   unique-seed            = "random"
   unique-length          = 3
   unique-include-numbers = false  
@@ -25,6 +25,7 @@ locals {
     inherit_tags = true
     passthrough = false
     prefix = local.config.prefix 
+    is_prefix = try(local.config.is_prefix, var.is_prefix) 
     prefix_with_hyphen = local.config.prefix 
     prefixes = [
       local.config.prefix 
