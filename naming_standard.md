@@ -1,5 +1,7 @@
 ### "Naming Standard"
+
 https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming
+
 Establishing a consistent naming convention for Azure resources is essential for efficient resource management, governance, and operational clarity. A well-structured naming convention enables teams to quickly identify the purpose, ownership, and scope of a resource while maintaining uniformity across an organization's Azure environment.
 
 ## **Key Elements of a Naming Convention**
