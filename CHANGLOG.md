@@ -1,5 +1,5 @@
 
-### **Version 0.0.10 (TBD)**
+### **Version 0.0.12 (TBD)**
 #### **Compatibility:**
 - **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.2`
 - **Azurerm:** Version 3.85
@@ -16,7 +16,27 @@
 
 ---
 
-### **Version 0.0.9 (06 Feb 2025)**
+### **Version 0.0.11 (06 Feb 2025)**
+#### **Compatibility:**
+- **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.2`
+- **Azurerm:** Version 3.85
+- **AAF:** Version 0.0.5
+
+#### **New Features:**
+- *No features added in this release.*
+
+#### **Enhancements:**
+- Updated Redis Cache creation using AVM
+- Updated AGW creation using AVM
+- Updated ACR creation using AVM 
+- Updated Container Instance creation using AVM 
+
+#### **Bug Fixes:**
+- *No Bug Fixes added in this release.*
+
+---
+
+### **Version 0.0.10 (24 Oct 2024)**
 #### **Compatibility:**
 - **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.2`
 - **Azurerm:** Version 3.85
@@ -29,11 +49,25 @@
 - Added Solution Accelerator Stream Analytics.
 - Added Solution Accelerator Azure Frontdoor.
 
+#### **Enhancements:**
+- *No Enhancements added in this release.*
+
+#### **Bug Fixes:**
+- *No Bug Fixes added in this release.*
+
+---
+
+### **Version 0.0.9 (09 Sep 2024)**
+#### **Compatibility:**
+- **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.2`
+- **Azurerm:** Version 3.85
+- **AAF:** Version 0.0.5
+
+#### **New Features:**
+- *No features added in this release.*
+
 #### **Enhancements:**  
-- Updated ACR creation using AVM 
-- Updated Container Instance creation using AVM 
-- Updated Redis Cache creation using AVM
-- Updated AGW creation using AVM
+- *No Enhancements added in this release.*
 
 #### **Bug Fixes:**
 - Resolved an issue with diagnostic settings on storage accounts to prevent changes upon redeployment.
