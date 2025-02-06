@@ -50,7 +50,8 @@ resource "azurerm_storage_account" "this" {
   account_replication_type = "LRS"
   account_tier             = "Standard"
   location                 = azurerm_resource_group.this.location
-  name                     = module.naming.storage_account.name_unique
+  # name                     = module.naming.storage_account.name_unique
+  name = replace(replace(module.naming.storage_account.name_unique, "-", ""), "_", "")
   resource_group_name      = azurerm_resource_group.this.name
 }
 
