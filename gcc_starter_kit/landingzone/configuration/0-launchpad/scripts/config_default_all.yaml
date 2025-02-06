@@ -3,6 +3,7 @@ log_analytics_workspace_resource_group_name: "gcci-agency-law"  # DO NOT CHANGE
 log_analytics_workspace_name: "gcci-agency-workspace"  # DO NOT CHANGE
 # # virtual network - leave empty if there is no such virtual network   
 prefix: "aoaiuat"
+is_prefix: true
 location: "southeastasia"
 environment: "sandpit"
 app_config:

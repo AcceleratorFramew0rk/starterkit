@@ -3,7 +3,7 @@ log_analytics_workspace_resource_group_name: "gcci-agency-law"  # DO NOT CHANGE
 log_analytics_workspace_name: "gcci-agency-workspace"  # DO NOT CHANGE
 # # virtual network - leave empty if there is no such virtual network  
 prefix: "wx2-dev-sea"
-is_prefix: false
+is_prefix: true
 location: "southeastasia"
 environment: "dev"
 app_config:
@@ -114,9 +114,9 @@ subnets:
     ApiSubnet: # DO NOT CHANGE subnet name
       name: "ApiSubnet"    
       address_prefixes: ["100.64.0.192/27"]
-    ContainerAppSubnet: # DO NOT CHANGE subnet name
-      name: "ContainerAppSubnet"    
-      address_prefixes: ["100.64.0.224/27"]
+    # ContainerAppSubnet: # DO NOT CHANGE subnet name
+    #   name: "ContainerAppSubnet"    
+    #   address_prefixes: ["100.64.0.224/27"]
     # SystemNodePoolSubnet: # DO NOT CHANGE subnet name
     #   name: "ApiSubnet"    
     #   address_prefixes: ["100.64.0.192/27"]
