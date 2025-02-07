@@ -84,10 +84,10 @@ module "virtualmachine1" {
 
   network_interfaces = {
     network_interface_1 = {
-      name = module.naming.network_interface.name_unique
+      name = "${module.naming.network_interface.name}-${random_string.this.result}" # module.naming.network_interface.name_unique
       ip_configurations = {
         ip_configuration_1 = {
-          name                          = "${module.naming.network_interface.name}-ipconfig1"
+          name                          = "${module.naming.network_interface.name}-ipconfig-${random_string.this.result}"
           private_ip_subnet_resource_id = try(local.remote.networking.virtual_networks.spoke_management.virtual_subnets["InfraSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_management.virtual_subnets["InfraSubnet"].resource.id : var.subnet_id 
           create_public_ip_address      = false # true
           public_ip_address_name        = module.naming.public_ip.name_unique
@@ -98,7 +98,7 @@ module "virtualmachine1" {
 
   data_disk_managed_disks = {
     disk1 = {
-      name                 = "${module.naming.managed_disk.name}-lun0"
+      name                 = "${module.naming.managed_disk.name}-lun0-${random_string.this.result}" # "${module.naming.managed_disk.name}-lun0"
       storage_account_type = "StandardSSD_LRS"
       lun                  = 0
       caching              = "ReadWrite"
