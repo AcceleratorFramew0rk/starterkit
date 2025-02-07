@@ -51,9 +51,10 @@ output "spoke_devops" {
 
 output "gcci_agency_workspace" {
   value       = {
-    name = module.log_analytics_workspace.name # azurerm_virtual_network.vnet
+    name = module.log_analytics_workspace.name
     id = module.log_analytics_workspace.id
+    resource = module.log_analytics_workspace
   }
-  description = "The Azure Virtual Network resource"
+  description = "The Azure log analytics workspace resource"
 }
 

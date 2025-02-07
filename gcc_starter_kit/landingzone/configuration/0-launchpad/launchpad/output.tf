@@ -52,6 +52,7 @@ output "gcci_agency_workspace" {
   value = {
     id = azurerm_log_analytics_workspace.gcci_agency_workspace.id
     name = azurerm_log_analytics_workspace.gcci_agency_workspace.name
+    resource = azurerm_log_analytics_workspace.gcci_agency_workspace
   }
   description = "The virtual network gcci_vnet_ingress_internet for gcci platform"
 }
