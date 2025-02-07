@@ -3,7 +3,7 @@ module "private_dns_zones" {
   version = "0.3.0"
 
   enable_telemetry      = true
-  resource_group_name   = azurerm_resource_group.this.name
+  resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.azurecr.io"
   tags         = merge(
     local.global_settings.tags,
@@ -55,8 +55,8 @@ module "container_registry" {
   version = "0.4.0"
 
   name                          = replace("${module.naming.container_registry.name}${random_string.this.result}", "-", "") # "${module.naming.container_registry.name_unique}${random_string.this.result}" # module.naming.container_registry.name_unique
-  location                      = azurerm_resource_group.this.location
-  resource_group_name           = azurerm_resource_group.this.name
+  location                      = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  resource_group_name           = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   public_network_access_enabled = false
   sku                          = "Premium" # ["Basic", "Standard", "Premium"]
   admin_enabled                = true 

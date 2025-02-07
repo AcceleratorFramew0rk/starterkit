@@ -7,7 +7,7 @@ module "private_dns_zones" {
   count = try(local.privatednszone.id, null) == null ? 1 : 0   
 
   enable_telemetry      = true
-  resource_group_name   = azurerm_resource_group.this.name
+  resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.azurewebsites.net"
 
   tags        = merge(
@@ -49,25 +49,25 @@ data "azurerm_role_definition" "linux_function_app" {
 resource "azurerm_storage_account" "this" {
   account_replication_type = "LRS"
   account_tier             = "Standard"
-  location                 = azurerm_resource_group.this.location
+  location                 = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   # name                     = module.naming.storage_account.name_unique
   name = replace(replace(module.naming.storage_account.name_unique, "-", ""), "_", "")
-  resource_group_name      = azurerm_resource_group.this.name
+  resource_group_name      = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
 }
 
 resource "azurerm_service_plan" "this" {
-  location = azurerm_resource_group.this.location
+  location = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   # This will equate to Consumption (Serverless) in portal
   name                = module.naming.app_service_plan.name_unique
   os_type             = "Windows" # "Linux"
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   sku_name            = "EP1"
 }
 
 resource "azurerm_user_assigned_identity" "user" {
-  location            = azurerm_resource_group.this.location
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   name                = module.naming.user_assigned_identity.name_unique
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
 }
 
 module "linux_function_app" {
@@ -76,8 +76,8 @@ module "linux_function_app" {
 
   enable_telemetry = var.enable_telemetry 
   name                = "${module.naming.function_app.name}-${random_string.this.result}"  # module.naming.function_app.name_unique
-  resource_group_name = azurerm_resource_group.this.name
-  location            = azurerm_resource_group.this.location
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   os_type = azurerm_service_plan.this.os_type
   service_plan_resource_id = azurerm_service_plan.this.id
   storage_account_name       = azurerm_storage_account.this.name

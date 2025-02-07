@@ -43,9 +43,9 @@ locals {
 }
 
 resource "azurerm_user_assigned_identity" "this" {
-  location            = azurerm_resource_group.this.location
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   name                = "uami-${random_id.name.hex}"
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
 }
 
 module "aks_cluster" {
@@ -55,7 +55,7 @@ module "aks_cluster" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/compute/terraform-azurerm-aks"
 
   prefix                    = try(local.global_settings.prefix, var.prefix) # random_id.name.hex
-  resource_group_name       = azurerm_resource_group.this.name # local.resource_group.name
+  resource_group_name       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name # local.resource_group.name
   kubernetes_version        = var.kubernetes_version # "1.26" # don't specify the patch version!
 
   # Either disable automatic upgrades, or specify `kubernetes_version` or `orchestrator_version` only up to the minor version
@@ -106,7 +106,7 @@ module "aks_cluster" {
   log_analytics_workspace = {
     id = local.remote.log_analytics_workspace.id
     name = local.remote.log_analytics_workspace.name
-    location = azurerm_resource_group.this.location
+    location = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   }
   microsoft_defender_enabled = true
 

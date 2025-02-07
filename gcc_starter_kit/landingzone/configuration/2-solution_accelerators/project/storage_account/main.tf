@@ -7,7 +7,7 @@ module "private_dns_zones" {
   version = "0.1.2" 
 
   enable_telemetry      = true
-  resource_group_name   = azurerm_resource_group.this.name
+  resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.blob.core.windows.net"
   # number_of_record_sets = 2
 
@@ -45,9 +45,9 @@ module "private_dns_zones" {
 }  
 
 resource "azurerm_user_assigned_identity" "this_identity" {
-  location            = azurerm_resource_group.this.location
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   name                = module.naming.user_assigned_identity.name_unique
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
 }
 
 data "azurerm_role_definition" "this" {
@@ -62,10 +62,10 @@ module "storageaccount" {
   account_replication_type      = "LRS" # "GRS"
   account_tier                  = "Standard"
   account_kind                  = "StorageV2"
-  location                      = azurerm_resource_group.this.location
+  location                      = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   # name                          = "${module.naming.storage_account.name_unique}${random_string.this.result}"
   name                          = replace(replace("${module.naming.storage_account.name_unique}${random_string.this.result}", "-", ""), "_", "")
-  resource_group_name           = azurerm_resource_group.this.name
+  resource_group_name           = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   min_tls_version               = "TLS1_2"
   shared_access_key_enabled     = true
   public_network_access_enabled = true

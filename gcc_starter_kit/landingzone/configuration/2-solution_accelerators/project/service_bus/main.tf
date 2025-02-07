@@ -4,7 +4,7 @@ module "private_dns_zones" {
   version = "0.1.2" 
 
   enable_telemetry      = true
-  resource_group_name   = azurerm_resource_group.this.name
+  resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.servicebus.core.windows.net"
 
   tags        = merge(
@@ -43,8 +43,8 @@ module "private_dns_zones" {
 resource "azurerm_application_security_group" "this" {
   name = "tf-appsecuritygroup-pe" 
 
-  resource_group_name = azurerm_resource_group.this.name
-  location            = azurerm_resource_group.this.location
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
 }
 
 module "servicebus" {
@@ -53,8 +53,8 @@ module "servicebus" {
 
   # insert the 3 required variables here
   sku                           = "Premium"
-  resource_group_name           = azurerm_resource_group.this.name
-  location                      = azurerm_resource_group.this.location
+  resource_group_name           = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location                      = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   name                          = "${module.naming.container_registry.name_unique}${random_string.this.result}" 
   public_network_access_enabled = false
 

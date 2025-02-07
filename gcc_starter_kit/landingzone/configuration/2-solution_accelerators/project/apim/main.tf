@@ -1,8 +1,8 @@
 # add your solution accelerator terraform here.
 resource "azurerm_user_assigned_identity" "this" {
-  location            = azurerm_resource_group.this.location
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   name                = "${module.naming.user_assigned_identity.name}-${random_string.this.result}"  # "uami-${random_id.name.hex}"
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
 }
 
 module "apim" {
@@ -10,8 +10,8 @@ module "apim" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/apim/api_management" 
 
   name                         = "${module.naming.api_management.name}-${random_string.this.result}" # alpha numeric characters only are allowed in "name var.name_prefix == null ? "${random_string.prefix.result}${var.acr_name}" : "${var.name_prefix}${var.acr_name}"
-  resource_group_name          = azurerm_resource_group.this.name
-  location                     = azurerm_resource_group.this.location
+  resource_group_name          = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location                     = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
 
   publisher_name       = "My Company"
   publisher_email      = "company@terraform.io"

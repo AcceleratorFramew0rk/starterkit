@@ -31,6 +31,13 @@ CONFIG_FILE_PATH="./../scripts/config.yaml"
 echo $CONFIG_FILE_PATH
 eval $(parse_yaml $CONFIG_FILE_PATH "CONFIG_")
 # Define your variables
+
+
+RESOURCE_GROUP_NAME="${CONFIG_resource_group_name}"
+LOG_ANALYTICS_WORKSPACE_RESOURCE_GROUP_NAME="${CONFIG_log_analytics_workspace_resource_group_name}"
+LOG_ANALYTICS_WORKSPACE_NAME="${CONFIG_log_analytics_workspace_name}"
+
+
 PROJECT_CODE="${CONFIG_prefix}" 
 # Generate resource group name to store state file
 RG_NAME="${PROJECT_CODE}-rg-launchpad"
@@ -73,7 +80,7 @@ else
     # log analytics workspace
     MSYS_NO_PATHCONV=1 terraform state rm azurerm_log_analytics_workspace.gcci_agency_workspace
 
-    MSYS_NO_PATHCONV=1 terraform import "azurerm_log_analytics_workspace.gcci_agency_workspace" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/gcci-agency-law/providers/Microsoft.OperationalInsights/workspaces/gcci-agency-workspace" 
+    MSYS_NO_PATHCONV=1 terraform import "azurerm_log_analytics_workspace.gcci_agency_workspace" "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/${LOG_ANALYTICS_WORKSPACE_RESOURCE_GROUP_NAME}/providers/Microsoft.OperationalInsights/workspaces/${LOG_ANALYTICS_WORKSPACE_NAME}" 
 
 
     echo "-----------------------------------------------------------------------------"  

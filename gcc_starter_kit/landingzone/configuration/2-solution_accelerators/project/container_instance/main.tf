@@ -3,8 +3,8 @@ module "container_group1" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/compute/terraform-azurerm-containergroup"  
 
   name                = "${module.naming.container_group.name}-${random_string.this.result}"
-  resource_group_name = azurerm_resource_group.this.name 
-  location            = azurerm_resource_group.this.location 
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name 
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
   ip_address_type     = "Private" # "Public"
   os_type             = "Linux"
   dns_name_label      = null #  this one needs to be unique

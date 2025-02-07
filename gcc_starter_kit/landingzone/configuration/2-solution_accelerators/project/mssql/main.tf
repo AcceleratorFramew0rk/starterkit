@@ -5,7 +5,7 @@ module "private_dns_zones" {
   # count = try(local.keyvault.id, null) == null ? 1 : 0 
 
   enable_telemetry      = true
-  resource_group_name   = azurerm_resource_group.this.name
+  resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.database.windows.net" 
 
   tags        = merge(
@@ -83,8 +83,8 @@ module "sql_server" {
   
   enable_telemetry             = var.enable_telemetry
   name                         = "${module.naming.mssql_server.name}-${random_string.this.result}" 
-  resource_group_name          = azurerm_resource_group.this.name
-  location                     = azurerm_resource_group.this.location
+  resource_group_name          = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location                     = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   administrator_login          = "sqladminuser"
   administrator_login_password = random_password.sql_admin.result 
 

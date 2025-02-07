@@ -2,7 +2,7 @@ module "private_dns_zones" {
   source                = "Azure/avm-res-network-privatednszone/azurerm"  
 
   enable_telemetry      = true
-  resource_group_name   = azurerm_resource_group.this.name
+  resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.openai.azure.com"
 
   tags        = merge(

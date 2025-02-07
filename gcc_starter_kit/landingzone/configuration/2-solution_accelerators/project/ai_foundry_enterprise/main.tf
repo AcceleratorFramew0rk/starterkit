@@ -64,7 +64,7 @@ module "ai_foundry_enterprise" {
 
   // use existing resource group name
   use_existing_rg = true
-  existing_rg_name = azurerm_resource_group.this.name # azurerm_resource_group.this.id # azurerm_resource_group.this.name
+  existing_rg_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name # azurerm_resource_group.this.id # try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
 
   // use existing vnet and subnet id
   existing_vnet_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id  

@@ -13,11 +13,11 @@
 
 
 resource "azurerm_resource_group" "gcci_platform" {
-  name = "gcci-platform"
+  name = try(local.globalsettings.config.resource_group_name, null) != null ? local.globalsettings.config.resource_group_name : "gcci-platform"
 }
 
 resource "azurerm_resource_group" "gcci_agency_law" {
-  name = "gcci-agency-law"
+  name = try(local.globalsettings.config.log_analytics_workspace_resource_group_name, null) != null ? local.globalsettings.config.log_analytics_workspace_resource_group_name : "gcci-agency-law"
 }
 
 resource "azurerm_virtual_network" "gcci_vnet_ingress_internet" {
@@ -49,6 +49,6 @@ resource "azurerm_virtual_network" "gcci_vnet_devops" {
 }
 
 resource "azurerm_log_analytics_workspace" "gcci_agency_workspace" {
-  name = "gcci-agency-workspace"
+  name = try(local.globalsettings.config.log_analytics_workspace_name, null) != null ? local.globalsettings.config.log_analytics_workspace_name : "gcci-agency-workspace"
 }
 

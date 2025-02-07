@@ -5,8 +5,8 @@ module "stream_analytics" {
 
   # name                         = "${module.naming.iothub.name_unique}${random_string.this.result}"
   name                     = "${module.naming.stream_analytics_job.name}-iot-${random_string.this.result}"
-  resource_group_name          = azurerm_resource_group.this.name
-  location                     = azurerm_resource_group.this.location
+  resource_group_name          = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location                     = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
 
   iot_hub_id = local.iothub_id 
   data_explorer_id = local.dataexplorer.resource.id

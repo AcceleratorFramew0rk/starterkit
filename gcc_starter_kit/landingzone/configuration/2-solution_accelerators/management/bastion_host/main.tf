@@ -3,9 +3,9 @@ module "public_ip" {
   version = "0.1.0"
 
   enable_telemetry    = var.enable_telemetry
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   name                = module.naming.public_ip.name_unique
-  location            = azurerm_resource_group.this.location 
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
   sku = "Standard"
 }
 
@@ -15,8 +15,8 @@ module "public_ip" {
 
 #   enable_telemetry    = true
 #   name                = module.naming.bastion_host.name_unique
-#   resource_group_name = azurerm_resource_group.this.name
-#   location            = azurerm_resource_group.this.location
+#   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+#   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
 #   copy_paste_enabled  = true
 #   file_copy_enabled   = false
 #   sku                 = "Standard"
@@ -57,8 +57,8 @@ module "azure_bastion" {
 
   // Pass in the required variables from the module
   enable_telemetry     = true
-  resource_group_name  = azurerm_resource_group.this.name
-  location             = azurerm_resource_group.this.location  
+  resource_group_name  = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location             = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location  
   # virtual_network_name = try(local.remote.networking.virtual_networks.spoke_management.virtual_network.name, null) != null ? local.remote.networking.virtual_networks.spoke_management.virtual_network.name : var.vnet_name  
 
   // Define the bastion host configuration

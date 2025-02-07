@@ -3,9 +3,9 @@ module "avm_res_keyvault_vault" {
   version             = ">= 0.5.0"
 
   tenant_id           = data.azurerm_client_config.current.tenant_id
-  name                = "${module.naming.key_vault.name_unique}${random_string.this.result}"  
-  resource_group_name = azurerm_resource_group.this.name 
-  location            = azurerm_resource_group.this.location 
+  name                = "${module.naming.key_vault.name}${random_string.this.result}"  
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name 
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
   network_acls = {
     default_action = "Allow"
   }
@@ -54,9 +54,9 @@ resource "random_integer" "zone_index" {
 }
 
 resource "azurerm_user_assigned_identity" "user" {
-  location            = azurerm_resource_group.this.location
-  name                = "${module.naming.user_assigned_identity.name_unique}${random_string.this.result}"   # module.naming.user_assigned_identity.name_unique
-  resource_group_name = azurerm_resource_group.this.name
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  name                = module.naming.user_assigned_identity.name_unique
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
 }
 
 module "virtualmachine1" {
@@ -64,15 +64,15 @@ module "virtualmachine1" {
   version = "0.14.0"
 
   enable_telemetry                       = var.enable_telemetry
-  location                               = azurerm_resource_group.this.location
-  resource_group_name                    = azurerm_resource_group.this.name
+  location                               = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  resource_group_name                    = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   virtualmachine_os_type                 = "Windows"
   # name                                   = "${module.naming.virtual_machine.name}${random_string.this.result}" 
   name = (
     length(replace("${module.naming.virtual_machine.name}-${random_string.this.result}", "-", "")) > 15
     ? substr(replace("${module.naming.virtual_machine.name}-${random_string.this.result}", "-", ""), 0, 15)
     : replace("${module.naming.virtual_machine.name}-${random_string.this.result}", "-", "")
-  )
+  )  
   admin_credential_key_vault_resource_id = module.avm_res_keyvault_vault.resource_id
   virtualmachine_sku_size                = "Standard_D8s_v3" # "Standard_D8s_v3" 
   zone                                   = random_integer.zone_index.result 
@@ -84,10 +84,10 @@ module "virtualmachine1" {
 
   network_interfaces = {
     network_interface_1 = {
-      name = "${module.naming.network_interface.name}-${random_string.this.result}" # module.naming.network_interface.name_unique
+      name = module.naming.network_interface.name_unique
       ip_configurations = {
         ip_configuration_1 = {
-          name                          = "${module.naming.network_interface.name}-ipconfig-${random_string.this.result}"
+          name                          = "${module.naming.network_interface.name}-ipconfig1"
           private_ip_subnet_resource_id = try(local.remote.networking.virtual_networks.spoke_management.virtual_subnets["InfraSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_management.virtual_subnets["InfraSubnet"].resource.id : var.subnet_id 
           create_public_ip_address      = false # true
           public_ip_address_name        = module.naming.public_ip.name_unique
@@ -98,7 +98,7 @@ module "virtualmachine1" {
 
   data_disk_managed_disks = {
     disk1 = {
-      name                 = "${module.naming.managed_disk.name}-lun0-${random_string.this.result}" # "${module.naming.managed_disk.name}-lun0"
+      name                 = "${module.naming.managed_disk.name}-lun0"
       storage_account_type = "StandardSSD_LRS"
       lun                  = 0
       caching              = "ReadWrite"

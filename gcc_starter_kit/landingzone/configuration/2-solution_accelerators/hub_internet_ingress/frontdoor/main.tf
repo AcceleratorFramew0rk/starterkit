@@ -6,7 +6,7 @@ module "cdn_frontdoor" {
   environment = var.environment
   stack       = var.stack
 
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
 
   sku_name = "Standard_AzureFrontDoor" # "Premium_AzureFrontDoor"
 

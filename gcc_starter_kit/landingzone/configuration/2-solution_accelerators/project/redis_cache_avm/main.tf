@@ -3,7 +3,7 @@ module "private_dns_zones" {
   version = "0.3.0"
 
   enable_telemetry      = true
-  resource_group_name   = azurerm_resource_group.this.name
+  resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.redis.cache.windows.net"
 
   tags        = merge(
@@ -45,8 +45,8 @@ module "redis_cache" {
 
   enable_telemetry              = var.enable_telemetry
   name                          = "${module.naming.redis_cache.name}-${random_string.this.result}"  # module.naming.redis_cache.name_unique
-  resource_group_name           = azurerm_resource_group.this.name
-  location                      = azurerm_resource_group.this.location
+  resource_group_name           = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location                      = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
 
   # add the variables here
   # capacity                      = 1  

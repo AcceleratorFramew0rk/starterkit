@@ -1,0 +1,27 @@
+# DO NOT CHANGE - Healthcare Commercial Cloud Infrastructure
+resource_group_name: "hcci-platform"
+log_analytics_workspace_resource_group_name: "hcci-agency-law"  
+log_analytics_workspace_name: "hcci-agency-workspace"  
+# virtual network - leave empty if there is no such virtual network  
+vnets:
+  hub_ingress_internet: 
+    name: "vnet-ingress-internet"     
+    cidr: "100.127.0.0/24" 
+  hub_egress_internet:  
+    name: "vnet-egress-internet"     
+    cidr: "100.127.1.0/24" 
+  hub_ingress_intranet:  
+    name: "vnet-ingress-intranet"    
+    cidr: "10.20.0.0/25"
+  hub_egress_intranet:  
+    name: "vnet-egress-intranet"     
+    cidr: "10.20.1.0/25" 
+  management:  
+    name: "vnet-management"     
+    cidr: "100.127.3.0/24" 
+  project:  
+    name: "vnet-project"     
+    cidr: "100.64.0.0/23" 
+  devops:  
+    name: "vnet-devops"   
+    cidr: "100.127.4.0/24"  

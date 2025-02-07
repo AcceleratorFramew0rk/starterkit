@@ -3,7 +3,7 @@ module "private_dns_zones" {
   version = "0.1.2" 
 
   enable_telemetry      = true
-  resource_group_name   = azurerm_resource_group.this.name
+  resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.azure-devices.net"
   tags         = merge(
     local.global_settings.tags,
@@ -40,7 +40,7 @@ module "private_dns_zones_dps" {
   version = "0.1.2" 
 
   enable_telemetry      = true
-  resource_group_name   = azurerm_resource_group.this.name
+  resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.provisioning.azure-devices.net"
   tags         = merge(
     local.global_settings.tags,
@@ -77,8 +77,8 @@ module "iot_hub" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/iot/iot-hub"
 
   name                         = "${module.naming.iothub.name}-iot-${random_string.this.result}"
-  resource_group_name          = azurerm_resource_group.this.name
-  location                     = azurerm_resource_group.this.location
+  resource_group_name          = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location                     = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
 
   # iot hub configuration
   sku                 = "S1"
@@ -100,7 +100,7 @@ module "iot_hub" {
 # Create IoT Hub Access Policy
 resource "azurerm_iothub_shared_access_policy" "this" {
   name                = "${module.naming.iothub.name}sap-${random_string.this.result}" # "terraform-policy"
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   iothub_name         = module.iot_hub.resource.name # azurerm_iothub.iothub.name
 
   registry_read   = true
@@ -117,8 +117,8 @@ resource "azurerm_iothub_shared_access_policy" "this" {
 # Create IoTHub dps
 resource "azurerm_iothub_dps" "this" {
   name                = "${module.naming.iothub.name}dps-${random_string.this.result}"
-  resource_group_name = azurerm_resource_group.this.name
-  location            = azurerm_resource_group.this.location
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   allocation_policy   = "Hashed"
 
   sku {
@@ -129,7 +129,7 @@ resource "azurerm_iothub_dps" "this" {
 
   linked_hub {
     connection_string       = azurerm_iothub_shared_access_policy.this.primary_connection_string
-    location                = azurerm_resource_group.this.location
+    location                = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
     allocation_weight       = 150
     apply_allocation_policy = true
   }
@@ -145,9 +145,9 @@ module "private_endpoint" {
   # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
 
-  name                           = "${module.iot_hub.name}PrivateEndpoint"
-  location                       = azurerm_resource_group.this.location
-  resource_group_name            = azurerm_resource_group.this.name
+  name                           = "${module.iot_hub.name}privateendpoint"
+  location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id : var.subnet_id 
   tags                           = merge(
     local.global_settings.tags,
@@ -164,6 +164,12 @@ module "private_endpoint" {
   subresource_name               = "iotHub" # ["iotHub"] # "registry"
   private_dns_zone_group_name    = "iothubsPrivateDnsZoneGroup"
   private_dns_zone_group_ids     = [module.private_dns_zones.resource.id] 
+  
+  depends_on = [
+    module.iot_hub, 
+    module.private_dns_zones
+  ]
+
 }
 
 
@@ -171,9 +177,9 @@ module "private_endpoint_dps" {
   # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
 
-  name                           = "${module.iot_hub.name}dpsPrivateEndpoint"
-  location                       = azurerm_resource_group.this.location
-  resource_group_name            = azurerm_resource_group.this.name
+  name                           = "${module.iot_hub.name}dpsprivateendpoint"
+  location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id : var.subnet_id 
   tags                           = merge(
     local.global_settings.tags,
@@ -190,4 +196,10 @@ module "private_endpoint_dps" {
   subresource_name               = "iotDps" # Corrected subresource for IoT DPS
   private_dns_zone_group_name    = "iotdpsPrivateDnsZoneGroup"
   private_dns_zone_group_ids     = [module.private_dns_zones_dps.resource.id] 
+  
+  depends_on = [
+    azurerm_iothub_dps.this, 
+    module.private_dns_zones_dps
+  ]
+
 }

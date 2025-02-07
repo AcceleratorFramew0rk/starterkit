@@ -5,8 +5,8 @@ module "container_group1" {
   version = "0.1.0"
 
   name                = "${module.naming.container_group.name}-${random_string.this.result}" # module.naming.container_group.name_unique
-  location            = azurerm_resource_group.this.location
-  resource_group_name = azurerm_resource_group.this.name
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   os_type             = "Linux"
   subnet_ids          = [try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["CiSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["CiSubnet"].resource.id : var.subnet_id  ]
   restart_policy      = "OnFailure" // Possible values are 'Always'(default) 'Never' 'OnFailure'

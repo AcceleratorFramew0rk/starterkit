@@ -51,11 +51,10 @@ output "spoke_devops" {
 
 output "gcci_agency_workspace" {
   value       = {
-    name = module.log_analytics_workspace.name
+    name = module.log_analytics_workspace.name 
     id = module.log_analytics_workspace.id
     resource = module.log_analytics_workspace
   }
-  description = "The Azure log analytics workspace resource"
-  sensitive = true  
+  description = "The Azure Virtual Network resource"
 }
 

@@ -3,8 +3,8 @@ module "natgateway" {
 
   name                = "${module.naming.nat_gateway.name}-${random_string.this.result}"
   enable_telemetry    = true
-  location            = azurerm_resource_group.this.location
-  resource_group_name = azurerm_resource_group.this.name
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
 
 }
 
@@ -23,9 +23,9 @@ module "public_ip1" {
   version = "0.1.0"
 
   enable_telemetry    = var.enable_telemetry
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   name                = "${module.naming.public_ip.name_unique}-${random_string.this.result}"
-  location            = azurerm_resource_group.this.location 
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
   sku = "Standard"
 }
 

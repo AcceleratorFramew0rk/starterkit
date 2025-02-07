@@ -1,7 +1,7 @@
 resource "azurerm_web_application_firewall_policy" "azure_waf" {
   name                = "${module.naming.firewall_policy.name}${random_string.this.result}" 
-  resource_group_name = azurerm_resource_group.this.name
-  location            = azurerm_resource_group.this.location
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
 
   # custom_rules {
   #   name      = "Rule1"

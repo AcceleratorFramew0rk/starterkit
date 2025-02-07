@@ -1,9 +1,10 @@
-resource_group_name: "gcci-platform" # DO NOT CHANGE
-log_analytics_workspace_resource_group_name: "gcci-agency-law"  # DO NOT CHANGE
-log_analytics_workspace_name: "gcci-agency-workspace"  # DO NOT CHANGE
+resource_group_name: "hcci-platform"
+log_analytics_workspace_resource_group_name: "hcci-agency-law" 
+log_analytics_workspace_name: "hcci-agency-workspace" 
 # # virtual network - leave empty if there is no such virtual network  
-prefix: "wx2-dev-sea"
-is_prefix: true
+prefix: "ab1-dev-sea"
+is_prefix: false
+is_single_resource_group: false
 location: "southeastasia"
 environment: "dev"
 app_config:
@@ -12,28 +13,33 @@ app_config:
     intranet_ingress_domain_name: lite-uat-intranet.xxx.gov.sg 
 # virtual networks name configuration - change the below if you are using different vnets name
 vnets:
-  # IMPORTANT: leave empty if there is no such virtual network  
+  # IMPORTANT: leave empty if there is no such virtual network   
   hub_ingress_internet: 
-    name: "gcci-vnet-ingress-internet"     
-    cidr: "100.127.0.0/24" 
+    name:   
+    cidr: 
+    id: 
   hub_egress_internet:  
-    name: "gcci-vnet-egress-internet"     
-    cidr: "100.127.1.0/24" 
+    name:   
+    cidr: 
+    id: 
   hub_ingress_intranet:  
-    name: "gcci-vnet-ingress-intranet"    
-    cidr: "10.20.0.0/25"
+    name:  
+    cidr: 
+    id: 
   hub_egress_intranet:  
-    name: "gcci-vnet-egress-intranet"     
-    cidr: "10.20.1.0/25" 
+    name:    
+    cidr: 
+    id: 
   management:  
-    name: "gcci-vnet-management"     
-    cidr: "100.127.3.0/24" 
+    name:     
+    cidr: 
+    id: 
   project:  
-    name: "gcci-vnet-project"     
+    name: "vnet-project"     
     cidr: "100.64.0.0/23" 
     id: 
   devops:  
-    name: "gcci-vnet-devops"   
+    name: "vnet-devops"   
     cidr: "100.127.4.0/24" 
     id: 
 # subnets cidr configuration

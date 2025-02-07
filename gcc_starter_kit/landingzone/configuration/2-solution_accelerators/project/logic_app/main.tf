@@ -1,7 +1,7 @@
 resource "azurerm_app_service_plan" "this" {
   name                         = "${module.naming.app_service_plan.name}-logicapp"
-  location                     = azurerm_resource_group.this.location
-  resource_group_name          = azurerm_resource_group.this.name
+  location                     = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  resource_group_name          = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   kind                         = "elastic" # "Linux"
   maximum_elastic_worker_count = 5 
 
@@ -23,7 +23,7 @@ module "private_dns_zones" {
   count = try(local.privatednszone.id, null) == null ? 1 : 0 
 
   enable_telemetry      = true
-  resource_group_name   = azurerm_resource_group.this.name
+  resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.azurewebsites.net"
   tags         = {
       environment = "dev"
@@ -45,8 +45,8 @@ module "private_endpoint" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
  
   name                           = "${module.logicapp.resource.name}-privateendpoint"
-  location                       = azurerm_resource_group.this.location
-  resource_group_name            = azurerm_resource_group.this.name
+  location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id : var.service_subnet_id 
   tags                           = {
       environment = "dev"
@@ -60,9 +60,9 @@ module "private_endpoint" {
 }
 
 resource "azurerm_user_assigned_identity" "this" {
-  location            = azurerm_resource_group.this.location
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   name                = module.naming.user_assigned_identity.name_unique
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
 }
 
 module "logicapp" {
@@ -72,8 +72,8 @@ module "logicapp" {
   # insert the 4 required variables here
 
   name                         = "${module.naming.logic_app_workflow.name}-${random_string.this.result}" # alpha numeric characters only are allowed in "name var.name_prefix == null ? "${random_string.prefix.result}${var.acr_name}" : "${var.name_prefix}${var.acr_name}"
-  resource_group_name          = azurerm_resource_group.this.name
-  location                     = azurerm_resource_group.this.location
+  resource_group_name          = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location                     = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
 
   app_service_plan_id = azurerm_app_service_plan.this.id
 

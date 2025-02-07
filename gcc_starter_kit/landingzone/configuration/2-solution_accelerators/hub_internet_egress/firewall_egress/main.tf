@@ -3,9 +3,9 @@ module "public_ip_firewall1" {
   version = "0.1.0"
   
   enable_telemetry    = var.enable_telemetry
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   name                = "${module.naming.public_ip.name_unique}-fw1"
-  location            = azurerm_resource_group.this.location 
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
 }
 
 module "public_ip_firewall2" {
@@ -13,9 +13,9 @@ module "public_ip_firewall2" {
   version = "0.1.0"
 
   enable_telemetry    = var.enable_telemetry
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   name                = "${module.naming.public_ip.name}-fw2"
-  location            = azurerm_resource_group.this.location 
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
 }
 
 module "firewall" {
@@ -24,7 +24,7 @@ module "firewall" {
   
   name                = "${module.naming.firewall.name}-egress-internet"
   enable_telemetry    = var.enable_telemetry
-  location            = azurerm_resource_group.this.location
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   resource_group_name = try(local.remote.resource_group.name, null) != null ? local.remote.resource_group.name : var.resource_group_name # firewall must be in the same resource group as virtual network and subnets
   firewall_sku_tier   = "Basic" # "Premium" or "Standard"
   firewall_policy_id  = module.firewall_policy.resource.id # bug in avm module which output resource to id or name variable

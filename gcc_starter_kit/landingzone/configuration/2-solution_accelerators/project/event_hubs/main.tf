@@ -3,8 +3,8 @@ module "event_hubs" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/iot/event-hubs" 
 
   name                         = "${module.naming.eventhub.name}-iot-${random_string.this.result}"
-  resource_group_name          = azurerm_resource_group.this.name
-  location                     = azurerm_resource_group.this.location
+  resource_group_name          = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location                     = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
 
   namespace_name      = "${module.naming.eventhub_namespace.name}-iot-${random_string.this.result}"  #  "iotehnamespace"
   partition_count     = 2 # 4

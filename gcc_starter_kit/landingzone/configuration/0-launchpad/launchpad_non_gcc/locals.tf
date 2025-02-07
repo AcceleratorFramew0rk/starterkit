@@ -74,6 +74,9 @@ locals {
     subnets = local.config.subnets
     vnets = local.config.vnets
     app_config = local.config.app_config
+    resource_group_name = try(local.config.is_single_resource_group, false) ? local.config.resource_group_name : null
+    is_single_resource_group = try(local.config.is_single_resource_group, false)
+    config = local.config
   }
 }  
 

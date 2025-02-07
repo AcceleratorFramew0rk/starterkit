@@ -3,7 +3,7 @@ module "private_dns_zones" {
   version = "0.1.2" 
 
   enable_telemetry      = true
-  resource_group_name   = azurerm_resource_group.this.name
+  resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.azurecr.io"
   tags         = merge(
     local.global_settings.tags,
@@ -39,8 +39,8 @@ module "container_registry" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/compute/terraform-azurerm-containerregistry" 
 
   name                         = "${module.naming.container_registry.name_unique}${random_string.this.result}"
-  resource_group_name          = azurerm_resource_group.this.name
-  location                     = azurerm_resource_group.this.location
+  resource_group_name          = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location                     = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   sku                          = "Premium" # ["Basic", "Standard", "Premium"]
   admin_enabled                = true 
   log_analytics_workspace_id   = try(local.remote.log_analytics_workspace.id, null) != null ? local.remote.log_analytics_workspace.id : var.log_analytics_workspace_id 
@@ -63,8 +63,8 @@ module "private_endpoint" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
 
   name                           = "${module.container_registry.name}PrivateEndpoint"
-  location                       = azurerm_resource_group.this.location
-  resource_group_name            = azurerm_resource_group.this.name
+  location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id : var.subnet_id 
   tags                           = merge(
     local.global_settings.tags,

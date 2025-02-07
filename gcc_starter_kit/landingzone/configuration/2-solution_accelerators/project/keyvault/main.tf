@@ -5,8 +5,8 @@ module "keyvault" {
 
   name                          = "${module.naming.key_vault.name_unique}${random_string.this.result}" 
   enable_telemetry              = var.enable_telemetry
-  location                      = azurerm_resource_group.this.location
-  resource_group_name           = azurerm_resource_group.this.name
+  location                      = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  resource_group_name           = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   tenant_id                     = data.azurerm_client_config.current.tenant_id
   purge_protection_enabled      = false # var.purge_protection_enabled
   soft_delete_retention_days    = 7 # var.soft_delete_retention_days
@@ -37,7 +37,7 @@ module "private_dns_zones" {
   version = "0.1.2" 
 
   enable_telemetry      = true
-  resource_group_name   = azurerm_resource_group.this.name
+  resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.vaultcore.azure.net"
 
   tags        = merge(

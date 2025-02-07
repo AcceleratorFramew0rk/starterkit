@@ -1,8 +1,8 @@
 # **IMPORTANT - The environment network configuration is invalid: Provided subnet must have a size of at least /23
 resource "azurerm_container_app_environment" "this" {
-  location                 = azurerm_resource_group.this.location
+  location                 = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   name                     = "${module.naming.container_app_environment.name_unique}${random_string.this.result}" # "my-environment"
-  resource_group_name      = azurerm_resource_group.this.name
+  resource_group_name      = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   infrastructure_subnet_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ContainerAppSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ContainerAppSubnet"].resource.id : var.subnet_id  # azurerm_subnet.subnet.id
   internal_load_balancer_enabled = true
   logs_destination           = "log-analytics"
@@ -26,7 +26,7 @@ module "containerapp_frontend" {
 
   container_app_environment_resource_id = azurerm_container_app_environment.this.id
   name                                  = "${module.naming.container_app.name}-${random_string.this.result}1" # local.counting_app_name
-  resource_group_name                   = azurerm_resource_group.this.name
+  resource_group_name                   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   revision_mode                         = "Single"
   template = {
     containers = [
@@ -61,7 +61,7 @@ module "containerapp_backend" {
 
   container_app_environment_resource_id = azurerm_container_app_environment.this.id
   name                                  = "${module.naming.container_app.name}-${random_string.this.result}2" #   local.dashboard_app_name
-  resource_group_name                   = azurerm_resource_group.this.name
+  resource_group_name                   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   revision_mode                         = "Single"
   template = {
     containers = [

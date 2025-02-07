@@ -4,8 +4,11 @@ module "avm_res_keyvault_vault" {
 
   tenant_id           = data.azurerm_client_config.current.tenant_id
   name                = "${module.naming.key_vault.name_unique}${random_string.this.result}"  
-  resource_group_name = azurerm_resource_group.this.name 
-  location            = azurerm_resource_group.this.location 
+  # resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name 
+  # location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location # azurerm_resource_group.this.0.location
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name # azurerm_resource_group.this.0.name
+
   network_acls = {
     default_action = "Allow"
   }
@@ -61,9 +64,12 @@ resource "random_integer" "zone_index" {
 }
 
 resource "azurerm_user_assigned_identity" "user" {
-  location            = azurerm_resource_group.this.location
+  # location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location # azurerm_resource_group.this.0.location
   name                = "${module.naming.user_assigned_identity.name_unique}${random_string.this.result}"   # module.naming.user_assigned_identity.name_unique
-  resource_group_name = azurerm_resource_group.this.name
+  # resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name # azurerm_resource_group.this.0.name
+
 }
 
 module "virtualmachine1" {
@@ -71,8 +77,11 @@ module "virtualmachine1" {
   version = "0.14.0"
 
   enable_telemetry                       = var.enable_telemetry
-  location                               = azurerm_resource_group.this.location
-  resource_group_name                    = azurerm_resource_group.this.name
+  # location                               = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  # resource_group_name                    = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location # azurerm_resource_group.this.0.location
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name # azurerm_resource_group.this.0.name
+
   virtualmachine_os_type                 = var.virtualmachine_os_type # default is "Windows"
   # name                                   = "${module.naming.virtual_machine.name}-${random_string.this.result}" 
   name = (
@@ -94,7 +103,7 @@ module "virtualmachine1" {
       name = "${module.naming.network_interface.name}-${random_string.this.result}" # module.naming.network_interface.name_unique
       ip_configurations = {
         ip_configuration_1 = {
-          name                          = "${module.naming.network_interface.name}-ipconfig-${random_string.this.result}"
+          name                          = "${module.naming.network_interface.name}-ipconfig1"
           # private_ip_subnet_resource_id = try(var.subnet_id, null) != null ? var.subnet_id : local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AppSubnet"].resource.id 
           private_ip_subnet_resource_id = try(var.subnet_id, null) != null ? var.subnet_id : local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id 
           create_public_ip_address      = false # true
@@ -106,7 +115,7 @@ module "virtualmachine1" {
 
   data_disk_managed_disks = {
     disk1 = {
-      name                 = "${module.naming.managed_disk.name}-lun0-${random_string.this.result}" # "${module.naming.managed_disk.name}-lun0"
+      name                 = "${module.naming.managed_disk.name}-lun0-${random_string.this.result}"
       storage_account_type = "StandardSSD_LRS"
       lun                  = 0
       caching              = "ReadWrite"

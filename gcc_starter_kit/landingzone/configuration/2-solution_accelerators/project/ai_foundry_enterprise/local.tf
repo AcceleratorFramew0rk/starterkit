@@ -2,7 +2,7 @@
 locals {
   development_environment = true
   base_name               = "${random_id.short_name.hex}${random_id.short_name.dec}"
-  location                = azurerm_resource_group.this.location # "swedencentral"
+  location                = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location # "swedencentral"
   tags                    = { "Environment" = "development", "Owner" = "team" }
 
   search_config = {

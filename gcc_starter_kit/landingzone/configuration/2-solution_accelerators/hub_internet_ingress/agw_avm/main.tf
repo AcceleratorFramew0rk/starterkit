@@ -3,9 +3,9 @@ module "public_ip" {
   version = "0.1.0"
 
   enable_telemetry    = var.enable_telemetry
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   name                = module.naming.public_ip.name_unique
-  location            = azurerm_resource_group.this.location 
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
   sku = "Standard"
 }
 
@@ -14,8 +14,8 @@ module "application_gateway" {
   version = "0.3.0"
 
   name = "${module.naming.application_gateway.name}${random_string.this.result}" 
-  resource_group_name = azurerm_resource_group.this.name
-  location            = azurerm_resource_group.this.location
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   enable_telemetry    = var.enable_telemetry
 
   gateway_ip_configuration = {

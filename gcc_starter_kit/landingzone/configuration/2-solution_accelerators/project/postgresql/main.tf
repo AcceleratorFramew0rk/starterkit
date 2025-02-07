@@ -3,7 +3,7 @@ module "private_dns_zones" {
   version = "0.1.2"
 
   enable_telemetry      = true
-  resource_group_name   = azurerm_resource_group.this.name
+  resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.postgres.database.azure.com"
   tags         = merge(
     local.global_settings.tags,
@@ -55,8 +55,8 @@ module "private_endpoint" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
 
   name                           = "${module.postgresql.name}PrivateEndpoint"
-  location                       = azurerm_resource_group.this.location
-  resource_group_name            = azurerm_resource_group.this.name
+  location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["DbSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["DbSubnet"].resource.id : var.subnet_id 
   tags                           = merge(
     local.global_settings.tags,
@@ -84,9 +84,9 @@ module "postgresql" {
   source  = "Azure/avm-res-dbforpostgresql-flexibleserver/azurerm"
   version = "0.1.2" 
 
-  location               = azurerm_resource_group.this.location
+  location               = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   name                   = "${module.naming.postgresql_server.name_unique}${random_string.this.result}" # module.naming.postgresql_server.name_unique
-  resource_group_name    = azurerm_resource_group.this.name
+  resource_group_name    = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   enable_telemetry       = var.enable_telemetry
   administrator_login    = "psqladmin"
   administrator_password = "!qaz@wsx@1234567890!qaz@wsx@1234567890" # random_password.myadminpassword.result

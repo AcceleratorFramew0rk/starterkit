@@ -1,7 +1,7 @@
 resource "azurerm_app_service_plan" "this" {
   name                         = "${module.naming.app_service_plan.name}-appserviceiz" # module.naming.app_service_plan.name
-  location                     = azurerm_resource_group.this.location
-  resource_group_name          = azurerm_resource_group.this.name
+  location                     = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  resource_group_name          = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   kind                         = "Linux"
   maximum_elastic_worker_count = 5 
 
@@ -22,7 +22,7 @@ module "private_dns_zones" {
   count = try(local.privatednszone.id, null) == null ? 1 : 0 
   
   enable_telemetry      = true
-  resource_group_name   = azurerm_resource_group.this.name
+  resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.azurewebsites.net"
   tags         = {
       environment = "dev"
@@ -44,8 +44,8 @@ module "appservice" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/webapps/terraform-azurerm-appservice"
 
   name                         = "${module.naming.app_service.name}-webiz-${random_string.this.result}" # alpha numeric characters only are allowed in "name var.name_prefix == null ? "${random_string.prefix.result}${var.acr_name}" : "${var.name_prefix}${var.acr_name}"
-  resource_group_name          = azurerm_resource_group.this.name
-  location                     = azurerm_resource_group.this.location
+  resource_group_name          = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location                     = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
 
   app_service_plan_id = azurerm_app_service_plan.this.id
   client_affinity_enabled = false
@@ -187,8 +187,8 @@ module "private_endpoint" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
  
   name                           = "${module.appservice.resource.name}-webiz-privateendpoint"
-  location                       = azurerm_resource_group.this.location
-  resource_group_name            = azurerm_resource_group.this.name
+  location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebIntranetSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebIntranetSubnet"].resource.id : var.subnet_id 
   tags                           = {
       environment = "dev"
@@ -215,8 +215,8 @@ module "appservice1" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/webapps/terraform-azurerm-appservice"
 
   name                         = "${module.naming.app_service.name}-apiiz-${random_string.this.result}" # alpha numeric characters only are allowed in "name var.name_prefix == null ? "${random_string.prefix.result}${var.acr_name}" : "${var.name_prefix}${var.acr_name}"
-  resource_group_name          = azurerm_resource_group.this.name
-  location                     = azurerm_resource_group.this.location
+  resource_group_name          = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location                     = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
 
   app_service_plan_id = azurerm_app_service_plan.this.id
   client_affinity_enabled = false
@@ -292,8 +292,8 @@ module "private_endpoint1" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
  
   name                           = "${module.appservice.resource.name}-apiiz-privateendpoint"
-  location                       = azurerm_resource_group.this.location
-  resource_group_name            = azurerm_resource_group.this.name
+  location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebIntranetSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebIntranetSubnet"].resource.id : var.subnet_id 
   tags                           = {
       environment = "dev"

@@ -3,7 +3,7 @@ module "private_dns_zones" {
   version = "0.1.2" 
 
   enable_telemetry      = true
-  resource_group_name   = azurerm_resource_group.this.name
+  resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.documents.azure.com"
 
   tags        = merge(
@@ -42,8 +42,8 @@ module "cosmos_db" {
   # source              = "./../../../../../../modules/terraform-azurerm-aaf/modules/databases/terraform-azurerm-cosmosdb"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/databases/terraform-azurerm-cosmosdb"
   
-  resource_group_name = azurerm_resource_group.this.name
-  location            = azurerm_resource_group.this.location
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   cosmos_account_name = "${module.naming.cosmosdb_account.name}-${random_string.this.result}" 
   cosmos_api          = var.cosmos_api
   sql_dbs             = var.sql_dbs
@@ -52,7 +52,7 @@ module "cosmos_db" {
   # ensure location is south east asia
   geo_locations ={
     geo_location1 = {
-      geo_location          = azurerm_resource_group.this.location
+      geo_location          = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
       failover_priority = 0
       zone_redundant = false
     }
@@ -61,14 +61,14 @@ module "cosmos_db" {
   private_endpoint = {
     "pe_endpoint" = {
       dns_zone_group_name             = var.dns_zone_group_name
-      dns_zone_rg_name                = azurerm_resource_group.this.name 
+      dns_zone_rg_name                = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name 
       enable_private_dns_entry        = true
       is_manual_connection            = false
       name                            = "${module.naming.cosmosdb_account.name}-${random_string.this.result}-privateendpoint" # var.pe_name
       private_service_connection_name = "${module.naming.cosmosdb_account.name}-${random_string.this.result}-serviceconnection" # var.pe_connection_name
       subnet_id                       = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["CosmosDbSubnet"].resource.id, null)
-      location                        = azurerm_resource_group.this.location 
-      resource_group_name              = azurerm_resource_group.this.name 
+      location                        = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
+      resource_group_name              = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name 
       subnet_name                     = null # "CosmosDbSubnet" 
       vnet_name                       = null # try(local.remote.networking.virtual_networks.spoke_project.virtual_network.name, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.name : var.vnet_name  
       vnet_rg_name                    = null # try(local.remote.resource_group.name, null) != null ? local.remote.resource_group.name : var.vnet_resource_group_name  

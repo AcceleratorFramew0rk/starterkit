@@ -1,7 +1,7 @@
 resource "azurerm_user_assigned_identity" "this" {
-  location            = azurerm_resource_group.this.location
+  location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   name                = "uami-${lower(module.naming.kubernetes_cluster.name)}" # "uami-${var.kubernetes_cluster_name}"
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
 }
 
 # assign network contributor to gcci_platform resoruce group
@@ -105,7 +105,7 @@ module "aks_cluster" {
   kubernetes_version  = "1.30"
   enable_telemetry    = var.enable_telemetry # see variables.tf
   name                = "${module.naming.kubernetes_cluster.name}-private-cluster"  # "private-cluster" # module.naming.kubernetes_cluster
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   vnet_subnet_id      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["SystemNodePoolSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["SystemNodePoolSubnet"].resource.id : var.systemnode_subnet_id
   node_resource_group = "${lower(module.naming.resource_group.name)}-solution-accelerators-aks-nodes" # node_resource_group                 = var.node_resource_group
   pod_cidr            = "172.31.0.0/18"
@@ -123,7 +123,7 @@ module "aks_cluster" {
     ]
   }
 
-  location = azurerm_resource_group.this.location # "East US 2" # Hardcoded because we have to test in a region with availability zones
+  location = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location # "East US 2" # Hardcoded because we have to test in a region with availability zones
   node_pools = {
     ezwl = {
       name                 = "ezwl" # intranet (ez) workload (wl) - the "name" must begin with a lowercase letter, contain only lowercase letters and numbers and be between 1 and 12 characters in length
