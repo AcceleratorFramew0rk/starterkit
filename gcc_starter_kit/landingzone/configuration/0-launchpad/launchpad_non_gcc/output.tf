@@ -56,5 +56,6 @@ output "gcci_agency_workspace" {
     resource = module.log_analytics_workspace
   }
   description = "The Azure log analytics workspace resource"
+  sensitive = true  
 }
 

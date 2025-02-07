@@ -55,6 +55,7 @@ output "gcci_agency_workspace" {
     resource = azurerm_log_analytics_workspace.gcci_agency_workspace
   }
   description = "The virtual network gcci_vnet_ingress_internet for gcci platform"
+  sensitive = true  
 }
 
 
