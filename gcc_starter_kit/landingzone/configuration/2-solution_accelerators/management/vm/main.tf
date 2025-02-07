@@ -3,7 +3,7 @@ module "avm_res_keyvault_vault" {
   version             = ">= 0.5.0"
 
   tenant_id           = data.azurerm_client_config.current.tenant_id
-  name                = "${module.naming.key_vault.name}${random_string.this.result}"  
+  name                = "${module.naming.key_vault.name_unique}${random_string.this.result}"  
   resource_group_name = azurerm_resource_group.this.name 
   location            = azurerm_resource_group.this.location 
   network_acls = {
@@ -55,7 +55,7 @@ resource "random_integer" "zone_index" {
 
 resource "azurerm_user_assigned_identity" "user" {
   location            = azurerm_resource_group.this.location
-  name                = module.naming.user_assigned_identity.name_unique
+  name                = "${module.naming.user_assigned_identity.name_unique}${random_string.this.result}"   # module.naming.user_assigned_identity.name_unique
   resource_group_name = azurerm_resource_group.this.name
 }
 
