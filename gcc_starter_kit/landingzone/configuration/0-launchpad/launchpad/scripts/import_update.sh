@@ -38,6 +38,7 @@ RG_NAME="${PROJECT_CODE}-rg-launchpad"
 echo "Resource Group Name: ${RG_NAME}"
 
 STORAGE_ACCOUNT_NAME_PREFIX="${PROJECT_CODE}stgtfstate"
+STORAGE_ACCOUNT_NAME_PREFIX="${STORAGE_ACCOUNT_NAME_PREFIX//-/}"
 STORAGE_ACCOUNT_INFO=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '$STORAGE_ACCOUNT_NAME_PREFIX')]" 2> /dev/null)
 if [[ $? -ne 0 ]]; then
     echo "no storage account"
