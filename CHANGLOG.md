@@ -1,4 +1,22 @@
 
+### **Version 0.0.13 (TBD)**
+#### **Compatibility:**
+- **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.2`
+- **Azurerm:** Version 3.85
+- **AAF:** Version 0.0.5
+
+#### **New Features:**
+- *No features added in this release.*
+
+#### **Enhancements:**
+- *No Enhancements added in this release.*
+
+#### **Bug Fixes:**
+- fixed issue with long window name
+- set lower case for resource group for vm
+
+---
+
 ### **Version 0.0.12 (TBD)**
 #### **Compatibility:**
 - **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.2`
