@@ -4,7 +4,7 @@ module "public_ip_firewall1" {
   
   enable_telemetry    = var.enable_telemetry
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
-  name                = "${module.naming.public_ip.name_unique}-fw1"
+  name                = "${module.naming.public_ip.name_unique}-1-fwegressiz"
   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
 }
 
@@ -14,7 +14,7 @@ module "public_ip_firewall2" {
 
   enable_telemetry    = var.enable_telemetry
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
-  name                = "${module.naming.public_ip.name}-fw2"
+  name                = "${module.naming.public_ip.name_unique}-2-fwegressiz"
   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
 }
 
@@ -32,7 +32,7 @@ module "firewall" {
   firewall_zones      = ["1", "2", "3"]
   firewall_ip_configuration = [
     {
-      name                 = "ipconfig1"
+      name                 = "${module.naming.firewall.name}-fwegressiz-ipconfig"
       subnet_id            = try(local.remote.networking.virtual_networks.hub_intranet_egress.virtual_subnets["AzureFirewallSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.hub_intranet_egress.virtual_subnets["AzureFirewallSubnet"].resource.id : var.subnet_id 
       public_ip_address_id = module.public_ip_firewall1.public_ip_id 
     }
@@ -40,8 +40,7 @@ module "firewall" {
 
   # firewall_management_ip_configuration is an object and not a list, therefore no []
   firewall_management_ip_configuration = {
-    name                 = "ipconfig2"
-    # subnet_id            = local.remote.networking.virtual_networks.hub_intranet_egress.virtual_subnets["AzureFirewallManagementSubnet"].resource.id # module.virtualnetwork_ingress_egress.subnets["AzureFirewallManagementSubnet"].resource.id  # azurerm_subnet.subnet.id
+    name                 = "${module.naming.firewall.name}-fwegressiz-ipconfigmgmt"
     subnet_id            = try(local.remote.networking.virtual_networks.hub_intranet_egress.virtual_subnets["AzureFirewallManagementSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.hub_intranet_egress.virtual_subnets["AzureFirewallManagementSubnet"].resource.id : var.azurefirewallmanagement_subnet_id 
     public_ip_address_id = module.public_ip_firewall2.public_ip_id 
   }

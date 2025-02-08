@@ -3,7 +3,7 @@ module "avm_res_keyvault_vault" {
   version             = ">= 0.5.0"
 
   tenant_id           = data.azurerm_client_config.current.tenant_id
-  name                = "${module.naming.key_vault.name}${random_string.this.result}"  
+  name                = "${module.naming.key_vault.name}-toolingvm-${random_string.this.result}" # "${module.naming.key_vault.name_unique}${random_string.this.result}vm"   
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name 
   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
   network_acls = {

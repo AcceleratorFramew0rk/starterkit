@@ -4,7 +4,7 @@ module "public_ip_firewall1" {
   
   enable_telemetry    = var.enable_telemetry
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
-  name                = "${module.naming.public_ip.name_unique}-fw1"
+  name                = "${module.naming.public_ip.name_unique}-1-fwingressez"
   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
 }
 
@@ -22,7 +22,7 @@ module "firewall" {
   firewall_zones      = ["1", "2", "3"]
   firewall_ip_configuration = [
     {
-      name                 = "ipconfig1"
+      name                 = "${module.naming.firewall.name}-fwingressez-ipconfig" 
       # subnet_id            = local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets["AzureFirewallSubnet"].resource.id # module.virtualnetwork_ingress_ingress.subnets["AzureFirewallSubnet"].resource.id  # azurerm_subnet.subnet.id
       subnet_id            = try(local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets["AzureFirewallSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets["AzureFirewallSubnet"].resource.id : var.subnet_id 
       public_ip_address_id = module.public_ip_firewall1.public_ip_id # azurerm_public_ip.public_ip.id
