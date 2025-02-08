@@ -27,6 +27,7 @@ echo "Subscription Name: ${SUB_NAME}"
 echo "Storage Account Name: ${STG_NAME}"
 echo "Resource Group Name: ${RG_NAME}"
 
+RESOURCE_GROUP_NAME=$(yq  -r '.resource_group_name' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
 
 #------------------------------------------------------------------------
 # end get configuration file path, resource group name, storage account name, subscription id, subscription name
@@ -181,11 +182,12 @@ terraform apply -auto-approve \
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/vm
 
 # ** IMPORTANT - define subnet_id for the VM deployment
-VNET_NAME="gcci-vnet-project"
+VNET_NAME=$(yq  -r '.vnets.project.name' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
+echo $VNET_NAME
 SUBNET_NAME="AiSubnet"
 SUBSCRIPTION_ID=$(echo "$(az account show 2> /dev/null)" | jq ".id" -r)
 echo $SUBSCRIPTION_ID
-SUBNET_ID="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/${VNET_NAME}/subnets/${SUBNET_NAME}"
+SUBNET_ID="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP_NAME}/providers/Microsoft.Network/virtualNetworks/${VNET_NAME}/subnets/${SUBNET_NAME}"
 echo $SUBNET_ID
 
 
@@ -214,11 +216,12 @@ terraform apply -auto-approve \
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/vm
 
 # ** IMPORTANT - define subnet_id for the VM deployment
-VNET_NAME="gcci-vnet-project"
+VNET_NAME=$(yq  -r '.vnets.project.name' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
+
 SUBNET_NAME="AiSubnet"
 SUBSCRIPTION_ID=$(echo "$(az account show 2> /dev/null)" | jq ".id" -r)
 echo $SUBSCRIPTION_ID
-SUBNET_ID="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/gcci-platform/providers/Microsoft.Network/virtualNetworks/${VNET_NAME}/subnets/${SUBNET_NAME}"
+SUBNET_ID="/subscriptions/${SUBSCRIPTION_ID}/resourceGroups/${RESOURCE_GROUP_NAME}/providers/Microsoft.Network/virtualNetworks/${VNET_NAME}/subnets/${SUBNET_NAME}"
 echo $SUBNET_ID
 
 

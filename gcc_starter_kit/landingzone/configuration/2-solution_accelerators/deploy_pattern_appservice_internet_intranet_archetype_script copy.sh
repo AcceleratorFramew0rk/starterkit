@@ -27,6 +27,7 @@ echo "Subscription Name: ${SUB_NAME}"
 echo "Storage Account Name: ${STG_NAME}"
 echo "Resource Group Name: ${RG_NAME}"
 
+RESOURCE_GROUP_NAME=$(yq  -r '.resource_group_name' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
 
 
 # keyvault
