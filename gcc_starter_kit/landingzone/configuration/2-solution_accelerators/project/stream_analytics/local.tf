@@ -52,7 +52,7 @@ locals {
   eventhubs = try(data.terraform_remote_state.eventhubs.outputs.resource, null)     
   iothub = try(data.terraform_remote_state.iothub.outputs.resource, null)     
   # Check Resource Type: Ensure that the resource type is correctly specified. It should be Microsoft.Devices/IotHubs (case-sensitive).
-  iothub_id = replace(try(data.terraform_remote_state.iothub.outputs.resource.resource.id, null) , "iotHubs", "IotHubs")
+  iothub_id = try(data.terraform_remote_state.iothub.outputs.resource.resource.id, null) == null ? null : replace(try(data.terraform_remote_state.iothub.outputs.resource.resource.id, null) , "iotHubs", "IotHubs")
   eventhub_namespace_id  = try(data.terraform_remote_state.eventhubs.outputs.eventhub_namespace_id, null)     
 }
 
