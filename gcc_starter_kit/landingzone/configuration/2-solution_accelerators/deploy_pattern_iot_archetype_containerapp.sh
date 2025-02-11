@@ -52,14 +52,31 @@ terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
 
-# app service
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
+# # app service
+# cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
+
+# terraform init  -reconfigure \
+# -backend-config="resource_group_name=${RG_NAME}" \
+# -backend-config="storage_account_name=${STG_NAME}" \
+# -backend-config="container_name=2-solution-accelerators" \
+# -backend-config="key=solution_accelerators-project-appservice.tfstate"
+
+# terraform plan \
+# -var="storage_account_name=${STG_NAME}" \
+# -var="resource_group_name=${RG_NAME}"
+
+# terraform apply -auto-approve \
+# -var="storage_account_name=${STG_NAME}" \
+# -var="resource_group_name=${RG_NAME}"
+
+# container app
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/container_app
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name=${RG_NAME}" \
 -backend-config="storage_account_name=${STG_NAME}" \
 -backend-config="container_name=2-solution-accelerators" \
--backend-config="key=solution_accelerators-project-appservice.tfstate"
+-backend-config="key=solution_accelerators-project-containerapp.tfstate"
 
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
@@ -122,22 +139,22 @@ terraform apply -auto-approve \
 -var="resource_group_name=${RG_NAME}"
 
 
-# linux function app
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/linux_function_app
+# # linux function app
+# cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/linux_function_app
 
-terraform init  -reconfigure \
--backend-config="resource_group_name=${RG_NAME}" \
--backend-config="storage_account_name=${STG_NAME}" \
--backend-config="container_name=2-solution-accelerators" \
--backend-config="key=solution_accelerators-project-linuxfunctionapp.tfstate"
+# terraform init  -reconfigure \
+# -backend-config="resource_group_name=${RG_NAME}" \
+# -backend-config="storage_account_name=${STG_NAME}" \
+# -backend-config="container_name=2-solution-accelerators" \
+# -backend-config="key=solution_accelerators-project-linuxfunctionapp.tfstate"
 
-terraform plan \
--var="storage_account_name=${STG_NAME}" \
--var="resource_group_name=${RG_NAME}"
+# terraform plan \
+# -var="storage_account_name=${STG_NAME}" \
+# -var="resource_group_name=${RG_NAME}"
 
-terraform apply -auto-approve \
--var="storage_account_name=${STG_NAME}" \
--var="resource_group_name=${RG_NAME}"
+# terraform apply -auto-approve \
+# -var="storage_account_name=${STG_NAME}" \
+# -var="resource_group_name=${RG_NAME}"
 
 
 # iot hub
@@ -232,6 +249,8 @@ terraform plan \
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
+
+
 
 # # # Approved managed endpoint via Azure CLI
 # -----------------------------------------------
