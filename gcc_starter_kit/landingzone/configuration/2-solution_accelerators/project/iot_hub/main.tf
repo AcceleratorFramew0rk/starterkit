@@ -141,6 +141,12 @@ resource "azurerm_iothub_dps" "this" {
 
 }
 
+# Add a delay after IoT Hub creation
+resource "time_sleep" "wait_for_iothub" {
+  depends_on = [module.iot_hub]  # Ensure IoT Hub is created first
+  create_duration = "60s"  # Wait 30 seconds before proceeding
+}
+
 module "private_endpoint" {
   # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
@@ -148,7 +154,7 @@ module "private_endpoint" {
   name                           = "${module.iot_hub.name}privateendpoint"
   location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
-  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id : var.subnet_id 
+  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id : var.subnet_id 
   tags                           = merge(
     local.global_settings.tags,
     {
@@ -166,6 +172,7 @@ module "private_endpoint" {
   private_dns_zone_group_ids     = [module.private_dns_zones.resource.id] 
   
   depends_on = [
+    time_sleep.wait_for_iothub,
     module.iot_hub, 
     module.private_dns_zones
   ]
@@ -198,6 +205,7 @@ module "private_endpoint_dps" {
   private_dns_zone_group_ids     = [module.private_dns_zones_dps.resource.id] 
   
   depends_on = [
+    time_sleep.wait_for_iothub,
     azurerm_iothub_dps.this, 
     module.private_dns_zones_dps
   ]
