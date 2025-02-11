@@ -53,3 +53,8 @@ variable "backend_image" {
   type        = string  
   default = "docker.io/hashicorp/dashboard-service:0.0.4"
 }
+
+variable "private_dns_zones_enabled" {
+  type        = bool  
+  default = true
+}

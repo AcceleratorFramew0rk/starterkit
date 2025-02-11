@@ -1,4 +1,3 @@
-# **IMPORTANT - The environment network configuration is invalid: Provided subnet must have a size of at least /23
 resource "azurerm_container_app_environment" "this" {
   location                 = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   name                     = "${module.naming.container_app_environment.name_unique}${random_string.this.result}" # "my-environment"
@@ -7,6 +6,19 @@ resource "azurerm_container_app_environment" "this" {
   internal_load_balancer_enabled = true
   logs_destination           = "log-analytics"
   log_analytics_workspace_id = local.remote.log_analytics_workspace.id 
+  
+  workload_profile {
+    name = (
+      length(replace("${module.naming.container_app_environment.name}-${random_string.this.result}", "-", "")) > 16
+      ? substr(replace("${module.naming.container_app_environment.name}-${random_string.this.result}", "-", ""), 0, 16)
+      : replace("${module.naming.container_app_environment.name}-${random_string.this.result}", "-", "")
+    )
+    workload_profile_type = "D8" # Possible values include Consumption, D4, D8, D16, D32, E4, E8, E16 and E32
+
+    maximum_count = 10 # - (Required) The maximum number of instances of workload profile that can be deployed in the Container App Environment.
+    minimum_count = 1 # - (Required) The minimum number of instances of workload profile that can be deployed in the Container App Environment.
+
+  }
 
   tags = merge(
     local.global_settings.tags,
@@ -18,6 +30,49 @@ resource "azurerm_container_app_environment" "this" {
       tier = "db"   
     }
   )   
+}
+
+
+module "private_dns_zones" {
+  source                = "Azure/avm-res-network-privatednszone/azurerm"   
+  version = "0.3.0" 
+
+  count = var.private_dns_zones_enabled ? 1 : 0
+
+  enable_telemetry      = true
+  resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  domain_name           = "privatelink.azurecontainerapps.io"
+  tags         = {
+      environment = "dev"
+    }
+  virtual_network_links = {
+      vnetlink1 = {
+        vnetlinkname     = "vnetlink1"
+        vnetid           = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id  
+        autoregistration = false # true
+        tags = {
+          "env" = "dev"
+        }
+      }
+    }
+}
+
+module "private_endpoint" {
+  # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
+  source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
+ 
+  name                           = "${azurerm_container_app_environment.this.name}-web-privateendpoint"
+  location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+  resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id : var.subnet_id 
+  tags                           = {
+      environment = "dev"
+    }
+  private_connection_resource_id = azurerm_container_app_environment.this.id
+  is_manual_connection           = false
+  subresource_name               = "managedEnvironments" # "containerappsenvironment"
+  private_dns_zone_group_name    = "default" 
+  private_dns_zone_group_ids     = [module.private_dns_zones[0].resource.id] 
 }
 
 module "containerapp_frontend" {

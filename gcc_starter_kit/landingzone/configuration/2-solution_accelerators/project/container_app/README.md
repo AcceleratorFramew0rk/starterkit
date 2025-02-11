@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# ** IMPORTANT **: Provided subnet "ContainerAppSubnet" must have a size of at least /23
+
+
 # Extract the value of 'prefix' using yq and assign it to the PREFIX variable and generate resource group name to store state file
 
 PREFIX=$(yq  -r '.prefix' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
