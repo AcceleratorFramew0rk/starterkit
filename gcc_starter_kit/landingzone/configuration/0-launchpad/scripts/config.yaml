@@ -2,7 +2,7 @@ resource_group_name: "gcci-platform"
 log_analytics_workspace_resource_group_name: "gcci-agency-law"
 log_analytics_workspace_name: "gcci-agency-workspace"
 # # virtual network - leave empty if there is no such virtual network  
-prefix: "wx3-dev-sea"
+prefix: "abc-dev-sea"
 is_prefix: true
 is_single_resource_group: false
 location: "southeastasia"
@@ -49,18 +49,18 @@ subnets:
     WebSubnet: # DO NOT CHANGE subnet name
       name: "WebSubnet"
       address_prefixes: ["100.64.0.0/27"]   
-    AppServiceSubnet: # DO NOT CHANGE subnet name
-      name: "AppServiceSubnet"
-      address_prefixes: ["100.64.0.32/27"]
-      delegations: [ 
-        {
-          name: "AppServiceSubnet",
-          service_delegation: {
-            name: "Microsoft.Web/serverFarms", 
-            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
-            }
-        }
-      ]     
+    # AppServiceSubnet: # DO NOT CHANGE subnet name
+    #   name: "AppServiceSubnet"
+    #   address_prefixes: ["100.64.0.32/27"]
+    #   delegations: [ 
+    #     {
+    #       name: "AppServiceSubnet",
+    #       service_delegation: {
+    #         name: "Microsoft.Web/serverFarms", 
+    #         actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+    #         }
+    #     }
+    #   ]     
     # LogicAppSubnet: # DO NOT CHANGE subnet name
     #   name: "LogicAppSubnet"
     #   address_prefixes: ["100.64.0.64/27"]   
@@ -100,24 +100,36 @@ subnets:
     #         }
     #     }
     #   ]        
-    FunctionAppSubnet: # DO NOT CHANGE subnet name
-      name: "FunctionAppSubnet"
-      address_prefixes: ["100.64.0.160/27"]
+    # FunctionAppSubnet: # DO NOT CHANGE subnet name
+    #   name: "FunctionAppSubnet"
+    #   address_prefixes: ["100.64.0.160/27"]
+    #   delegations: [
+    #     {
+    #       name: "functionapp",
+    #       service_delegation: {
+    #         name: "Microsoft.Web/serverFarms", 
+    #         actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+    #         }
+    #     }
+    #   ]                  
+    ApiSubnet: # DO NOT CHANGE subnet name
+      name: "ApiSubnet"    
+      address_prefixes: ["100.64.0.192/27"]
+    # ** IMPORTANT ** ContainerAppSubnet must have a size of at least /23
+    ContainerAppSubnet: # DO NOT CHANGE subnet name
+      name: "ContainerAppSubnet"    
+      address_prefixes: ["100.64.0.224/27"]
       delegations: [
         {
-          name: "functionapp",
+          name: "ContainerAppSubnet",
           service_delegation: {
-            name: "Microsoft.Web/serverFarms", 
+            name: "Microsoft.App/environments", 
             actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
             }
         }
       ]                  
-    ApiSubnet: # DO NOT CHANGE subnet name
-      name: "ApiSubnet"    
-      address_prefixes: ["100.64.0.192/27"]
-    # ContainerAppSubnet: # DO NOT CHANGE subnet name
-    #   name: "ContainerAppSubnet"    
-    #   address_prefixes: ["100.64.0.224/27"]
+      
+
     # SystemNodePoolSubnet: # DO NOT CHANGE subnet name
     #   name: "ApiSubnet"    
     #   address_prefixes: ["100.64.0.192/27"]
