@@ -8,7 +8,7 @@ STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains
 echo $RG_NAME
 echo $STG_NAME
 
-# deploy the solution accelerator
+# deploy the solution accelerator ** stream analytics will take about 1 hour to deploy **
 
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/stream_analytics
 
