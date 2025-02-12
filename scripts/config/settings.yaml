@@ -49,6 +49,7 @@ project:
   app_service_intranet: false
   app_service_windows: false
   azure_open_ai: false
+  container_app: false
   container_instance: false
   cosmos_db_mongo: false
   cosmos_db_sql: false

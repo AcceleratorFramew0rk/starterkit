@@ -1,5 +1,5 @@
 subscription_id: "0b5b13b8-0ad7-4552-936f-8fae87e0633f"
-prefix: "lite4dev"
+prefix: "abc-dev-sea"
 environment: "dev"
 vnets:
   hub_ingress_internet: 

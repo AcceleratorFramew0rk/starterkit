@@ -221,6 +221,21 @@ subnets:
         }
       ] 
 {% endif -%}
+{% if ContainerAppSubnet_address_prefixes | trim != 'None' and ContainerAppSubnet_address_prefixes | trim != '' -%} 
+# -----------------
+    ContainerAppSubnet: # DO NOT CHANGE subnet name
+      name: "ContainerAppSubnet"    
+      address_prefixes: ["{{ContainerAppSubnet_address_prefixes}}"]
+      delegations: [
+        {
+          name: "ContainerAppSubnet",
+          service_delegation: {
+            name: "Microsoft.App/environments", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ]
+{% endif -%}
   # IMPORTANT ** comment off the below any devops subnets if it is not used  
 # -----------------           
   devops:

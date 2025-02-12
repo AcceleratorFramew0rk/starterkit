@@ -93,6 +93,7 @@ def get_config(input, solution_accelerator, landingzone_type):
     WebIntranetSubnet_address_prefixes = ""
     AppServiceIntranetSubnet_address_prefixes = ""
     RedisCacheSubnet_address_prefixes = ""
+    ContainerAppSubnet_address_prefixes = ""
     config_yaml = ""
     config_yaml_encoded = ""
     internet_ingress_subnets = ""
@@ -419,6 +420,14 @@ def get_config(input, solution_accelerator, landingzone_type):
                 if AppSubnet_address_prefixes == "":
                     AppSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
+
+            current_value = solution_accelerator_data.get("project", {}).get("container_app", None)
+            print(current_value)
+            if current_value == 'True' or current_value is True or current_value == 'true' :
+                if ContainerAppSubnet_address_prefixes == "":
+                    ContainerAppSubnet_address_prefixes = str(subnets[count])
+                    count = count + 1
+                    
         # devops
         RunnerSubnet_address_prefixes = str(devops_subnets[0]) 
             
