@@ -66,7 +66,7 @@ subnets:
     #   address_prefixes: ["100.64.0.64/27"]   
     #   delegations: [
     #     {
-    #       name: "logicapp",
+    #       name: "LogicAppSubnet",
     #       service_delegation: {
     #         name: "Microsoft.Web/serverFarms", 
     #         actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
@@ -93,7 +93,7 @@ subnets:
     #   address_prefixes: ["100.64.0.160/27"]
     #   delegations: [ 
     #     {
-    #       name: "AppServiceSubnet",
+    #       name: "AppServiceIntranetSubnet",
     #       service_delegation: {
     #         name: "Microsoft.Web/serverFarms", 
     #         actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
@@ -105,7 +105,7 @@ subnets:
     #   address_prefixes: ["100.64.0.160/27"]
     #   delegations: [
     #     {
-    #       name: "functionapp",
+    #       name: "FunctionAppSubnet",
     #       service_delegation: {
     #         name: "Microsoft.Web/serverFarms", 
     #         actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
@@ -130,24 +130,24 @@ subnets:
       ]                  
       
 
-    # SystemNodePoolSubnet: # DO NOT CHANGE subnet name
-    #   name: "ApiSubnet"    
+    #   SystemNodePoolSubnet: # DO NOT CHANGE subnet name
+    #   name: "SystemNodePoolSubnet"    
     #   address_prefixes: ["100.64.0.192/27"]
     # UserNodePoolSubnet: # DO NOT CHANGE subnet name
-    #   name: "ApiSubnet"    
+    #   name: "UserNodePoolSubnet"    
     #   address_prefixes: ["100.64.0.224/27"]
     # UserNodePoolWindowsSubnet: # DO NOT CHANGE subnet name
-    #   name: "ApiSubnet"    
-    #   address_prefixes: ["100.64.1.192/27"]      
+    #   name: "UserNodePoolWindowsSubnet"    
+    #   address_prefixes: ["100.64.1.0/27"]   
     # AiSubnet: # DO NOT CHANGE subnet name
     #   name: "AiSubnet"    
     #   address_prefixes: ["100.64.1.0/27"]   
     # CiSubnet: # DO NOT CHANGE subnet name 
-    #   name: "ApiSubnet"    
+    #   name: "CiSubnet"    
     #   address_prefixes: ["100.64.1.64/27"]   
     #   delegations: [
     #     {
-    #       name: "ci",
+    #       name: "CiSubnet",
     #       service_delegation: {
     #         name: "Microsoft.ContainerInstance/containerGroups", 
     #         actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
@@ -155,7 +155,7 @@ subnets:
     #     }
     #   ]  
     # ServiceBusSubnet: # DO NOT CHANGE subnet name
-    #   name: "ApiSubnet"    
+    #   name: "ServiceBusSubnet"    
     #   address_prefixes: ["100.64.1.96/27"]         
   # IMPORTANT ** comment off the below any devops subnets if it is not used          
   devops:
