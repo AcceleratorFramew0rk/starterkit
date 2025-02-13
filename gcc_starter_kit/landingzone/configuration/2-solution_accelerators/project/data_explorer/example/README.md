@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------
-# Standalone deployment - acr
+# Standalone deployment 
 # ------------------------------------------------------------------
 
 # prepare and create launchpad - only run once per subscription
@@ -14,7 +14,7 @@ echo $PREFIX
 ./launchpad.sh $PREFIX
 
 # goto solution accelerator folder
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/acr
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/data_explorer
 
 # get subscription id
 ACCOUNT_INFO=$(az account show 2> /dev/null)

@@ -8,13 +8,13 @@ sudo chmod -R -f 777 /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchp
 
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts
 
-PREFIX="aaf"
+PREFIX=$(yq  -r '.prefix' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
 echo $PREFIX
 
 ./launchpad.sh $PREFIX
 
 # goto solution accelerator folder
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/logic_app
 
 # get subscription id
 ACCOUNT_INFO=$(az account show 2> /dev/null)

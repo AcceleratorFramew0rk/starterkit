@@ -8,10 +8,10 @@ module "stream_analytics" {
   resource_group_name          = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   location                     = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
 
-  iot_hub_id = local.iothub_id 
-  data_explorer_id = local.dataexplorer.resource.id
-  eventhub_namespace_id = local.eventhubs.eventhub_namespace_id 
-  sql_server_id = local.sqlserver.id
+  iot_hub_id = try(local.iothub_id , null) 
+  data_explorer_id = try(local.dataexplorer.resource.id, null) 
+  eventhub_namespace_id = try(local.eventhubs.eventhub_namespace_id, null) 
+  sql_server_id = try(local.sqlserver.id, null) 
 
  
   tags = merge(

@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------
-# Standalone deployment - acr
+# Standalone deployment 
 # ------------------------------------------------------------------
 
 # prepare and create launchpad - only run once per subscription

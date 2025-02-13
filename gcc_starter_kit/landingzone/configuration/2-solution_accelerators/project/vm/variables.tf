@@ -46,7 +46,7 @@ variable "virtualmachine_os_type" {
 
 variable "vnet_type" {
   type        = string  
-  default = "" # "" or "project" or "devops" 
+  default = "project" # "" or "project" or "devops" 
 }
 
 # allow cusomization of the private endpoint subnet name
