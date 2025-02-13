@@ -48,7 +48,10 @@ subnets:
   project:
     WebSubnet: # DO NOT CHANGE subnet name
       name: "WebSubnet"
-      address_prefixes: ["100.64.0.0/27"]   
+      address_prefixes: ["100.64.0.0/27"]    
+    # WebIntranetSubnet: # DO NOT CHANGE subnet name
+    #   name: "WebSubnet"
+    #   address_prefixes: ["100.64.1.96/27"]      
     # AppServiceSubnet: # DO NOT CHANGE subnet name
     #   name: "AppServiceSubnet"
     #   address_prefixes: ["100.64.0.32/27"]
@@ -128,8 +131,18 @@ subnets:
             }
         }
       ]                  
-      
-
+    # ContainerAppIntranetSubnet: # DO NOT CHANGE subnet name
+    #   name: "ContainerAppIntranetSubnet"    
+    #   address_prefixes: ["100.64.1.32/27"]
+    #   delegations: [
+    #     {
+    #       name: "ContainerAppIntranetSubnet",
+    #       service_delegation: {
+    #         name: "Microsoft.App/environments", 
+    #         actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+    #         }
+    #     }
+    #   ] 
     #   SystemNodePoolSubnet: # DO NOT CHANGE subnet name
     #   name: "SystemNodePoolSubnet"    
     #   address_prefixes: ["100.64.0.192/27"]

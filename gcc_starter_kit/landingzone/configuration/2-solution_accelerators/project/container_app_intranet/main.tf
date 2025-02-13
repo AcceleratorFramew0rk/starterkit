@@ -1,6 +1,6 @@
 resource "azurerm_container_app_environment" "this" {
   location                 = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
-  name                     = "${module.naming.container_app_environment.name_unique}${random_string.this.result}" # "my-environment"
+  name                     = "${module.naming.container_app_environment.name_unique}${random_string.this.result}ez" # "my-environment"
   resource_group_name      = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   infrastructure_subnet_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id  # azurerm_subnet.subnet.id
   internal_load_balancer_enabled = true
@@ -61,7 +61,7 @@ module "private_endpoint" {
   # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
  
-  name                           = "${azurerm_container_app_environment.this.name}-web-privateendpoint"
+  name                           = "${azurerm_container_app_environment.this.name}-webez-privateendpoint"
   location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id : var.ingress_subnet_id 
@@ -80,7 +80,7 @@ module "containerapp_frontend" {
   version = "0.3.0"
 
   container_app_environment_resource_id = azurerm_container_app_environment.this.id
-  name                                  = "${module.naming.container_app.name}-${random_string.this.result}1" # local.counting_app_name
+  name                                  = "${module.naming.container_app.name}-${random_string.this.result}1ez" # local.counting_app_name
   resource_group_name                   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   revision_mode                         = "Single"
   template = {
@@ -115,7 +115,7 @@ module "containerapp_backend" {
   version = "0.3.0"
 
   container_app_environment_resource_id = azurerm_container_app_environment.this.id
-  name                                  = "${module.naming.container_app.name}-${random_string.this.result}2" #   local.dashboard_app_name
+  name                                  = "${module.naming.container_app.name}-${random_string.this.result}2ez" #   local.dashboard_app_name
   resource_group_name                   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   revision_mode                         = "Single"
   template = {
