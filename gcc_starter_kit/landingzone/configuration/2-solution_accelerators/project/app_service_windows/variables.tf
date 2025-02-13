@@ -29,4 +29,19 @@ variable "environment" {
   default = "sandpit"
 }
 
+variable "ingress_subnet_id" {
+  type        = string  
+  default = null
+}
+
+variable "subnet_name" {
+  type        = string  
+  default = "AppServiceSubnet"
+}
+
+variable "ingress_subnet_name" {
+  type        = string  
+  default = "WebSubnet"
+}
+
 

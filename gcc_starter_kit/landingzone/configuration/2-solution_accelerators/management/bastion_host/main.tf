@@ -22,7 +22,7 @@ module "public_ip" {
 #   sku                 = "Standard"
 #   ip_configuration = {
 #     name                 = "my-ipconfig"
-#     subnet_id            = module.virtualnetwork.subnets["AzureBastionSubnet"].resource_id
+#     subnet_id            = module.virtualnetwork.subnets[var.subnet_name].resource_id
 #     public_ip_address_id = azurerm_public_ip.example.id
 #   }
 #   ip_connect_enabled     = true
@@ -68,7 +68,7 @@ module "azure_bastion" {
   sku                 = "Standard" # "Premium" # for session recording preview
   ip_configuration    = {
       name                 = "${module.naming.bastion_host.name}ipconfig" # "bhipconfig" 
-      subnet_id            = try(local.remote.networking.virtual_networks.spoke_management.virtual_subnets["AzureBastionSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_management.virtual_subnets["AzureBastionSubnet"].resource.id : var.subnet_id 
+      subnet_id            = try(local.remote.networking.virtual_networks.spoke_management.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_management.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
       public_ip_address_id = module.public_ip.public_ip_id # azurerm_public_ip.example.id
   }
   ip_connect_enabled     = true

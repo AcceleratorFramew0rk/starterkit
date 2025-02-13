@@ -38,3 +38,18 @@ variable "intranet_enabled" {
   type        = bool  
   default = false
 }
+
+variable "ingress_subnet_id" {
+  type        = string  
+  default = null
+}
+
+variable "subnet_name" {
+  type        = string  
+  default = "AppServiceIntranetSubnet"
+}
+
+variable "ingress_subnet_name" {
+  type        = string  
+  default = "WebIntranetSubnet"
+}

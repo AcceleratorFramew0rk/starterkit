@@ -68,7 +68,7 @@ module "ai_foundry_enterprise" {
 
   // use existing vnet and subnet id
   existing_vnet_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_network.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_network.id : var.vnet_id  
-  existing_subnet_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AiSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AiSubnet"].resource.id : var.subnet_id
+  existing_subnet_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["var.subnet_name"].resource.id : var.subnet_id
 
   # subscription_id = "0b5b13b8-0ad7-4552-936f-8fae87e0633f"
 }

@@ -62,7 +62,7 @@ module "servicebus" {
     max = {
       name                        = "max"
       private_dns_zone_group_name = "max_group"
-      subnet_resource_id          = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceBusSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceBusSubnet"].resource.id : var.subnet_id 
+      subnet_resource_id          = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
 
       role_assignments = {
         key = {
@@ -96,7 +96,7 @@ module "servicebus" {
     staticIp = {
       name                   = "staticIp"
       network_interface_name = "nic1"
-      subnet_resource_id     = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceBusSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceBusSubnet"].resource.id : var.subnet_id 
+      subnet_resource_id     = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
 
       ip_configurations = {
         ipconfig1 = {
@@ -108,14 +108,14 @@ module "servicebus" {
 
     noDnsGroup = {
       name               = "noDnsGroup"
-      subnet_resource_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceBusSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceBusSubnet"].resource.id : var.subnet_id 
+      subnet_resource_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
     }
 
     withDnsGroup = {
       name                        = "withDnsGroup"
       private_dns_zone_group_name = "withDnsGroup_group"
 
-      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceBusSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceBusSubnet"].resource.id : var.subnet_id 
+      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
       private_dns_zone_resource_ids = [module.private_dns_zones.resource.id] 
     }
   }

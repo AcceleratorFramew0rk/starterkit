@@ -59,7 +59,7 @@ resource "azurerm_service_plan" "this" {
   location = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   # This will equate to Consumption (Serverless) in portal
   name                = module.naming.app_service_plan.name_unique
-  os_type             = "Windows" # "Linux"
+  os_type             = "Linux" # "Windows"
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   sku_name            = "EP1"
 }
@@ -72,7 +72,7 @@ resource "azurerm_user_assigned_identity" "user" {
 
 module "linux_function_app" {
   source  = "Azure/avm-res-web-site/azurerm"
-  version = "0.1.0"
+  version = "0.14.2"
 
   enable_telemetry = var.enable_telemetry 
   name                = "${module.naming.function_app.name}-${random_string.this.result}"  # module.naming.function_app.name_unique
@@ -83,6 +83,7 @@ module "linux_function_app" {
   storage_account_name       = azurerm_storage_account.this.name
   storage_account_access_key = azurerm_storage_account.this.primary_access_key
   public_network_access_enabled = false
+  virtual_network_subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
   managed_identities = {
     # Identities can only be used with the Standard SKU
 
@@ -125,7 +126,7 @@ module "linux_function_app" {
       # private_dns_zone_resource_ids =  [try(var.private_dns_zones_id, null) != null ? var.private_dns_zones_id : module.private_dns_zones[0].resource.id] 
       private_dns_zone_resource_ids =  [try(local.privatednszone.id, null) == null ? module.private_dns_zones[0].resource.id : local.privatednszone.id ]
 
-      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ServiceSubnet"].resource.id : var.subnet_id 
+      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id : var.ingress_subnet_id 
       inherit_lock = true
       inherit_tags = true
       lock = {

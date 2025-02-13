@@ -58,7 +58,7 @@ terraform plan \
 -var="log_analytics_workspace_id=${LAW_ID}"  \
 -var="prefix=${PROJECT_CODE}"  \
 -var="environment=${ENV}" \
--var="service_subnet_id=${SERVICE_SUBNET_ID}" 
+-var="ingress_subnet_id=${SERVICE_SUBNET_ID}" 
 
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
@@ -68,4 +68,4 @@ terraform apply -auto-approve \
 -var="log_analytics_workspace_id=${LAW_ID}" \
 -var="prefix=${PROJECT_CODE}"  \
 -var="environment=${ENV}" \
--var="service_subnet_id=${SERVICE_SUBNET_ID}" 
+-var="ingress_subnet_id=${SERVICE_SUBNET_ID}" 

@@ -14,6 +14,11 @@ variable "subnet_id" {
   default = null
 }
 
+variable "ingress_subnet_id" {
+  type        = string  
+  default = null
+}
+
 variable "log_analytics_workspace_id" {
   type        = string  
   default = null
@@ -32,4 +37,14 @@ variable "environment" {
 variable "private_dns_zones_enabled" {
   type        = bool  
   default = true
+}
+
+variable "subnet_name" {
+  type        = string  
+  default = "AppServiceSubnet"
+}
+
+variable "ingress_subnet_name" {
+  type        = string  
+  default = "WebSubnet"
 }

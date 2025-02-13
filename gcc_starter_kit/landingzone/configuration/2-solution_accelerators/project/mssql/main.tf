@@ -94,7 +94,7 @@ module "sql_server" {
   private_endpoints = {
     primary = {
       private_dns_zone_resource_ids = [module.private_dns_zones.resource.id] 
-      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["DbSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["DbSubnet"].resource.id : var.subnet_id  
+      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id  
     }
   }
 

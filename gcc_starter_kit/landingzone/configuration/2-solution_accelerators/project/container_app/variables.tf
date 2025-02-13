@@ -58,3 +58,18 @@ variable "private_dns_zones_enabled" {
   type        = bool  
   default = true
 }
+
+variable "ingress_subnet_id" {
+  type        = string  
+  default = null
+}
+
+variable "subnet_name" {
+  type        = string  
+  default = "ContainerAppSubnet"
+}
+
+variable "ingress_subnet_name" {
+  type        = string  
+  default = "WebSubnet"
+}

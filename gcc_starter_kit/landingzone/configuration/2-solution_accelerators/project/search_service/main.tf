@@ -72,7 +72,7 @@ module "private_endpoint" {
   name                           = "${module.searchservice.resource.name}PrivateEndpoint"
   location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
-  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AiSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AiSubnet"].resource.id : var.subnet_id 
+  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
 
   private_connection_resource_id = module.searchservice.resource.id
   is_manual_connection           = false

@@ -16,6 +16,12 @@ variable "managed_identity_principal_id" {
   default = null
 }
 
+variable "kubernetes_version" {
+  description = "Specifies the AKS Kubernetes version"
+  default     = "1.29.0" # "1.26.3"
+  type        = string
+}
+
 variable "tags" {
   default = {
     purpose = "aks cluster" 
@@ -67,38 +73,7 @@ variable "usernode_subnet_id" {
   default = null
 }
 
-variable "usernodeintranet_subnet_id" {
-  type        = string  
-  default = null
-}
-
 variable "usernodewindows_subnet_id" {
   type        = string  
   default = null
-}
-
-variable "systemnode_subnet_name" {
-  type        = string  
-  default = "SystemNodePoolSubnet"
-}
-
-variable "usernode_subnet_name" {
-  type        = string  
-  default = "UserNodePoolSubnet"
-}
-
-variable "usernodeintranet_subnet_name" {
-  type        = string  
-  default = "UserNodePoolIntranetSubnet"
-}
-
-variable "usernodewindows_subnet_name" {
-  type        = string  
-  default = "UserNodePoolWindowsSubnet"
-}
-
-variable "kubernetes_version" {
-  description = "Specifies the AKS Kubernetes version"
-  default     = "1.31" # "1.26.3"
-  type        = string
 }

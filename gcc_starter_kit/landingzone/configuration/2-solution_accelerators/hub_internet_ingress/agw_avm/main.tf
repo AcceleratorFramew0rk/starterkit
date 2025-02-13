@@ -19,7 +19,7 @@ module "application_gateway" {
   enable_telemetry    = var.enable_telemetry
 
   gateway_ip_configuration = {
-    subnet_id = try(local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets["AgwSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets["AgwSubnet"].resource.id : var.subnet_id  # azurerm_subnet.backend.id
+    subnet_id = try(local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets[var.subnet_name].resource.id : var.subnet_id  # azurerm_subnet.backend.id
   }
 
   # WAF : Azure Application Gateways v2 are always deployed in a highly available fashion with multiple instances by default. Enabling autoscale ensures the service is not reliant on manual intervention for scaling.
@@ -46,7 +46,7 @@ module "application_gateway" {
     private_ip_address            = try(cidrhost(local.global_settings.subnets.hub_internet_ingress.AgwSubnet.address_prefixes.0, 10), null) # (agw subnet cidr 100.127.0.64/27, offset 10) >"100.127.0.74" 
     private_ip_address_allocation = "Static" # Dynamic and Static default to Dynamic
     private_link_configuration_name = null
-    subnet_id                     = try(local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets["AgwSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets["AgwSubnet"].resource.id : var.subnet_id  
+    subnet_id                     = try(local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.hub_internet_ingress.virtual_subnets[var.subnet_name].resource.id : var.subnet_id  
   }
 
   # frontend port configuration block for the application gateway

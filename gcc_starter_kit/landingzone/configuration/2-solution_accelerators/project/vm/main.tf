@@ -4,8 +4,6 @@ module "avm_res_keyvault_vault" {
 
   tenant_id           = data.azurerm_client_config.current.tenant_id
   name                = "${module.naming.key_vault.name}-vm-${random_string.this.result}" # "${module.naming.key_vault.name_unique}${random_string.this.result}vm"  
-  # resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name 
-  # location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location # azurerm_resource_group.this.0.location
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name # azurerm_resource_group.this.0.name
 
@@ -64,10 +62,8 @@ resource "random_integer" "zone_index" {
 }
 
 resource "azurerm_user_assigned_identity" "user" {
-  # location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location # azurerm_resource_group.this.0.location
   name                = "${module.naming.user_assigned_identity.name_unique}${random_string.this.result}"   # module.naming.user_assigned_identity.name_unique
-  # resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name # azurerm_resource_group.this.0.name
 
 }
@@ -77,13 +73,10 @@ module "virtualmachine1" {
   version = "0.14.0"
 
   enable_telemetry                       = var.enable_telemetry
-  # location                               = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
-  # resource_group_name                    = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location # azurerm_resource_group.this.0.location
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name # azurerm_resource_group.this.0.name
 
   virtualmachine_os_type                 = var.virtualmachine_os_type # default is "Windows"
-  # name                                   = "${module.naming.virtual_machine.name}-${random_string.this.result}" 
   name = (
     length(replace("${module.naming.virtual_machine.name}-${random_string.this.result}", "-", "")) > 15
     ? substr(replace("${module.naming.virtual_machine.name}-${random_string.this.result}", "-", ""), 0, 15)
@@ -105,7 +98,8 @@ module "virtualmachine1" {
         ip_configuration_1 = {
           name                          = "${module.naming.network_interface.name}-ipconfig1"
           # private_ip_subnet_resource_id = try(var.subnet_id, null) != null ? var.subnet_id : local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AppSubnet"].resource.id 
-          private_ip_subnet_resource_id = try(var.subnet_id, null) != null ? var.subnet_id : local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id 
+          # private_ip_subnet_resource_id = try(var.subnet_id, null) != null ? var.subnet_id : local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id 
+          private_ip_subnet_resource_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
           create_public_ip_address      = false # true
           public_ip_address_name        = module.naming.public_ip.name_unique
         }

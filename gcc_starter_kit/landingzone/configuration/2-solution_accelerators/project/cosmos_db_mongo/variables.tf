@@ -119,3 +119,8 @@ variable "vnet_resource_group_name" {
   type        = string  
   default = "gcci-platform"
 }
+
+variable "subnet_name" {
+  type        = string  
+  default = "CosmosDbSubnet"
+}

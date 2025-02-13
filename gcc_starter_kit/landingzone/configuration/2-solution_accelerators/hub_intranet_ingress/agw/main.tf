@@ -47,7 +47,7 @@ module "application_gateway" {
   gateway_ip_configuration  = {  
     gateway_ip_configuration1  = {
       name      = "agw-gateway-ip-configuration"
-      subnet_id = try(local.remote.networking.virtual_networks.hub_intranet_ingress.virtual_subnets["AgwSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.hub_intranet_ingress.virtual_subnets["AgwSubnet"].resource.id : var.subnet_id 
+      subnet_id = try(local.remote.networking.virtual_networks.hub_intranet_ingress.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.hub_intranet_ingress.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
     }
   }
   frontend_port  = {  
@@ -69,7 +69,7 @@ module "application_gateway" {
       public_ip_address_id = null 
       private_ip_address            = try(cidrhost(local.global_settings.subnets.hub_intranet_ingress.AgwSubnet.address_prefixes.0, 10), null) # (agw subnet cidr 100.127.0.64/27, offset 10) >"100.127.0.74" 
       private_ip_address_allocation = "Static" # Dynamic and Static default to Dynamic
-      subnet_id                     = try(local.remote.networking.virtual_networks.hub_intranet_ingress.virtual_subnets["AgwSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.hub_intranet_ingress.virtual_subnets["AgwSubnet"].resource.id : var.subnet_id 
+      subnet_id                     = try(local.remote.networking.virtual_networks.hub_intranet_ingress.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.hub_intranet_ingress.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
     }    
   }
   backend_address_pool = {

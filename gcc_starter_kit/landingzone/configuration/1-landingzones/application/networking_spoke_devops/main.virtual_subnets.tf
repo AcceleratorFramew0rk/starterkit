@@ -1,5 +1,4 @@
 module "virtual_subnet1" {
-  # source = "./modules/subnet"
   source = "Azure/avm-res-network-virtualnetwork/azurerm//modules/subnet"
   version = "0.2.3"
 

@@ -33,3 +33,9 @@ variable "environment" {
   type        = string  
   default = "sandpit"
 }
+
+variable "subnet_name" {
+  type        = string  
+  default = "AzureBastionSubnet"
+}
+

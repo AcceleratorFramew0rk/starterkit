@@ -88,7 +88,7 @@ module "virtualmachine1" {
       ip_configurations = {
         ip_configuration_1 = {
           name                          = "${module.naming.network_interface.name}-ipconfig1"
-          private_ip_subnet_resource_id = try(local.remote.networking.virtual_networks.spoke_management.virtual_subnets["InfraSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_management.virtual_subnets["InfraSubnet"].resource.id : var.subnet_id 
+          private_ip_subnet_resource_id = try(local.remote.networking.virtual_networks.spoke_management.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_management.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
           create_public_ip_address      = false # true
           public_ip_address_name        = module.naming.public_ip.name_unique
         }

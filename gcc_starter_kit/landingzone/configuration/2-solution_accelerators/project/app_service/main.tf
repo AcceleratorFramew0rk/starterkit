@@ -188,7 +188,7 @@ module "private_endpoint" {
   name                           = "${module.appservice.resource.name}-web-privateendpoint"
   location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
-  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id : var.subnet_id 
+  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id : var.ingress_subnet_id 
   tags                           = {
       environment = "dev"
     }
@@ -203,7 +203,7 @@ module "private_endpoint" {
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
   app_service_id = module.appservice.resource.id
-  subnet_id      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AppServiceSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AppServiceSubnet"].resource.id : var.subnet_id 
+  subnet_id      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
 }
 
 
@@ -291,7 +291,7 @@ module "private_endpoint1" {
   name                           = "${module.appservice.resource.name}-api-privateendpoint"
   location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
-  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id : var.subnet_id 
+  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id : var.ingress_subnet_id 
   tags                           = {
       environment = "dev"
     }
@@ -306,6 +306,6 @@ module "private_endpoint1" {
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config1" {
   app_service_id = module.appservice1.resource.id
-  subnet_id      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AppServiceSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["AppServiceSubnet"].resource.id : var.subnet_id 
+  subnet_id      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
 }
 

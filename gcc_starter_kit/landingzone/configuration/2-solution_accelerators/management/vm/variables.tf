@@ -34,3 +34,8 @@ variable "source_image_resource_id" {
   default = null # "/subscriptions/<subscription_id>/resourceGroups/<resource_group>/providers/Microsoft.Compute/images/<custom_image_name>"
 }
 
+variable "subnet_name" {
+  type        = string  
+  default = "ServiceSubnet"
+}
+

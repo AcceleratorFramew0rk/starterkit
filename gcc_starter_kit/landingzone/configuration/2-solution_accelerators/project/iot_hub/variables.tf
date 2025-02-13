@@ -28,3 +28,18 @@ variable "environment" {
   type        = string  
   default = "sandpit"
 }
+
+variable "dps_subnet_id" {
+  type        = string  
+  default = null
+}
+
+variable "subnet_name" {
+  type        = string  
+  default = "WebSubnet"
+}
+
+variable "dps_subnet_name" {
+  type        = string  
+  default = "ServiceSubnet"
+}

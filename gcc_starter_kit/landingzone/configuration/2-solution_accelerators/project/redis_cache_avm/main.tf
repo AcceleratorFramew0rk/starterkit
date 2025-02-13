@@ -57,7 +57,7 @@ module "redis_cache" {
   public_network_access_enabled = false
   private_endpoints = {
     endpoint1 = {
-      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["DbSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["DbSubnet"].resource.id : var.subnet_id  # azurerm_subnet.endpoint.id
+      subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id  # azurerm_subnet.endpoint.id
       private_dns_zone_group_name   = "private-dns-zone-group"
       private_dns_zone_resource_ids = [module.private_dns_zones.resource.id]  # [azurerm_private_dns_zone.this.id]
     }

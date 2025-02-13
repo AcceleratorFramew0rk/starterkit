@@ -119,7 +119,8 @@ module "vmss" {
     name = "VMSS-NIC"
     ip_configuration = [{
       name      = "VMSS-IPConfig"
-      subnet_id =  try(var.subnet_id, null) != null ? var.subnet_id : local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id  # azurerm_subnet.subnet.id
+      # subnet_id =  try(var.subnet_id, null) != null ? var.subnet_id : local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id  # azurerm_subnet.subnet.id
+      subnet_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
     }]
   }]
   os_profile = {

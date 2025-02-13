@@ -14,7 +14,7 @@ variable "subnet_id" {
   default = null
 }
 
-variable "service_subnet_id" {
+variable "ingress_subnet_id" {
   type        = string  
   default = null
 }
@@ -32,4 +32,14 @@ variable "prefix" {
 variable "environment" {
   type        = string  
   default = "sandpit"
+}
+
+variable "subnet_name" {
+  type        = string  
+  default = "LogicAppSubnet"
+}
+
+variable "ingress_subnet_name" {
+  type        = string  
+  default = "ServiceSubnet"
 }

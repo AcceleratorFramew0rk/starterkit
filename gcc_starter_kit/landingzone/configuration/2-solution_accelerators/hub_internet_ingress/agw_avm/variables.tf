@@ -225,3 +225,8 @@ DESCRIPTION
     # Add more rules as needed
   }  
 }
+
+variable "subnet_name" {
+  type        = string  
+  default = "AgwSubnet"
+}

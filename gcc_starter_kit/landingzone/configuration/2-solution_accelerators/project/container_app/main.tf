@@ -2,7 +2,7 @@ resource "azurerm_container_app_environment" "this" {
   location                 = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   name                     = "${module.naming.container_app_environment.name_unique}${random_string.this.result}" # "my-environment"
   resource_group_name      = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
-  infrastructure_subnet_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ContainerAppSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["ContainerAppSubnet"].resource.id : var.subnet_id  # azurerm_subnet.subnet.id
+  infrastructure_subnet_id = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id  # azurerm_subnet.subnet.id
   internal_load_balancer_enabled = true
   logs_destination           = "log-analytics"
   log_analytics_workspace_id = local.remote.log_analytics_workspace.id 
@@ -64,7 +64,7 @@ module "private_endpoint" {
   name                           = "${azurerm_container_app_environment.this.name}-web-privateendpoint"
   location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
-  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["WebSubnet"].resource.id : var.subnet_id 
+  subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id : var.ingress_subnet_id 
   tags                           = {
       environment = "dev"
     }

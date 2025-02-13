@@ -8,7 +8,7 @@ module "container_group1" {
   ip_address_type     = "Private" # "Public"
   os_type             = "Linux"
   dns_name_label      = null #  this one needs to be unique
-  subnet_ids          = [try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets["CiSubnet"].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets["CiSubnet"].resource.id : var.subnet_id  ]
+  subnet_ids          = [try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id  ]
   restart_policy     = "OnFailure" // Possible values are 'Always'(default) 'Never' 'OnFailure'
 
   identity = {

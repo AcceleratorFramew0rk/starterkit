@@ -48,3 +48,8 @@ variable "memory" {
   type        = string  
   default = "2"
 }
+
+variable "subnet_name" {
+  type        = string  
+  default = "CiSubnet"
+}

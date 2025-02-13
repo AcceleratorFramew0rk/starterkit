@@ -4,11 +4,9 @@
 
 PREFIX=$(yq  -r '.prefix' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
 RG_NAME="${PREFIX}-rg-launchpad"
-STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '${PREFIX}stgtfstate')].[name]" -o tsv 2>/dev/null | head -n 1)
+STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '${PREFIX//-/}stgtfstate')].[name]" -o tsv 2>/dev/null | head -n 1)
 echo $RG_NAME
 echo $STG_NAME
-
-export ARM_SUBSCRIPTION_ID="0b5b13b8-0ad7-4552-936f-8fae87e0633f"
 
 # deploy the solution accelerator
 
@@ -18,7 +16,7 @@ terraform init  -reconfigure \
 -backend-config="resource_group_name=${RG_NAME}" \
 -backend-config="storage_account_name=${STG_NAME}" \
 -backend-config="container_name=2-solution-accelerators" \
--backend-config="key=solution-accelerators-project-aksavmptn.tfstate"
+-backend-config="key=solution_accelerators-project-aksptn.tfstate"
 
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
@@ -52,22 +50,3 @@ user node: 10 minutes
 # ** IMPORTANT: ensure subnet has sufficient IPs available for the worker nodes (max count)
 
 # ** IMPORTANT: remove deny all inbound and outbound to test if AKS create failed for SystemNodePoolSubnet and UserNodePoolSubnet NSG
-
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/aks_avm_ptn
-
-terraform init  -reconfigure \
--backend-config="resource_group_name=iotzdev-rg-launchpad" \
--backend-config="storage_account_name=iotzdevstgtfstatevjs" \
--backend-config="container_name=2-solution-accelerators" \
--backend-config="key=solution-accelerators-project-aks.tfstate"
-
-terraform plan \
--var="storage_account_name=iotzdevstgtfstatevjs" \
--var="resource_group_name=iotzdev-rg-launchpad"
-
-terraform apply -auto-approve \
--var="storage_account_name=iotzdevstgtfstatevjs" \
--var="resource_group_name=iotzdev-rg-launchpad"
-
-# ** IMPORTANT
-# Add in deny all inbound and outbound after AKS is deployed

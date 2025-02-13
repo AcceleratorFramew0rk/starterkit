@@ -38,3 +38,18 @@ variable "private_dns_zones_enabled" {
 #   type        = string  
 #   default = null
 # }
+
+variable "subnet_name" {
+  type        = string  
+  default = "FunctionAppSubnet"
+}
+
+variable "ingress_subnet_name" {
+  type        = string  
+  default = "ServiceSubnet"
+}
+
+variable "ingress_subnet_id" {
+  type        = string  
+  default = null
+}
