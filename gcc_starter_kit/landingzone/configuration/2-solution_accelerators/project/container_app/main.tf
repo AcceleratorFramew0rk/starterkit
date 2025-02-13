@@ -13,7 +13,7 @@ resource "azurerm_container_app_environment" "this" {
       ? substr(replace("${module.naming.container_app_environment.name}-${random_string.this.result}", "-", ""), 0, 16)
       : replace("${module.naming.container_app_environment.name}-${random_string.this.result}", "-", "")
     )
-    workload_profile_type = "D4" # Possible values include Consumption, D4, D8, D16, D32, E4, E8, E16 and E32
+    workload_profile_type = "D16" # Possible values include Consumption, D4, D8, D16, D32, E4, E8, E16 and E32
 
     maximum_count = 10 # - (Required) The maximum number of instances of workload profile that can be deployed in the Container App Environment.
     minimum_count = 1 # - (Required) The minimum number of instances of workload profile that can be deployed in the Container App Environment.
