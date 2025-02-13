@@ -102,7 +102,7 @@ module "aks_cluster" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/compute/terraform-azurerm-avm-ptn-aks-production" 
   version = "0.0.8"
 
-  kubernetes_version  = "1.30"
+  kubernetes_version  = "1.31" # "1.30"
   enable_telemetry    = var.enable_telemetry # see variables.tf
   name                = "${module.naming.kubernetes_cluster.name}-private-cluster"  # "private-cluster" # module.naming.kubernetes_cluster
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
@@ -128,7 +128,7 @@ module "aks_cluster" {
     ezwl = {
       name                 = "ezwl" # intranet (ez) workload (wl) - the "name" must begin with a lowercase letter, contain only lowercase letters and numbers and be between 1 and 12 characters in length
       vm_size              = "Standard_D2d_v5"
-      orchestrator_version = "1.30"
+      orchestrator_version = "1.31" # "1.30"
       max_count            = 8 # ensure subnet has sufficent IPs
       min_count            = 2
       os_sku               = "Ubuntu"
@@ -143,7 +143,7 @@ module "aks_cluster" {
     izwl = {
       name                 = "izwl" # intranet (iz) workload (wl)- the "name" must begin with a lowercase letter, contain only lowercase letters and numbers and be between 1 and 12 characters in length
       vm_size              = "Standard_D2d_v5"
-      orchestrator_version = "1.30"
+      orchestrator_version = "1.31" # "1.30"
       max_count            = 8 # ensure subnet has sufficent IPs
       min_count            = 2
       os_sku               = "Ubuntu"
@@ -170,7 +170,7 @@ module "aks_cluster" {
     # workload_windows = {
     #   name                 = "workload1"
     #   vm_size              = "Standard_D4s_v3"
-    #   orchestrator_version = "1.30"
+    #   orchestrator_version = "1.31" # "1.30"
     #   max_count            = 4 # 16 - ensure subnet has sufficent IPs
     #   min_count            = 2
     #   os_sku               = "Windows2022" # expected os_sku to be one of ["AzureLinux" "CBLMariner" "Mariner" "Ubuntu" "Windows2019" "Windows2022"]
@@ -185,7 +185,7 @@ module "aks_cluster" {
     # ingress = {
     #   name                 = "ingress"
     #   vm_size              = "Standard_D2d_v5"
-    #   orchestrator_version = "1.30"
+    #   orchestrator_version = "1.31" # "1.30"
     #   max_count            = 16 # - ensure subnet has sufficent IPs
     #   min_count            = 2
     #   os_sku               = "Ubuntu"
