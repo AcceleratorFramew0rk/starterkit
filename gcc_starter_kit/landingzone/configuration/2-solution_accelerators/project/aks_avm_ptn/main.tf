@@ -98,8 +98,7 @@ module "aks_cluster" {
     service_cidr        = "172.16.0.0/18" #"10.0.0.0/16"
   }
 
-  node_resource_group = "${try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name}-nodes" # node_resource_group                 = var.node_resource_group
-
+  node_resource_group = try(local.global_settings.resource_group_name, null) == null ? "${module.naming.resource_group.name}-solution-accelerators-aks-nodes" : "${azurerm_resource_group.this.0.name}-aks-nodes"
   # custom container registry id - from local remote state
   container_registry_id = local.container_registry.id
   log_analytics_workspace_id = try(local.remote.log_analytics_workspace.id, null) != null ? local.remote.log_analytics_workspace.id : var.log_analytics_workspace_id
