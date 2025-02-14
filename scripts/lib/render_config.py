@@ -94,6 +94,7 @@ def get_config(input, solution_accelerator, landingzone_type):
     AppServiceIntranetSubnet_address_prefixes = ""
     RedisCacheSubnet_address_prefixes = ""
     ContainerAppSubnet_address_prefixes = ""
+    ContainerAppIntranetSubnet_address_prefixes = ""
     config_yaml = ""
     config_yaml_encoded = ""
     internet_ingress_subnets = ""
@@ -427,7 +428,19 @@ def get_config(input, solution_accelerator, landingzone_type):
                 if ContainerAppSubnet_address_prefixes == "":
                     ContainerAppSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
-                    
+                if WebSubnet_address_prefixes == "":
+                    WebSubnet_address_prefixes = str(subnets[count])
+                    count = count + 1
+
+            current_value = solution_accelerator_data.get("project", {}).get("container_app_intranet", None)
+            print(current_value)
+            if current_value == 'True' or current_value is True or current_value == 'true' :
+                if ContainerAppIntranetSubnet_address_prefixes == "":
+                    ContainerAppIntranetSubnet_address_prefixes = str(subnets[count])
+                    count = count + 1  
+                if WebIntranetSubnet_address_prefixes == "":
+                    WebIntranetSubnet_address_prefixes = str(subnets[count])
+                    count = count + 1                  
         # devops
         RunnerSubnet_address_prefixes = str(devops_subnets[0]) 
             
@@ -458,6 +471,8 @@ def get_config(input, solution_accelerator, landingzone_type):
         "AiSubnet_address_prefixes": AiSubnet_address_prefixes,
         "WebIntranetSubnet_address_prefixes": WebIntranetSubnet_address_prefixes,
         "AppServiceIntranetSubnet_address_prefixes": AppServiceIntranetSubnet_address_prefixes,
+        "ContainerAppSubnet_address_prefixes": ContainerAppSubnet_address_prefixes,
+        "ContainerAppIntranetSubnet_address_prefixes": ContainerAppIntranetSubnet_address_prefixes,
         "RunnerSubnet_address_prefixes": RunnerSubnet_address_prefixes,
         # infra landing zone
         "hub_ingress_internet_vnet_cidr": internet_ingress_vnet_cidr,

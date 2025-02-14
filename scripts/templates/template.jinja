@@ -105,7 +105,7 @@ subnets:
       address_prefixes: ["{{FunctionAppSubnet_address_prefixes}}"]
       delegations: [
         {
-          name: "functionapp",
+          name: "FunctionAppSubnet",
           service_delegation: {
             name: "Microsoft.Web/serverFarms", 
             actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
@@ -156,7 +156,7 @@ subnets:
       address_prefixes: ["{{LogicAppSubnet_address_prefixes}}"]   
       delegations: [
         {
-          name: "logicapp",
+          name: "LogicAppSubnet",
           service_delegation: {
             name: "Microsoft.Web/serverFarms", 
             actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
@@ -171,7 +171,7 @@ subnets:
       address_prefixes: ["{{CiSubnet_address_prefixes}}"]   
       delegations: [
         {
-          name: "ci",
+          name: "CiSubnet",
           service_delegation: {
             name: "Microsoft.ContainerInstance/containerGroups", 
             actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
@@ -229,6 +229,21 @@ subnets:
       delegations: [
         {
           name: "ContainerAppSubnet",
+          service_delegation: {
+            name: "Microsoft.App/environments", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ]
+{% endif -%}
+{% if ContainerAppIntranetSubnet_address_prefixes | trim != 'None' and ContainerAppIntranetSubnet_address_prefixes | trim != '' -%} 
+# -----------------
+    ContainerAppIntranetSubnet: # DO NOT CHANGE subnet name
+      name: "ContainerAppIntranetSubnet"    
+      address_prefixes: ["{{ContainerAppIntranetSubnet_address_prefixes}}"]
+      delegations: [
+        {
+          name: "ContainerAppIntranetSubnet",
           service_delegation: {
             name: "Microsoft.App/environments", 
             actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
