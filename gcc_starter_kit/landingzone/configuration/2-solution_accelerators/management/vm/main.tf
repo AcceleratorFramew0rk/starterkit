@@ -3,7 +3,7 @@ module "avm_res_keyvault_vault" {
   version             = ">= 0.5.0"
 
   tenant_id           = data.azurerm_client_config.current.tenant_id
-  name                = "${module.naming.key_vault.name}-toolingvm-${random_string.this.result}" # "${module.naming.key_vault.name_unique}${random_string.this.result}vm"   
+  name                = "${module.naming.key_vault.name}-toolingvm-${random_string.this.result}"   
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name 
   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
   network_acls = {
@@ -67,7 +67,6 @@ module "virtualmachine1" {
   location                               = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   resource_group_name                    = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   virtualmachine_os_type                 = "Windows"
-  # name                                   = "${module.naming.virtual_machine.name}${random_string.this.result}" 
   name = (
     length(replace("${module.naming.virtual_machine.name}-${random_string.this.result}", "-", "")) > 15
     ? substr(replace("${module.naming.virtual_machine.name}-${random_string.this.result}", "-", ""), 0, 15)
