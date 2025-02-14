@@ -11,7 +11,7 @@
 - Added Solution Accelerator VMSS Windows
 - Added Single Resource Group feature
 - Added Suffix for naming standard
-- Added isntall.sh single deployment script
+- Added install.sh single deployment script
 
 #### **Enhancements:**
 - Add parameters for var.subnet_name for all solvution accelerators
