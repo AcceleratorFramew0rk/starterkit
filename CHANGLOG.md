@@ -1,15 +1,20 @@
 
-### **Version 0.0.13 (TBD)**
+### **Version 0.0.13 (14 Feb 2025)**
 #### **Compatibility:**
 - **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.2`
 - **Azurerm:** Version 3.85
 - **AAF:** Version 0.0.5
 
 #### **New Features:**
-- *No features added in this release.*
+- Added Solution Accelerator Container App Intranet
+- Added Solution Accelerator VMSS Linux
+- Added Solution Accelerator VMSS Windows
+- Added Single Resource Group feature
+- Added Suffix for naming standard
+- Added install.sh single deployment script
 
 #### **Enhancements:**
-- *No Enhancements added in this release.*
+- Add parameters for var.subnet_name for all solution accelerators
 
 #### **Bug Fixes:**
 - fixed issue with long window name
@@ -17,14 +22,14 @@
 
 ---
 
-### **Version 0.0.12 (TBD)**
+### **Version 0.0.12 (08 Feb 2025)**
 #### **Compatibility:**
 - **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.2`
 - **Azurerm:** Version 3.85
 - **AAF:** Version 0.0.5
 
 #### **New Features:**
-- *No features added in this release.*
+- Added Solution Accelerator Container App 
 
 #### **Enhancements:**
 - *No Enhancements added in this release.*
