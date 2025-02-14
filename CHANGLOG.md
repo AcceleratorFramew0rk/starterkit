@@ -14,7 +14,7 @@
 - Added install.sh single deployment script
 
 #### **Enhancements:**
-- Add parameters for var.subnet_name for all solvution accelerators
+- Add parameters for var.subnet_name for all solution accelerators
 
 #### **Bug Fixes:**
 - fixed issue with long window name
