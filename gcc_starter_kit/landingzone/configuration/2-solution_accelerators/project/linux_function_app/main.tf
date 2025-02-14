@@ -72,7 +72,8 @@ resource "azurerm_user_assigned_identity" "user" {
 
 module "linux_function_app" {
   source  = "Azure/avm-res-web-site/azurerm"
-  version = "0.14.2"
+  version = "0.1.0"
+  # version = "0.14.2" # required terraform 1.9 above
 
   enable_telemetry = var.enable_telemetry 
   name                = "${module.naming.function_app.name}-${random_string.this.result}"  # module.naming.function_app.name_unique
