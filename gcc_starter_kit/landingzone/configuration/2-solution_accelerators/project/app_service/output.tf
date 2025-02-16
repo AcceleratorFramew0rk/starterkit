@@ -1,5 +1,5 @@
 output "resource" {
-  value       = module.appservice.resource 
+  value       = module.appservice.0.resource 
   description = "The Azure appservice resource"
   sensitive = true  
 }

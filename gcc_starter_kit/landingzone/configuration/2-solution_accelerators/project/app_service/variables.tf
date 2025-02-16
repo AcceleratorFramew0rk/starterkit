@@ -48,3 +48,21 @@ variable "ingress_subnet_name" {
   type        = string  
   default = "WebSubnet"
 }
+
+variable "linux_fx_version" {
+  type        = string  
+  # default = "NODE:20-lts"
+  # default = "DOCKER|mcr.microsoft.com/azure-functions/python:4" # Public Docker image
+  default = "DOCKER|nginx:latest" # Public Docker image
+}
+
+variable "appservice_api_enabled" {
+  type        = bool  
+  default = true
+}
+
+variable "appservice_web_enabled" {
+  type        = bool  
+  default = true
+}
+

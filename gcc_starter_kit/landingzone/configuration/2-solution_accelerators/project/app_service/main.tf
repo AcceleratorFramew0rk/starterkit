@@ -42,6 +42,8 @@ module "appservice" {
   # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/webapps/terraform-azurerm-appservice"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/webapps/terraform-azurerm-appservice"
 
+  count = var.appservice_web_enabled ? 1 : 0
+
   name                         = "${module.naming.app_service.name}-web-${random_string.this.result}" # alpha numeric characters only are allowed in "name var.name_prefix == null ? "${random_string.prefix.result}${var.acr_name}" : "${var.name_prefix}${var.acr_name}"
   resource_group_name          = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   location                     = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
@@ -56,6 +58,7 @@ module "appservice" {
     type = "SystemAssigned"
   }
   # key_vault_reference_identity_id = {} 
+
   site_config = {
     # Free tier only supports 32-bit
     use_32_bit_worker_process = true
@@ -63,9 +66,14 @@ module "appservice" {
     # always connect to the runtime with "az webapp ssh" or output the value
     # of process.version from a running app because you might not get the
     # version you expect
-    linux_fx_version = "NODE:20-lts" # "NODE|12-lts"
+    linux_fx_version = var.linux_fx_version # "NODE:20-lts" # "NODE|12-lts"
   }
 
+  # site_config {
+  #   linux_fx_version = "DOCKER|nginx:latest"  # Specifies the container image
+  # }
+
+ 
   backup = {
     name                = "webapp_backup"
     enabled             = true
@@ -184,15 +192,17 @@ module "appservice" {
 module "private_endpoint" {
   # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
- 
-  name                           = "${module.appservice.resource.name}-web-privateendpoint"
+
+  count = var.appservice_web_enabled ? 1 : 0
+
+  name                           = "${module.appservice.0.resource.name}-web-privateendpoint"
   location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id : var.ingress_subnet_id 
   tags                           = {
       environment = "dev"
     }
-  private_connection_resource_id = module.appservice.resource.id
+  private_connection_resource_id = module.appservice.0.resource.id
   is_manual_connection           = false
   subresource_name               = "sites"
   private_dns_zone_group_name    = "default" 
@@ -202,7 +212,10 @@ module "private_endpoint" {
 # Tested with :  AzureRM version 2.55.0
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
-  app_service_id = module.appservice.resource.id
+  
+  count = var.appservice_web_enabled ? 1 : 0
+
+  app_service_id = module.appservice.0.resource.id
   subnet_id      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
 }
 
@@ -211,6 +224,8 @@ module "appservice1" {
   # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/webapps/terraform-azurerm-appservice"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/webapps/terraform-azurerm-appservice"
 
+  count = var.appservice_api_enabled ? 1 : 0
+  
   name                         = "${module.naming.app_service.name}-api-${random_string.this.result}" # alpha numeric characters only are allowed in "name var.name_prefix == null ? "${random_string.prefix.result}${var.acr_name}" : "${var.name_prefix}${var.acr_name}"
   resource_group_name          = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   location                     = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
@@ -232,7 +247,7 @@ module "appservice1" {
     # always connect to the runtime with "az webapp ssh" or output the value
     # of process.version from a running app because you might not get the
     # version you expect
-    linux_fx_version = "NODE:20-lts" # "NODE|12-lts"
+    linux_fx_version = var.linux_fx_version #  "NODE:20-lts" # "NODE|12-lts"
   }
   app_settings = {
     "WEBSITE_NODE_DEFAULT_VERSION" = "6.9.1"
@@ -287,15 +302,17 @@ module "appservice1" {
 module "private_endpoint1" {
   # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/networking/terraform-azurerm-privateendpoint"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/networking/terraform-azurerm-privateendpoint"
- 
-  name                           = "${module.appservice.resource.name}-api-privateendpoint"
+
+  count = var.appservice_api_enabled ? 1 : 0
+
+  name                           = "${module.appservice1.0.resource.name}-api-privateendpoint"
   location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id : var.ingress_subnet_id 
   tags                           = {
       environment = "dev"
     }
-  private_connection_resource_id = module.appservice1.resource.id
+  private_connection_resource_id = module.appservice1.0.resource.id
   is_manual_connection           = false
   subresource_name               = "sites"
   private_dns_zone_group_name    = "default" 
@@ -305,7 +322,10 @@ module "private_endpoint1" {
 # Tested with :  AzureRM version 2.55.0
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config1" {
-  app_service_id = module.appservice1.resource.id
+
+  count = var.appservice_api_enabled ? 1 : 0
+
+  app_service_id = module.appservice1.0.resource.id
   subnet_id      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
 }
 
