@@ -56,13 +56,18 @@ variable "linux_fx_version" {
   default = "DOCKER|nginx:latest" # Public Docker image
 }
 
-variable "appservice_api_enabled" {
-  type        = bool  
-  default = true
-}
+# variable "appservice_api_enabled" {
+#   type        = bool  
+#   default = false
+# }
 
-variable "appservice_web_enabled" {
-  type        = bool  
-  default = true
-}
+# variable "appservice_web_enabled" {
+#   type        = bool  
+#   default = true
+# }
 
+variable "appservice_name" {
+  description = "List of App Service names"
+  type        = list(string)
+  default     = ["web", "api"]
+}

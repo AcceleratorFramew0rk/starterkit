@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# source "./utils.sh"
+source "./utils.sh"
 
 # #------------------------------------------------------------------------
 # # get configuration file path, resource group name, storage account name, subscription id, subscription name
@@ -31,7 +31,6 @@ echo "Resource Group Name: ${RG_NAME}"
 
 RESOURCE_GROUP_NAME=$(yq  -r '.resource_group_name' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
 
-
 #------------------------------------------------------------------------
 # end get configuration file path, resource group name, storage account name, subscription id, subscription name
 #------------------------------------------------------------------------
@@ -56,7 +55,12 @@ terraform apply -auto-approve \
 # app service
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
 
+
+# Define the linux_fx_version string, default is "DOCKER|nginx" / "NODE:20-lts" 
 linux_fx_version="DOCKER|nginx"
+
+# Define the appservice_name array string, default is two app service with names ["web","api"]
+appservice_name='["web"]'
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name=${RG_NAME}" \
@@ -66,17 +70,15 @@ terraform init  -reconfigure \
 
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
--var="resource_group_name=${RG_NAME}"
--var="appservice_api_enabled=false" \
--var="appservice_web_enabled=true" \
--var="linux_fx_version=${linux_fx_version}" 
+-var="resource_group_name=${RG_NAME}" \
+-var="linux_fx_version=${linux_fx_version}" \
+-var="appservice_name=${appservice_name}" 
 
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
--var="resource_group_name=${RG_NAME}"
--var="appservice_api_enabled=false" \
--var="appservice_web_enabled=true" \
--var="linux_fx_version=${linux_fx_version}" 
+-var="resource_group_name=${RG_NAME}" \
+-var="linux_fx_version=${linux_fx_version}"  \
+-var="appservice_name=${appservice_name}" 
 
 
 # mssql
