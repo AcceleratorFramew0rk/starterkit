@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "./utils.sh"
+# source "./utils.sh"
 
 # #------------------------------------------------------------------------
 # # get configuration file path, resource group name, storage account name, subscription id, subscription name
@@ -36,104 +36,244 @@ RESOURCE_GROUP_NAME=$(yq  -r '.resource_group_name' /tf/avm/gcc_starter_kit/land
 # end get configuration file path, resource group name, storage account name, subscription id, subscription name
 #------------------------------------------------------------------------
 
-
 # keyvault
-# -----------------------------------------------
-section="project"
-key="keyvault"
-backend_config_key="solution-accelerators-${section}-${key//_/}"
-working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/${section}/${key}"
-exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "2-solution-accelerators" 
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/keyvault
 
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-keyvault.tfstate"
 
-# app_service
-# -----------------------------------------------
-section="project"
-key="app_service"
-backend_config_key="solution-accelerators-${section}-${key//_/}"
-working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/${section}/${key}"
-exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "2-solution-accelerators" 
+terraform plan \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
+
+terraform apply -auto-approve \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
+
+# app service
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
+
+linux_fx_version="DOCKER|nginx"
+
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-appservice.tfstate"
+
+terraform plan \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
+-var="appservice_api_enabled=false" \
+-var="appservice_web_enabled=true" \
+-var="linux_fx_version=${linux_fx_version}" 
+
+terraform apply -auto-approve \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
+-var="appservice_api_enabled=false" \
+-var="appservice_web_enabled=true" \
+-var="linux_fx_version=${linux_fx_version}" 
 
 
 # mssql
-# -----------------------------------------------
-section="project"
-key="mssql"
-backend_config_key="solution-accelerators-${section}-${key//_/}"
-working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/${section}/${key}"
-exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "2-solution-accelerators" 
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/mssql
+
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-mssql.tfstate"
+
+terraform plan \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
+
+terraform apply -auto-approve \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
 
 
-# storage_account
-# -----------------------------------------------
-section="project"
-key="storage_account"
-backend_config_key="solution-accelerators-${section}-${key//_/}"
-working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/${section}/${key}"
-exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "2-solution-accelerators" 
+# storage account
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/storage_account
 
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-storageaccount.tfstate"
+
+terraform plan \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
+
+terraform apply -auto-approve \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
 
 # apim
-# -----------------------------------------------
-section="project"
-key="apim"
-backend_config_key="solution-accelerators-${section}-${key//_/}"
-working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/${section}/${key}"
-exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "2-solution-accelerators" 
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/apim
 
-# linux_function_app
-# -----------------------------------------------
-section="project"
-key="linux_function_app"
-backend_config_key="solution-accelerators-${section}-${key//_/}"
-working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/${section}/${key}"
-exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "2-solution-accelerators" 
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-apim.tfstate"
+
+terraform plan \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
+
+terraform apply -auto-approve \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
+
+
+# linux function app
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/linux_function_app
+
+# Define the site_config JSON as a HEREDOC
+SITE_CONFIG_JSON=$(cat <<EOF
+{
+  "application_stack": {
+    "container": {
+      "dotnet_version": null,
+      "java_version": null,
+      "node_version": null,
+      "powershell_core_version": null,
+      "python_version": null,
+      "go_version": null,
+      "ruby_version": null,
+      "java_server": null,
+      "java_server_version": null,
+      "php_version": null,
+      "use_custom_runtime": null,
+      "use_dotnet_isolated_runtime": null,
+      "docker": [
+        {
+          "image_name": "nginx",
+          "image_tag": "latest",
+          "registry_url": "docker.io"
+        }
+      ]
+    }
+  }
+}
+EOF
+)
+
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-linuxfunctionapp.tfstate"
+
+terraform plan \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}" \
+-var "site_config=${SITE_CONFIG_JSON}"
+
+terraform apply -auto-approve \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
+-var "site_config=${SITE_CONFIG_JSON}"
+
+
+# iot hub
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/iot_hub
+
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-iothub.tfstate"
+
+terraform plan \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
+
+terraform apply -auto-approve \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
+
+# # event hubs
+# cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/event_hubs
+
+# terraform init  -reconfigure \
+# -backend-config="resource_group_name=${RG_NAME}" \
+# -backend-config="storage_account_name=${STG_NAME}" \
+# -backend-config="container_name=2-solution-accelerators" \
+# -backend-config="key=solution_accelerators-project-eventhubs.tfstate"
+
+# terraform plan \
+# -var="storage_account_name=${STG_NAME}" \
+# -var="resource_group_name=${RG_NAME}"
+
+# terraform apply -auto-approve \
+# -var="storage_account_name=${STG_NAME}" \
+# -var="resource_group_name=${RG_NAME}"
+
+
+
+# data explorer
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/data_explorer
+
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-dataexplorer.tfstate"
+
+
+terraform plan \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
+
+terraform apply -auto-approve \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
+
 
 
 # vm for vnet data gateway (to be confirmed)
-# -----------------------------------------------
-section="project"
-key="vm"
-backend_config_key="solution-accelerators-${section}-${key//_/}"
-working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/${section}/${key}"
-exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "2-solution-accelerators" 
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/vm
+
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-vm.tfstate"
+
+terraform plan \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
+
+terraform apply -auto-approve \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
 
 
-# iot_hub
-# -----------------------------------------------
-section="project"
-key="iot_hub"
-backend_config_key="solution-accelerators-${section}-${key//_/}"
-working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/${section}/${key}"
-exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "2-solution-accelerators" 
 
-
-# event_hubs
-# -----------------------------------------------
-section="project"
-key="event_hubs"
-backend_config_key="solution-accelerators-${section}-${key//_/}"
-working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/${section}/${key}"
-exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "2-solution-accelerators" 
-
-# data_explorer
-# -----------------------------------------------
-section="project"
-key="data_explorer"
-backend_config_key="solution-accelerators-${section}-${key//_/}"
-working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/${section}/${key}"
-exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "2-solution-accelerators" 
-
-
-# stream_analytics (must be last solution accelerator to be deployed)
+# stream analytics (must be last solution accelerator to be deployed)
 # ** IMPORTANT: This step requires event hubs, iot hub, data explorer and sql server to be deployed first
-# -----------------------------------------------
-section="project"
-key="stream_analytics"
-backend_config_key="solution-accelerators-${section}-${key//_/}"
-working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/${section}/${key}"
-exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "2-solution-accelerators" 
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/stream_analytics
 
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-streamanalytics.tfstate"
+
+terraform plan \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
+
+terraform apply -auto-approve \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}"
 
 # # # Approved managed endpoint via Azure CLI
 # -----------------------------------------------
