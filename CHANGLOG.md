@@ -1,3 +1,20 @@
+### **Version 0.0.14 (17 Feb 2025)**
+#### **Compatibility:**
+- **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.2`
+- **Azurerm:** Version 3.85
+- **AAF:** Version 0.0.5
+
+#### **New Features:**
+- add multiple resouce names for app service, container app, container instance, vm
+- add container as Publishing model for app service and linux function app
+
+#### **Enhancements:**
+- *No Enhancements added in this release.*
+
+#### **Bug Fixes:**
+- *No Bug Fixes added in this release.*
+
+---
 
 ### **Version 0.0.13 (14 Feb 2025)**
 #### **Compatibility:**
