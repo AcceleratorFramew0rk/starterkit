@@ -4,6 +4,7 @@ log_analytics_workspace_name: "gcci-agency-workspace"  # DO NOT CHANGE
 # # virtual network - leave empty if there is no such virtual network  
 prefix: "wx2-dev-sea"
 is_prefix: true
+is_single_resource_group: false
 location: "southeastasia"
 environment: "dev"
 app_config:
