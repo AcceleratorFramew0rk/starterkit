@@ -22,7 +22,16 @@ module "avm_res_keyvault_vault" {
     create = "60s"
   }
 
-  tags = local.tags
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "virtual machine key vault" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
+    }
+  )
 }
 
 module "regions" {
