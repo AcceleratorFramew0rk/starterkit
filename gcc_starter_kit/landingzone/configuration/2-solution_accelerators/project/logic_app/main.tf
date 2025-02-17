@@ -12,6 +12,18 @@ resource "azurerm_app_service_plan" "this" {
     tier     = "WorkflowStandard" # "Standard"
     size     = "WS1" # "S1"
   }
+
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "logic app asp" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
+    }
+  )
+
 }
 
 # this is not required if app service exists - use azurerm resource logic - do not use AVM
@@ -25,9 +37,16 @@ module "private_dns_zones" {
   enable_telemetry      = true
   resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.azurewebsites.net"
-  tags         = {
-      environment = "dev"
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "logic app private dns zone" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
     }
+  ) 
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
@@ -48,9 +67,16 @@ module "private_endpoint" {
   location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id : var.ingress_subnet_id 
-  tags                           = {
-      environment = "dev"
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "logic app private endpoint" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
     }
+  ) 
   private_connection_resource_id = module.logicapp.resource.id
   is_manual_connection           = false
   subresource_name               = "sites"
