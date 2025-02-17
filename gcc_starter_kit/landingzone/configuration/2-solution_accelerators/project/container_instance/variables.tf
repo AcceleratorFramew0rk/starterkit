@@ -48,3 +48,9 @@ variable "subnet_name" {
   type        = string  
   default = "CiSubnet"
 }
+
+variable "resource_names" {
+  description = "List of resource names"
+  type        = list(string)
+  default     = ["1"] # default to one resource # ["1", "2"] default to two resources. make sure the vaule is single digit
+}

@@ -2,7 +2,9 @@ module "container_group1" {
   # source  = "./../../../../../../modules/terraform-azurerm-aaf/modules/compute/terraform-azurerm-containergroup"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/compute/terraform-azurerm-containergroup"  
 
-  name                = "${module.naming.container_group.name}-${random_string.this.result}"
+  for_each                     = toset(var.resource_names)
+
+  name                = "${module.naming.container_group.name}-${each.value}-${random_string.this.result}"
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name 
   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
   ip_address_type     = "Private" # "Public"
@@ -49,7 +51,7 @@ module "container_group1" {
   tags        = merge(
     local.global_settings.tags,
     {
-      purpose = "container instance" 
+      purpose = "container instance - ${each.value}" 
       project_code = try(local.global_settings.prefix, var.prefix) 
       env = try(local.global_settings.environment, var.environment) 
       zone = "project"

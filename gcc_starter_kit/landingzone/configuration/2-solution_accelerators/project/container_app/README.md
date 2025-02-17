@@ -37,12 +37,12 @@ terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
 
-# Linux ASP with one app "web" in Publishing model = Container
+# Linux ASP with one app "web" 
 # -----------------------------------------------------------------------------------
 
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
 
-container_app_name='["web"]'
+resource_names='["web"]'
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name=${RG_NAME}" \
@@ -53,12 +53,12 @@ terraform init  -reconfigure \
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}" \
--var="container_app_name=${appservice_name}" 
+-var="resource_names=${appservice_name}" 
 
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}" \
--var="container_app_name=${appservice_name}" 
+-var="resource_names=${appservice_name}" 
 
 # Linux ASP with two app "web" and "api" in WebIntranetSubnet and ContainerAppIntranetSubnet
 # -----------------------------------------------------------------------------------

@@ -46,9 +46,9 @@ terraform init  -reconfigure \
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}" \
--var="vm_name=${vm_name}" 
+-var="resource_names=${resource_names}" 
 
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}" \
--var="resource_names=${vm_name}" 
+-var="resource_names=${resource_names}" 
