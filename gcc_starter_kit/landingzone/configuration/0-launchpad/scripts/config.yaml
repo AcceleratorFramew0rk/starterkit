@@ -1,8 +1,8 @@
-resource_group_name: "gcci-platform"
-log_analytics_workspace_resource_group_name: "gcci-agency-law"
-log_analytics_workspace_name: "gcci-agency-workspace"
+resource_group_name: "gcci-platform" 
+log_analytics_workspace_resource_group_name: "gcci-agency-law"  
+log_analytics_workspace_name: "gcci-agency-workspace"  
 # # virtual network - leave empty if there is no such virtual network  
-prefix: "ab5-dev-sea"
+prefix: "iot1dev" 
 is_prefix: true
 is_single_resource_group: false
 location: "southeastasia"
@@ -48,22 +48,19 @@ subnets:
   project:
     WebSubnet: # DO NOT CHANGE subnet name
       name: "WebSubnet"
-      address_prefixes: ["100.64.0.0/27"]    
-    # WebIntranetSubnet: # DO NOT CHANGE subnet name
-    #   name: "WebSubnet"
-    #   address_prefixes: ["100.64.1.96/27"]      
-    # AppServiceSubnet: # DO NOT CHANGE subnet name
-    #   name: "AppServiceSubnet"
-    #   address_prefixes: ["100.64.0.32/27"]
-    #   delegations: [ 
-    #     {
-    #       name: "AppServiceSubnet",
-    #       service_delegation: {
-    #         name: "Microsoft.Web/serverFarms", 
-    #         actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
-    #         }
-    #     }
-    #   ]     
+      address_prefixes: ["100.64.0.0/27"]   
+    AppServiceSubnet: # DO NOT CHANGE subnet name
+      name: "AppServiceSubnet"
+      address_prefixes: ["100.64.0.32/27"]
+      delegations: [ 
+        {
+          name: "AppServiceSubnet",
+          service_delegation: {
+            name: "Microsoft.Web/serverFarms", 
+            actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
+            }
+        }
+      ]     
     # LogicAppSubnet: # DO NOT CHANGE subnet name
     #   name: "LogicAppSubnet"
     #   address_prefixes: ["100.64.0.64/27"]   
@@ -103,47 +100,28 @@ subnets:
     #         }
     #     }
     #   ]        
-    # FunctionAppSubnet: # DO NOT CHANGE subnet name
-    #   name: "FunctionAppSubnet"
-    #   address_prefixes: ["100.64.0.160/27"]
-    #   delegations: [
-    #     {
-    #       name: "FunctionAppSubnet",
-    #       service_delegation: {
-    #         name: "Microsoft.Web/serverFarms", 
-    #         actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
-    #         }
-    #     }
-    #   ]                  
-    ApiSubnet: # DO NOT CHANGE subnet name
-      name: "ApiSubnet"    
-      address_prefixes: ["100.64.0.192/27"]
-    # ** IMPORTANT ** ContainerAppSubnet must have a size of at least /23
-    ContainerAppSubnet: # DO NOT CHANGE subnet name
-      name: "ContainerAppSubnet"    
-      address_prefixes: ["100.64.0.224/27"]
+    FunctionAppSubnet: # DO NOT CHANGE subnet name
+      name: "FunctionAppSubnet"
+      address_prefixes: ["100.64.0.160/27"]
       delegations: [
         {
-          name: "ContainerAppSubnet",
+          name: "FunctionAppSubnet",
           service_delegation: {
-            name: "Microsoft.App/environments", 
+            name: "Microsoft.Web/serverFarms", 
             actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
             }
         }
       ]                  
+    ApiSubnet: # DO NOT CHANGE subnet name
+      name: "ApiSubnet"    
+      address_prefixes: ["100.64.0.192/27"]
+    # ContainerAppSubnet: # DO NOT CHANGE subnet name
+    #   name: "ContainerAppSubnet"    
+    #   address_prefixes: ["100.64.0.224/27"]
     # ContainerAppIntranetSubnet: # DO NOT CHANGE subnet name
     #   name: "ContainerAppIntranetSubnet"    
-    #   address_prefixes: ["100.64.1.32/27"]
-    #   delegations: [
-    #     {
-    #       name: "ContainerAppIntranetSubnet",
-    #       service_delegation: {
-    #         name: "Microsoft.App/environments", 
-    #         actions: ["Microsoft.Network/virtualNetworks/subnets/action"]
-    #         }
-    #     }
-    #   ] 
-    #   SystemNodePoolSubnet: # DO NOT CHANGE subnet name
+    #   address_prefixes: ["100.64.0.224/27"]
+    # SystemNodePoolSubnet: # DO NOT CHANGE subnet name
     #   name: "SystemNodePoolSubnet"    
     #   address_prefixes: ["100.64.0.192/27"]
     # UserNodePoolSubnet: # DO NOT CHANGE subnet name
@@ -151,7 +129,7 @@ subnets:
     #   address_prefixes: ["100.64.0.224/27"]
     # UserNodePoolWindowsSubnet: # DO NOT CHANGE subnet name
     #   name: "UserNodePoolWindowsSubnet"    
-    #   address_prefixes: ["100.64.1.0/27"]   
+    #   address_prefixes: ["100.64.1.192/27"]      
     # AiSubnet: # DO NOT CHANGE subnet name
     #   name: "AiSubnet"    
     #   address_prefixes: ["100.64.1.0/27"]   
