@@ -6,7 +6,7 @@ resource "azurerm_app_service_plan" "this" {
   maximum_elastic_worker_count = 5 
 
   # For kind=Linux must be set to true and for kind=Windows must be set to false
-  reserved         = true 
+  reserved         = try(var.kind, "Linux") == "Linux" ? true : false 
 
   sku {
     tier     = "Standard"
