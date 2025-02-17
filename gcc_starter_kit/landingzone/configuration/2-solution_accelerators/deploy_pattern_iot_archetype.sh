@@ -55,6 +55,8 @@ terraform apply -auto-approve \
 # app service
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
 
+linux_fx_version="DOCKER|nginx"
+
 terraform init  -reconfigure \
 -backend-config="resource_group_name=${RG_NAME}" \
 -backend-config="storage_account_name=${STG_NAME}" \
@@ -64,10 +66,16 @@ terraform init  -reconfigure \
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
+-var="appservice_api_enabled=true" \
+-var="appservice_web_enabled=false" \
+-var="linux_fx_version=${linux_fx_version}" \
 
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
+-var="appservice_api_enabled=true" \
+-var="appservice_web_enabled=false" \
+-var="linux_fx_version=${linux_fx_version}" \
 
 # mssql
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/mssql
@@ -125,6 +133,36 @@ terraform apply -auto-approve \
 # linux function app
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/linux_function_app
 
+# Define the site_config JSON as a HEREDOC
+SITE_CONFIG_JSON=$(cat <<EOF
+{
+  "application_stack": {
+    "container": {
+      "dotnet_version": null,
+      "java_version": null,
+      "node_version": null,
+      "powershell_core_version": null,
+      "python_version": null,
+      "go_version": null,
+      "ruby_version": null,
+      "java_server": null,
+      "java_server_version": null,
+      "php_version": null,
+      "use_custom_runtime": null,
+      "use_dotnet_isolated_runtime": null,
+      "docker": [
+        {
+          "image_name": "nginx",
+          "image_tag": "latest",
+          "registry_url": "docker.io"
+        }
+      ]
+    }
+  }
+}
+EOF
+)
+
 terraform init  -reconfigure \
 -backend-config="resource_group_name=${RG_NAME}" \
 -backend-config="storage_account_name=${STG_NAME}" \
@@ -133,11 +171,13 @@ terraform init  -reconfigure \
 
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
--var="resource_group_name=${RG_NAME}"
+-var="resource_group_name=${RG_NAME}" \
+-var "site_config=${SITE_CONFIG_JSON}"
 
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
+-var "site_config=${SITE_CONFIG_JSON}"
 
 
 # iot hub
