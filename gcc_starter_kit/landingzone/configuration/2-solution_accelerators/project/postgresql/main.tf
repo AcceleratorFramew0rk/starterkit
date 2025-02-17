@@ -97,5 +97,15 @@ module "postgresql" {
     mode                      = "ZoneRedundant"
     standby_availability_zone = 2
   }
-  tags = null
+  # tags = null
+  tags                           = merge(
+    local.global_settings.tags,
+    {
+      purpose = "postgresql server" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "db"   
+    }
+  ) 
 }

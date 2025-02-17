@@ -46,9 +46,16 @@ module "private_endpoint" {
   location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
-  tags                           = {
-      env = try(local.global_settings.environment, var.environment)  
+  tags        = merge(
+    local.global_settings.tags,
+    {
+      purpose = "redis cache private endpoint" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "db"   
     }
+  )
   private_connection_resource_id = module.redis_cache.resource.id
   is_manual_connection           = false
   subresource_name               = "redisCache"
