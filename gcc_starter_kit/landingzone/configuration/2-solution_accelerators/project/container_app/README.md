@@ -40,7 +40,7 @@ terraform apply -auto-approve \
 # Linux ASP with one app "web" 
 # -----------------------------------------------------------------------------------
 
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/container_app
 
 resource_names='["web"]'
 
@@ -48,7 +48,7 @@ terraform init  -reconfigure \
 -backend-config="resource_group_name=${RG_NAME}" \
 -backend-config="storage_account_name=${STG_NAME}" \
 -backend-config="container_name=2-solution-accelerators" \
--backend-config="key=solution_accelerators-project-appservice.tfstate"
+-backend-config="key=solution_accelerators-project-containerapp.tfstate"
 
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
@@ -64,13 +64,13 @@ terraform apply -auto-approve \
 # -----------------------------------------------------------------------------------
 
 
-cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/container_app
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name=${RG_NAME}" \
 -backend-config="storage_account_name=${STG_NAME}" \
 -backend-config="container_name=2-solution-accelerators" \
--backend-config="key=solution_accelerators-project-appservice.tfstate"
+-backend-config="key=solution_accelerators-project-containerapp.tfstate"
 
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
