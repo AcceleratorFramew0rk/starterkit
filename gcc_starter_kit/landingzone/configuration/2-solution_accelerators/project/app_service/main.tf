@@ -2,7 +2,7 @@ resource "azurerm_app_service_plan" "this" {
   name                         = "${module.naming.app_service_plan.name}-${random_string.this.result}" # module.naming.app_service_plan.name
   location                     = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   resource_group_name          = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
-  kind                         = "Linux"
+  kind                         = var.kind # "Linux"
   maximum_elastic_worker_count = 5 
 
   # For kind=Linux must be set to true and for kind=Windows must be set to false
@@ -67,6 +67,7 @@ module "appservice" {
     # of process.version from a running app because you might not get the
     # version you expect
     linux_fx_version = var.linux_fx_version # "NODE:20-lts" # "NODE|12-lts"
+    dotnet_framework_version = var.dotnet_framework_version # "v2.0" # "v4.0" # "v5.0" # "v6.0"
   }
 
   backup = {

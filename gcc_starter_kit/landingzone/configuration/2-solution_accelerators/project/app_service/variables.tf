@@ -56,6 +56,13 @@ variable "linux_fx_version" {
   default = "DOCKER|nginx:latest" # Public Docker image
 }
 
+
+variable "dotnet_framework_version" {
+  type        = string  
+  default = null # "v6.0" 
+}
+
+
 # variable "appservice_api_enabled" {
 #   type        = bool  
 #   default = false
@@ -71,3 +78,9 @@ variable "appservice_name" {
   type        = list(string)
   default     = ["web", "api"]
 }
+
+variable "kind" {
+  type        = string  
+  default = "Linux" # "Windows"
+}
+

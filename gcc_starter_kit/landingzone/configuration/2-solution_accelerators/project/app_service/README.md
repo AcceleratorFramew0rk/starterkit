@@ -10,6 +10,8 @@ echo $STG_NAME
 
 # deploy the solution accelerator
 
+# Linux ASP with two app service web and api
+# -----------------------------------------------------------------------------------
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
 
 terraform init  -reconfigure \
@@ -25,3 +27,78 @@ terraform plan \
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
+
+# Linux ASP with one app service "web" in Publishing model = Container
+# -----------------------------------------------------------------------------------
+
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
+
+linux_fx_version="DOCKER|nginx"
+appservice_name='["web"]'
+
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-appservice.tfstate"
+
+terraform plan \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}" \
+-var="linux_fx_version=${linux_fx_version}" \
+-var="appservice_name=${appservice_name}" 
+
+terraform apply -auto-approve \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}" \
+-var="linux_fx_version=${linux_fx_version}"  \
+-var="appservice_name=${appservice_name}" 
+
+# Linux ASP with two app service "web" and "api" in WebIntranetSubnet and AppServiceIntranetSubnet
+# -----------------------------------------------------------------------------------
+
+
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
+
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-appservice.tfstate"
+
+terraform plan \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}" \
+-var="subnet_name=AppServiceIntranetSubnet" \
+-var="ingress_subnet_name=WebIntranetSubnet" 
+
+terraform apply -auto-approve \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}" \
+-var="subnet_name=AppServiceIntranetSubnet" \
+-var="ingress_subnet_name=WebIntranetSubnet" 
+
+# Windows ASP with two app service "web" and "api"
+# -----------------------------------------------------------------------------------
+
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
+
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-appservice.tfstate"
+
+terraform plan \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}" \
+-var="kind=Windows" \
+-var="dotnet_framework_version=v6.0" \
+-var="linux_fx_version=null" 
+
+terraform apply -auto-approve \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}" \
+-var="kind=Windows" \
+-var="dotnet_framework_version=v6.0" \
+-var="linux_fx_version=null" 

@@ -144,6 +144,7 @@ module "linux_function_app" {
 
   site_config = var.site_config
 
+  # # example:
   # site_config = {
   #   application_stack = {
   #     container = {
