@@ -66,15 +66,15 @@ terraform init  -reconfigure \
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
--var="appservice_api_enabled=true" \
--var="appservice_web_enabled=false" \
+-var="appservice_api_enabled=false" \
+-var="appservice_web_enabled=true" \
 -var="linux_fx_version=${linux_fx_version}" \
 
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
--var="appservice_api_enabled=true" \
--var="appservice_web_enabled=false" \
+-var="appservice_api_enabled=false" \
+-var="appservice_web_enabled=true" \
 -var="linux_fx_version=${linux_fx_version}" \
 
 # mssql
