@@ -70,21 +70,30 @@ resource "azurerm_user_assigned_identity" "user" {
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
 }
 
+
+# This is the module call
 module "linux_function_app" {
   source  = "Azure/avm-res-web-site/azurerm"
-  version = "0.1.0"
-  # version = "0.14.2" # required terraform 1.9 above
+  # version = "0.1.0"
+  version = "0.9.0"  
+  # version = "0.14.2" # required terrform version 1.9
 
-  enable_telemetry = var.enable_telemetry 
+  enable_telemetry = var.enable_telemetry
+
   name                = "${module.naming.function_app.name}-${random_string.this.result}"  # module.naming.function_app.name_unique
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+
+  kind    = "functionapp"
   os_type = azurerm_service_plan.this.os_type
+
   service_plan_resource_id = azurerm_service_plan.this.id
-  storage_account_name       = azurerm_storage_account.this.name
-  storage_account_access_key = azurerm_storage_account.this.primary_access_key
+
+  function_app_storage_account_name       = azurerm_storage_account.this.name
+  function_app_storage_account_access_key = azurerm_storage_account.this.primary_access_key  
   public_network_access_enabled = false
-  virtual_network_subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
+  virtual_network_subnet_id  = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
+
   managed_identities = {
     # Identities can only be used with the Standard SKU
 
@@ -110,15 +119,48 @@ module "linux_function_app" {
     */
   }
 
-  lock = {
-    kind = "None"
-    /*
-    kind = "ReadOnly"
-    */
-    /*
-    kind = "CanNotDelete"
-    */
+
+  enable_application_insights = true
+
+  application_insights = {
+    name                  = module.naming.application_insights.name_unique
+    # resource_group_name   = azurerm_resource_group.this.0.name
+    # location              = azurerm_resource_group.this.0.location
+    resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
+    location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
+    application_type      = "web"
+    workspace_resource_id = try(local.remote.log_analytics_workspace.id, null) != null ? local.remote.log_analytics_workspace.id : var.log_analytics_workspace_id
+    tags        = merge(
+      local.global_settings.tags,
+      {
+        purpose = "linux function app application insight" 
+        project_code = try(local.global_settings.prefix, var.prefix) 
+        env = try(local.global_settings.environment, var.environment) 
+        zone = "project"
+        tier = "app"   
+      }
+    ) 
   }
+
+  site_config = var.site_config
+
+  # site_config = {
+  #   application_stack = {
+  #     container = {
+  #       docker = [
+  #         {
+  #           image_name        = "nginx"
+  #           image_tag         = "latest"
+  #           registry_url      = "docker.io"
+  #           # registry_username = "myusername"
+  #           # registry_password = "mypassword"
+  #         }
+  #       ]
+
+  #     }
+  #   }
+  # }
+
 
   private_endpoints = {
     # Use of private endpoints requires Standard SKU
@@ -130,17 +172,17 @@ module "linux_function_app" {
       subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id : var.ingress_subnet_id 
       inherit_lock = true
       inherit_tags = true
-      lock = {
-        /*
-        kind = "None"
-        */
-        /*
-        kind = "ReadOnly"
-        */
-        /*
-        kind = "CanNotDelete"
-        */
-      }
+      # lock = {
+      #   /*
+      #   kind = "None"
+      #   */
+      #   /*
+      #   kind = "ReadOnly"
+      #   */
+      #   /*
+      #   kind = "CanNotDelete"
+      #   */
+      # }
 
       role_assignments = {
         role_assignment_1 = {
@@ -149,9 +191,17 @@ module "linux_function_app" {
         }
       }
 
-      tags = {
-        webapp = "${module.naming.static_web_app.name_unique}-interfaces"
-      }
+
+      tags        = merge(
+        local.global_settings.tags,
+        {
+          purpose = "linux function app private endpoint" 
+          project_code = try(local.global_settings.prefix, var.prefix) 
+          env = try(local.global_settings.environment, var.environment) 
+          zone = "project"
+          tier = "app"   
+        }
+      ) 
 
     }
 
@@ -166,7 +216,7 @@ module "linux_function_app" {
 
   diagnostic_settings = {
     diagnostic_settings_1 = {
-      name                  = "dia_settings_1"
+      name                  = "${module.naming.monitor_diagnostic_setting.name_unique}-funcapp"
       workspace_resource_id = try(local.remote.log_analytics_workspace.id, null) != null ? local.remote.log_analytics_workspace.id : var.log_analytics_workspace_id 
     }
   }
@@ -183,5 +233,4 @@ module "linux_function_app" {
   ) 
 
 }
-
 
