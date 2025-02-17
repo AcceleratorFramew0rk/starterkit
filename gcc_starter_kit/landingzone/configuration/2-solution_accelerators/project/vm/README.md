@@ -10,6 +10,9 @@ echo $STG_NAME
 
 # deploy the solution accelerator
 
+# deploy one virtual machine - using default
+# -----------------------------------------------------------------------------------
+
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/vm
 
 terraform init  -reconfigure \
@@ -25,3 +28,27 @@ terraform plan \
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
+
+
+# deploy two virtual machines 
+# -----------------------------------------------------------------------------------
+
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/vm
+
+resource_names='["1","2"]'
+
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-appservice.tfstate"
+
+terraform plan \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}" \
+-var="vm_name=${vm_name}" 
+
+terraform apply -auto-approve \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}" \
+-var="resource_names=${vm_name}" 

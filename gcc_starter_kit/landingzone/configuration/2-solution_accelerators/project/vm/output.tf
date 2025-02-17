@@ -1,8 +1,5 @@
 output "resource" {
-  value       = {
-    id = module.virtualmachine1.virtual_machine.id
-    name = module.virtualmachine1.virtual_machine.name
-  }
+  value       = module.virtualmachine1 
   description = "The Azure virtual machine resource"
   sensitive = true  
 }

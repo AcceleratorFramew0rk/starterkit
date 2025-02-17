@@ -72,15 +72,17 @@ module "virtualmachine1" {
   source = "Azure/avm-res-compute-virtualmachine/azurerm"
   version = "0.14.0"
 
+  for_each                     = toset(var.resource_names)
+  
   enable_telemetry                       = var.enable_telemetry
   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location # azurerm_resource_group.this.0.location
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name # azurerm_resource_group.this.0.name
 
   virtualmachine_os_type                 = var.virtualmachine_os_type # default is "Windows"
   name = (
-    length(replace("${module.naming.virtual_machine.name}-${random_string.this.result}", "-", "")) > 15
-    ? substr(replace("${module.naming.virtual_machine.name}-${random_string.this.result}", "-", ""), 0, 15)
-    : replace("${module.naming.virtual_machine.name}-${random_string.this.result}", "-", "")
+    length(replace("${module.naming.virtual_machine.name}-${each.value}-${random_string.this.result}", "-", "")) > 15
+    ? substr(replace("${module.naming.virtual_machine.name}-${each.value}-${random_string.this.result}", "-", ""), 0, 15)
+    : replace("${module.naming.virtual_machine.name}-${each.value}-${random_string.this.result}", "-", "")
   )
   admin_credential_key_vault_resource_id = module.avm_res_keyvault_vault.resource_id # module.avm_res_keyvault_vault.resource.id
   virtualmachine_sku_size                = "Standard_D8s_v3" # "Standard_D8s_v3" 

@@ -17,6 +17,10 @@ echo $SUBSCRIPTION_ID
 
 # deploy the solution accelerator
 
+
+# Linux ASP with two app web and api
+# -----------------------------------------------------------------------------------
+
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/container_app
 
 terraform init  -reconfigure \
@@ -32,3 +36,50 @@ terraform plan \
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
+
+# Linux ASP with one app "web" in Publishing model = Container
+# -----------------------------------------------------------------------------------
+
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
+
+container_app_name='["web"]'
+
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-appservice.tfstate"
+
+terraform plan \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}" \
+-var="container_app_name=${appservice_name}" 
+
+terraform apply -auto-approve \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}" \
+-var="container_app_name=${appservice_name}" 
+
+# Linux ASP with two app "web" and "api" in WebIntranetSubnet and ContainerAppIntranetSubnet
+# -----------------------------------------------------------------------------------
+
+
+cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
+
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=2-solution-accelerators" \
+-backend-config="key=solution_accelerators-project-appservice.tfstate"
+
+terraform plan \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}" \
+-var="subnet_name=ContainerAppIntranetSubnet" \
+-var="ingress_subnet_name=WebIntranetSubnet" 
+
+terraform apply -auto-approve \
+-var="storage_account_name=${STG_NAME}" \
+-var="resource_group_name=${RG_NAME}" \
+-var="subnet_name=ContainerAppIntranetSubnet" \
+-var="ingress_subnet_name=WebIntranetSubnet" 

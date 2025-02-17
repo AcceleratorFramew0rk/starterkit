@@ -13,9 +13,12 @@ resource "azurerm_container_app_environment" "this" {
       ? substr(replace("${module.naming.container_app_environment.name}-${random_string.this.result}", "-", ""), 0, 16)
       : replace("${module.naming.container_app_environment.name}-${random_string.this.result}", "-", "")
     )
-    workload_profile_type = "D16" # Possible values include Consumption, D4, D8, D16, D32, E4, E8, E16 and E32
+    
+    # ** IMPORTANT ** workload_profile_type = "D16" # Possible values include Consumption, D4, D8, D16, D32, E4, E8, E16 and E32
+    workload_profile_type = var.workload_profile_type # "D16" # Possible values include Consumption, D4, D8, D16, D32, E4, E8, E16 and E32
 
-    maximum_count = 10 # - (Required) The maximum number of instances of workload profile that can be deployed in the Container App Environment.
+
+    maximum_count = 3 # - (Required) The maximum number of instances of workload profile that can be deployed in the Container App Environment.
     minimum_count = 1 # - (Required) The minimum number of instances of workload profile that can be deployed in the Container App Environment.
 
   }
@@ -27,7 +30,7 @@ resource "azurerm_container_app_environment" "this" {
       project_code = try(local.global_settings.prefix, var.prefix) 
       env = try(local.global_settings.environment, var.environment) 
       zone = "project"
-      tier = "db"   
+      tier = "app"   
     }
   )   
 }
@@ -42,9 +45,16 @@ module "private_dns_zones" {
   enable_telemetry      = true
   resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.azurecontainerapps.io"
-  tags         = {
-      environment = "dev"
+  tags = merge(
+    local.global_settings.tags,
+    {
+      purpose = "container app environment private dns zone" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
     }
+  ) 
   virtual_network_links = {
       vnetlink1 = {
         vnetlinkname     = "vnetlink1"
@@ -65,37 +75,46 @@ module "private_endpoint" {
   location                       = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   resource_group_name            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   subnet_id                      = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id : var.ingress_subnet_id 
-  tags                           = {
-      environment = "dev"
+  tags = merge(
+    local.global_settings.tags,
+    {
+      purpose = "container app environment private endpoint" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
     }
+  ) 
   private_connection_resource_id = azurerm_container_app_environment.this.id
   is_manual_connection           = false
-  subresource_name               = "managedEnvironments" # "containerappsenvironment"
+  subresource_name               = "managedEnvironments" 
   private_dns_zone_group_name    = "default" 
   private_dns_zone_group_ids     = [module.private_dns_zones[0].resource.id] 
 }
 
-module "containerapp_frontend" {
+module "containerapp" {
   source  = "Azure/avm-res-app-containerapp/azurerm"
   version = "0.3.0"
 
+  for_each                     = toset(var.resource_names)
+  
   container_app_environment_resource_id = azurerm_container_app_environment.this.id
-  name                                  = "${module.naming.container_app.name}-${random_string.this.result}1" # local.counting_app_name
+  name                                  = "${module.naming.container_app.name}-${each.value}-${random_string.this.result}1" # local.counting_app_name
   resource_group_name                   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   revision_mode                         = "Single"
   template = {
     containers = [
       {
-        name   = "frontend${random_string.this.result}" # "frontend"
+        name   = "${each.value}${random_string.this.result}" # "frontend"
         memory = var.memory # "0.5Gi"
         cpu    = var.cpu # 0.25
         image  = var.frontend_image # "docker.io/hashicorp/counting-service:0.0.2"
-        env = [
-          {
-            name  = "PORT"
-            value = "9001"
-          }
-        ]
+        # env = [
+        #   {
+        #     name  = "PORT"
+        #     value = "900${each.value}"
+        #   }
+        # ]
       },
     ]
   }
@@ -108,48 +127,16 @@ module "containerapp_frontend" {
       percentage      = 100
     }]
   }  
-}
 
-module "containerapp_backend" {
-  source  = "Azure/avm-res-app-containerapp/azurerm"
-  version = "0.3.0"
+  tags = merge(
+    local.global_settings.tags,
+    {
+      purpose = "container app - ${each.value}" 
+      project_code = try(local.global_settings.prefix, var.prefix) 
+      env = try(local.global_settings.environment, var.environment) 
+      zone = "project"
+      tier = "app"   
+    }
+  ) 
 
-  container_app_environment_resource_id = azurerm_container_app_environment.this.id
-  name                                  = "${module.naming.container_app.name}-${random_string.this.result}2" #   local.dashboard_app_name
-  resource_group_name                   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
-  revision_mode                         = "Single"
-  template = {
-    containers = [
-      {
-        name   = "backend${random_string.this.result}" # "backend"
-        memory = var.memory # "1Gi"
-        cpu    = var.cpu # 0.5
-        image  = var.backend_image # "docker.io/hashicorp/dashboard-service:0.0.4"
-        env = [
-          {
-            name  = "PORT"
-            value = "8080"
-          },
-          # {
-          #   name  = "COUNTING_SERVICE_URL"
-          #   value = "http://${local.counting_app_name}"
-          # }
-        ]
-      },
-    ]
-  }
-
-  ingress = {
-    allow_insecure_connections = false
-    target_port                = 8080
-    external_enabled           = true
-
-    traffic_weight = [{
-      latest_revision = true
-      percentage      = 100
-    }]
-  }
-  managed_identities = {
-    system_assigned = true
-  }
 }

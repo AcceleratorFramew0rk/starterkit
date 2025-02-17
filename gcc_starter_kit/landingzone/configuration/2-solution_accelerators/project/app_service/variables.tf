@@ -73,7 +73,7 @@ variable "dotnet_framework_version" {
 #   default = true
 # }
 
-variable "appservice_name" {
+variable "resource_names" {
   description = "List of App Service names"
   type        = list(string)
   default     = ["web", "api"]
