@@ -93,12 +93,10 @@ terraform plan \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}" \
 -var="kind=Windows" \
--var="dotnet_framework_version=v6.0" \
--var="linux_fx_version=null" 
+-var="dotnet_framework_version=v6.0" 
 
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}" \
 -var="kind=Windows" \
--var="dotnet_framework_version=v6.0" \
--var="linux_fx_version=null" 
+-var="dotnet_framework_version=v6.0" 

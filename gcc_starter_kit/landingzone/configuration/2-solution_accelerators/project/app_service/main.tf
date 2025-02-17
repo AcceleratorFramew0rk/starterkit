@@ -66,7 +66,7 @@ module "appservice" {
     # always connect to the runtime with "az webapp ssh" or output the value
     # of process.version from a running app because you might not get the
     # version you expect
-    linux_fx_version = var.linux_fx_version # "NODE:20-lts" # "NODE|12-lts"
+    linux_fx_version = try(var.kind, "Linux") == "Linux" ? var.linux_fx_version : null # try(var.linux_fx_version, null) # "NODE:20-lts" # "NODE|12-lts"
     dotnet_framework_version = var.dotnet_framework_version # "v2.0" # "v4.0" # "v5.0" # "v6.0"
   }
 
