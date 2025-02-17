@@ -34,7 +34,7 @@ terraform apply -auto-approve \
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
 
 linux_fx_version="DOCKER|nginx"
-appservice_name='["web"]'
+resource_names='["web"]'
 
 terraform init  -reconfigure \
 -backend-config="resource_group_name=${RG_NAME}" \
@@ -46,13 +46,13 @@ terraform plan \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}" \
 -var="linux_fx_version=${linux_fx_version}" \
--var="appservice_name=${appservice_name}" 
+-var="resource_names=${resource_names}" 
 
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}" \
 -var="linux_fx_version=${linux_fx_version}"  \
--var="appservice_name=${appservice_name}" 
+-var="resource_names=${resource_names}" 
 
 # Linux ASP with two app service "web" and "api" in WebIntranetSubnet and AppServiceIntranetSubnet
 # -----------------------------------------------------------------------------------
