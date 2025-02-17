@@ -6,6 +6,7 @@
 
 #### **New Features:**
 - add multiple resouce names for app service, container app, container instance, vm
+- add container as Publishing model for app service and linux function app
 
 #### **Enhancements:**
 - *No Enhancements added in this release.*
