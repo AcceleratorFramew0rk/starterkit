@@ -42,7 +42,7 @@ terraform init  -reconfigure \
 -backend-config="resource_group_name=${RG_NAME}" \
 -backend-config="storage_account_name=${STG_NAME}" \
 -backend-config="container_name=2-solution-accelerators" \
--backend-config="key=solution_accelerators-project-appservice.tfstate"
+-backend-config="key=solution_accelerators-project-containerinstance.tfstate"
 
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \

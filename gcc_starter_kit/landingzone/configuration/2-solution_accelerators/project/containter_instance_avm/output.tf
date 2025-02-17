@@ -1,9 +1,7 @@
 output "resource" {
-  value       = {
-    id = module.container_group1.resource_id
-    name = module.container_group1.name
-  }
+  value       =  module.container_group1 
   description = "The Azure containter instance resource"
+  sensitive = true  
 }
 
 output "global_settings" {

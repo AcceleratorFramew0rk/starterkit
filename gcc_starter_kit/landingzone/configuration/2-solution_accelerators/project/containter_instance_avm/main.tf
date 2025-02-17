@@ -4,7 +4,9 @@ module "container_group1" {
   source  = "Azure/avm-res-containerinstance-containergroup/azurerm"
   version = "0.1.0"
 
-  name                = "${module.naming.container_group.name}-${random_string.this.result}" # module.naming.container_group.name_unique
+  for_each                     = toset(var.resource_names)
+
+  name                = "${module.naming.container_group.name}-${each.value}-${random_string.this.result}" # module.naming.container_group.name_unique
   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   os_type             = "Linux"
@@ -21,7 +23,7 @@ module "container_group1" {
   enable_telemetry = var.enable_telemetry
   containers = {
     container1 = {
-      name   = "container1"
+      name   = "container-${each.value}"
       image  = try(var.image, null) == null ? "nginx:latest" : var.image  
       cpu    = try(var.cpu, 1)
       memory = try(var.memory, 2)
@@ -93,7 +95,7 @@ module "container_group1" {
   tags        = merge(
     local.global_settings.tags,
     {
-      purpose = "project container instance" 
+      purpose = "container instance - ${each.value}" 
       project_code = try(local.global_settings.prefix, var.prefix) 
       env = try(local.global_settings.environment, var.environment) 
       zone = "app"
