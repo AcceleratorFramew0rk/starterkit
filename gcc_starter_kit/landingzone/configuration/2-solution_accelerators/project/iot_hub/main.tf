@@ -116,7 +116,7 @@ resource "azurerm_iothub_shared_access_policy" "this" {
 
 # Create IoTHub dps
 resource "azurerm_iothub_dps" "this" {
-  name                = "${module.naming.iothub.name}dps-${random_string.this.result}"
+  name                = "${module.naming.iothub.name}-dps-${random_string.this.result}"
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
   allocation_policy   = "Hashed"
