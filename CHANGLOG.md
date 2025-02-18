@@ -1,3 +1,19 @@
+### **Version 0.0.15 (TBD)**
+#### **Compatibility:**
+- **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.2`
+- **Azurerm:** Version 3.85
+- **AAF:** Version 0.0.5
+
+#### **New Features:**
+- add notification hub solution accelerator
+
+#### **Enhancements:**
+- *No Enhancements added in this release.*
+
+#### **Bug Fixes:**
+- *No Bug Fixes added in this release.*
+
+---
 ### **Version 0.0.14 (17 Feb 2025)**
 #### **Compatibility:**
 - **AAF AVM SDE:** `gccstarterkit/gccstarterkit-avm-sde:0.2`
