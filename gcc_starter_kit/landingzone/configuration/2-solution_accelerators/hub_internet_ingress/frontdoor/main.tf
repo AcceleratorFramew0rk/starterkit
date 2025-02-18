@@ -3,7 +3,7 @@ module "cdn_frontdoor" {
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/cdn/terraform-azurerm-cdn-frontdoor"
 
   client_name = "${module.naming.frontdoor .name}-${random_string.this.result}"  # var.client_name
-  environment = var.environment
+  environment = try(local.global_settings.environment, var.environment) # var.environment
   stack       = var.stack
 
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
