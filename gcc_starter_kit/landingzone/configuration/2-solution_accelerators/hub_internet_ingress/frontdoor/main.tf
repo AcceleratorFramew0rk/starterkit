@@ -2,7 +2,7 @@ module "cdn_frontdoor" {
   # source = "./../../../../../../modules/terraform-azurerm-aaf/modules/cdn/terraform-azurerm-cdn-frontdoor"
   source = "AcceleratorFramew0rk/aaf/azurerm//modules/cdn/terraform-azurerm-cdn-frontdoor"
 
-  client_name = "${module.naming.frontdoor .name}-${random_string.this.result}"  # var.client_name
+  client_name = "${module.naming.frontdoor.name}-${random_string.this.result}"  # var.client_name
   environment = try(local.global_settings.environment, var.environment) # var.environment
   stack       = var.stack
 
