@@ -44,13 +44,21 @@ terraform init  -reconfigure \
 -backend-config="container_name=2-solution-accelerators" \
 -backend-config="key=solution_accelerators-project-keyvault.tfstate"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+  
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
+
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
 
 # app service
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/app_service
@@ -68,17 +76,26 @@ terraform init  -reconfigure \
 -backend-config="container_name=2-solution-accelerators" \
 -backend-config="key=solution_accelerators-project-appservice.tfstate"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}" \
 -var="linux_fx_version=${linux_fx_version}" \
 -var="resource_names=${resource_names}" 
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}" \
 -var="linux_fx_version=${linux_fx_version}"  \
 -var="resource_names=${resource_names}" 
+
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
 
 
 # mssql
@@ -90,13 +107,22 @@ terraform init  -reconfigure \
 -backend-config="container_name=2-solution-accelerators" \
 -backend-config="key=solution_accelerators-project-mssql.tfstate"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
+
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
 
 
 # storage account
@@ -108,13 +134,22 @@ terraform init  -reconfigure \
 -backend-config="container_name=2-solution-accelerators" \
 -backend-config="key=solution_accelerators-project-storageaccount.tfstate"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
+
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
 
 # apim
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/apim
@@ -125,13 +160,22 @@ terraform init  -reconfigure \
 -backend-config="container_name=2-solution-accelerators" \
 -backend-config="key=solution_accelerators-project-apim.tfstate"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
+
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
 
 
 # linux function app
@@ -173,15 +217,24 @@ terraform init  -reconfigure \
 -backend-config="container_name=2-solution-accelerators" \
 -backend-config="key=solution_accelerators-project-linuxfunctionapp.tfstate"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}" \
 -var "site_config=${SITE_CONFIG_JSON}"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
--var="resource_group_name=${RG_NAME}"
+-var="resource_group_name=${RG_NAME}" \
 -var "site_config=${SITE_CONFIG_JSON}"
+
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
 
 
 # iot hub
@@ -193,13 +246,22 @@ terraform init  -reconfigure \
 -backend-config="container_name=2-solution-accelerators" \
 -backend-config="key=solution_accelerators-project-iothub.tfstate"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
+
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
 
 # # event hubs
 # cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/event_hubs
@@ -210,13 +272,22 @@ terraform apply -auto-approve \
 # -backend-config="container_name=2-solution-accelerators" \
 # -backend-config="key=solution_accelerators-project-eventhubs.tfstate"
 
+# [ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 # terraform plan \
 # -var="storage_account_name=${STG_NAME}" \
 # -var="resource_group_name=${RG_NAME}"
 
+# [ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 # terraform apply -auto-approve \
 # -var="storage_account_name=${STG_NAME}" \
 # -var="resource_group_name=${RG_NAME}"
+
+# [ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
 
 
 
@@ -229,14 +300,23 @@ terraform init  -reconfigure \
 -backend-config="container_name=2-solution-accelerators" \
 -backend-config="key=solution_accelerators-project-dataexplorer.tfstate"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
+
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
 
 
 
@@ -249,13 +329,22 @@ terraform init  -reconfigure \
 -backend-config="container_name=2-solution-accelerators" \
 -backend-config="key=solution_accelerators-project-vm.tfstate"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
+
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
 
 
 
@@ -269,13 +358,22 @@ terraform init  -reconfigure \
 -backend-config="container_name=2-solution-accelerators" \
 -backend-config="key=solution_accelerators-project-streamanalytics.tfstate"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform plan \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
 
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
+
 terraform apply -auto-approve \
 -var="storage_account_name=${STG_NAME}" \
 -var="resource_group_name=${RG_NAME}"
+
+[ $? -ne 0 ] && echo -e "\e[31mTerraform failed. Exiting.\e[0m" && exit 1
+
 
 # # # Approved managed endpoint via Azure CLI
 # -----------------------------------------------
