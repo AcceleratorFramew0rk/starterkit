@@ -114,7 +114,7 @@ module "appservice" {
       frequency_interval       = 1
       frequency_unit           = "Day"
       keep_at_least_one_backup = true
-      retention_period_in_days = 1
+      retention_period_in_days = 7
       start_time               = "2023-11-08T00:00:00Z"
     }
   }
