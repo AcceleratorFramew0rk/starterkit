@@ -2,8 +2,6 @@ module "private_dns_zones" {
   source                = "Azure/avm-res-network-privatednszone/azurerm"   
   version = "0.1.2" 
 
-  # count = try(local.keyvault.id, null) == null ? 1 : 0 
-
   enable_telemetry      = true
   resource_group_name   = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
   domain_name           = "privatelink.database.windows.net" 
@@ -72,6 +70,13 @@ locals {
         retention_days           = 1
         backup_interval_in_hours = 24
       }
+
+      long_term_retention_policy = {
+        weekly_retention  = "P4W"   # 4 weeks
+        monthly_retention = "P12M"  # 12 months
+        yearly_retention  = "P7Y"   # 7 years
+        week_of_year      = 1       # Adjust if needed
+      }      
     }
   }
 }
@@ -114,3 +119,19 @@ module "sql_server" {
   ]
 }
 
+# https://github.com/hashicorp/terraform-provider-azurerm/issues/19971
+# Enable express Vulnerability assessment on Azure SQL Server using AzAPI provider
+# --------------------------------------------------------------------------------------------
+resource "azapi_update_resource" "this" {
+  type = "Microsoft.Sql/servers/sqlVulnerabilityAssessments@2022-05-01-preview"
+  name = "default"
+  parent_id = module.sql_server.resource.id 
+  body = jsonencode({
+    properties = {
+      state = "Enabled"
+    }
+  })
+  depends_on = [
+    module.sql_server
+  ]  
+}
