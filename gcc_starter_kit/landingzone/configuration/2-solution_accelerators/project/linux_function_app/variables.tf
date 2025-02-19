@@ -116,9 +116,9 @@ variable "site_config" {
 
         docker = [
           {
-            image_name        = "nginx"
-            image_tag         = "latest"
-            registry_url      = "docker.io"
+            image_name        = "azure-functions/dotnet"
+            image_tag         = "4-appservice-quickstart"
+            registry_url      = "mcr.microsoft.com"
             # registry_username = "myusername"
             # registry_password = "mypassword"
           }
