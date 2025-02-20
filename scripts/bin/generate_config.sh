@@ -59,6 +59,8 @@ if [[ "$LANDINGZONE_TYPE" == "application"  || "$LANDINGZONE_TYPE" == "1" ]]; th
 cat <<EOF > ./../config/input.yaml
 subscription_id: "${SUB_ID}"
 prefix: "${PREFIX}"
+is_prefix: false
+is_single_resource_group: false
 environment: "${ENVIRONMENT}"
 vnets:
   hub_ingress_internet: 
@@ -89,6 +91,8 @@ else
 cat <<EOF > ./../config/input.yaml
 subscription_id: "${SUB_ID}"
 prefix: "${PREFIX}"
+is_prefix: false
+is_single_resource_group: false
 environment: "${ENVIRONMENT}"
 vnets:
   hub_ingress_internet: 
