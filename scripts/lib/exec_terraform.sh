@@ -67,7 +67,7 @@ exec_terraform() {
 
 # # perform copy
 # echo "copy output_config.yaml to working directory"
-# cp "./output_config.yaml" "/tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml"
+# cp "./output_config.yaml" "/tf/avm/templates/landingzone/configuration/0-launchpad/scripts/config.yaml"
 
 
 #------------------------------------------------------------------------
@@ -106,7 +106,7 @@ USER_NAME=$(echo "$ACCOUNT_INFO" | jq ".user.name" -r)
 SUBSCRIPTION_ID="${SUB_ID}" 
 
 # get resource group and storage account name
-PREFIX=$(yq  -r '.prefix' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
+PREFIX=$(yq  -r '.prefix' /tf/avm/templates/landingzone/configuration/0-launchpad/scripts/config.yaml)
 RG_NAME="${PREFIX}-rg-launchpad"
 STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '${PREFIX}stgtfstate')].[name]" -o tsv 2>/dev/null | head -n 1)
 
@@ -129,11 +129,11 @@ export ARM_SUBSCRIPTION_ID="${SUBSCRIPTION_ID}"
 
 if [[ -z "$STG_NAME" ]]; then
     # execute the import script
-    cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad
+    cd /tf/avm/templates/landingzone/configuration/0-launchpad/launchpad
     ./scripts/import.sh
 else
     # execute the import script    
-    cd /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/launchpad
+    cd /tf/avm/templates/landingzone/configuration/0-launchpad/launchpad
     ./scripts/import_update.sh
 fi
 
@@ -148,7 +148,7 @@ cd /tf/avm/scripts
 # # #------------------------------------------------------------------------
 # # # get configuration file path, resource group name, storage account name, subscription id, subscription name
 # # #------------------------------------------------------------------------
-PREFIX=$(yq  -r '.prefix' /tf/avm/gcc_starter_kit/landingzone/configuration/0-launchpad/scripts/config.yaml)
+PREFIX=$(yq  -r '.prefix' /tf/avm/templates/landingzone/configuration/0-launchpad/scripts/config.yaml)
 RG_NAME="${PREFIX}-rg-launchpad"
 STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '${PREFIX}stgtfstate')].[name]" -o tsv 2>/dev/null | head -n 1)
 if [[ -z "$STG_NAME" ]]; then
@@ -183,17 +183,17 @@ echo "Resource Group Name: ${RG_NAME}"
 
 # spoke project 
 backend_config_key="network-spoke-project"
-working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/application/networking_spoke_project"
+working_path="/tf/avm/templates/landingzone/configuration/1-landingzones/application/networking_spoke_project"
 exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "1-landingzones"
 
 # spoke devops 
 backend_config_key="network-spoke-devops"
-working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/application/networking_spoke_devops"
+working_path="/tf/avm/templates/landingzone/configuration/1-landingzones/application/networking_spoke_devops"
 exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "1-landingzones" 
 
 # peering project-devops
 backend_config_key="network-peering-project-devops"
-working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/1-landingzones/application/networking_peering_project_devops"
+working_path="/tf/avm/templates/landingzone/configuration/1-landingzones/application/networking_peering_project_devops"
 exec_terraform $backend_config_key $working_path $RG_NAME $STG_NAME "1-landingzones" 
 
 #------------------------------------------------------------------------
@@ -228,7 +228,7 @@ for section in $(yq 'keys | .[]' "$yaml_file" -r); do
       echo "processing $key: $value"
       clean_key="${key//_/}"
       backend_config_key="solution-accelerators-${section}-${clean_key}"
-      working_path="/tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/${section}/${key}"
+      working_path="/tf/avm/templates/landingzone/configuration/2-solution_accelerators/${section}/${key}"
       echo "backend_config_key: $backend_config_key"
       echo "working_path: $working_path"
 
