@@ -184,6 +184,8 @@ cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/pro
 # Define the site_config JSON as a HEREDOC
 SITE_CONFIG_JSON=$(cat <<EOF
 {
+  "container_registry_use_managed_identity": true
+  "always_on": true
   "application_stack": {
     "container": {
       "dotnet_version": null,
@@ -200,9 +202,9 @@ SITE_CONFIG_JSON=$(cat <<EOF
       "use_dotnet_isolated_runtime": null,
       "docker": [
         {
-          "image_name": "nginx",
-          "image_tag": "latest",
-          "registry_url": "docker.io"
+          "image_name": "azure-functions/dotnet",
+          "image_tag": "4-appservice-quickstart",
+          "registry_url": "mcr.microsoft.com"
         }
       ]
     }
@@ -210,7 +212,6 @@ SITE_CONFIG_JSON=$(cat <<EOF
 }
 EOF
 )
-
 terraform init  -reconfigure \
 -backend-config="resource_group_name=${RG_NAME}" \
 -backend-config="storage_account_name=${STG_NAME}" \

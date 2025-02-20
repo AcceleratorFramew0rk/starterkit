@@ -63,6 +63,8 @@ variable "custom_image_name" {
 variable "site_config" {
   description = "Site configuration for the App Service"
   type = object({
+    container_registry_use_managed_identity = optional(bool)
+    always_on  = optional(bool)
     application_stack = optional(map(object({
 
     # dotnet_version - (Optional) The version of .NET to use. Possible values include 3.1, 6.0, 7.0, 8.0 and 9.0.
@@ -98,6 +100,8 @@ variable "site_config" {
     })), {})
   })
   default = {
+    container_registry_use_managed_identity = true
+    always_on  = true
     application_stack = {
       container = {
         # only one of the following can be set e.g. either docker or one of the other application stacks e.g. node_version

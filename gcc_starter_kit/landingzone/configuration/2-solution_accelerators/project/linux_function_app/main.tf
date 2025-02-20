@@ -3,7 +3,6 @@ module "private_dns_zones" {
   source                = "Azure/avm-res-network-privatednszone/azurerm"   
   version = "0.1.2" 
 
-  # count = var.private_dns_zones_enabled ? 1 : 0
   count = try(local.privatednszone.id, null) == null ? 1 : 0   
 
   enable_telemetry      = true
@@ -50,8 +49,7 @@ resource "azurerm_storage_account" "this" {
   account_replication_type = "LRS"
   account_tier             = "Standard"
   location                 = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
-  # name                     = module.naming.storage_account.name_unique
-  name = replace(replace(module.naming.storage_account.name_unique, "-", ""), "_", "")
+  name = replace(replace("${module.naming.storage_account.name_unique}${random_string.this.result}fa", "-", ""), "_", "")
   resource_group_name      = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
 }
 
@@ -86,46 +84,26 @@ module "linux_function_app" {
 
   kind    = "functionapp"
   os_type = azurerm_service_plan.this.os_type
-
   service_plan_resource_id = azurerm_service_plan.this.id
-
   function_app_storage_account_name       = azurerm_storage_account.this.name
   function_app_storage_account_access_key = azurerm_storage_account.this.primary_access_key  
   public_network_access_enabled = false
   virtual_network_subnet_id  = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.subnet_name].resource.id : var.subnet_id 
+  https_only                 = true
+
 
   managed_identities = {
-    # Identities can only be used with the Standard SKU
-
-    /*
-    system = {
-      identity_type = "SystemAssigned"
-      identity_ids = [ azurerm_user_assigned_identity.system.id ]
-    }
-    */
-
-    user = {
-      identity_type = "UserAssigned"
-      identity_ids  = [azurerm_user_assigned_identity.user.id]
-    }
-
-    /*
-    system_and_user = {
-      identity_type = "SystemAssigned, UserAssigned"
-      identity_resource_ids = [
-        azurerm_user_assigned_identity.user.id
-      ]
-    }
-    */
+    # Identities can only be used with the Standard SKU    
+    system_assigned = true
+    user_assigned_resource_ids = [
+      azurerm_user_assigned_identity.user.id
+    ]
   }
-
 
   enable_application_insights = true
 
   application_insights = {
     name                  = module.naming.application_insights.name_unique
-    # resource_group_name   = azurerm_resource_group.this.0.name
-    # location              = azurerm_resource_group.this.0.location
     resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
     location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location
     application_type      = "web"
@@ -144,30 +122,33 @@ module "linux_function_app" {
 
   site_config = var.site_config
 
-  # # example:
-  # site_config = {
-  #   application_stack = {
-  #     container = {
-  #       docker = [
-  #         {
-  #           image_name        = "nginx"
-  #           image_tag         = "latest"
-  #           registry_url      = "docker.io"
-  #           # registry_username = "myusername"
-  #           # registry_password = "mypassword"
-  #         }
-  #       ]
+  functions_extension_version = "~4"
 
-  #     }
-  #   }
-  # }
-
+    # "APPINSIGHTS_INSTRUMENTATIONKEY"                             = azurerm_application_insights.main.instrumentation_key
+    # "APPLICATIONINSIGHTS_CONNECTION_STRING"                      = azurerm_application_insights.main.connection_string
+    # "STORAGE_ACCOUNT_CONNECTION_STRING"                          = "@Microsoft.KeyVault(VaultName=${var.key_vault_name};SecretName=${var.storage_account_connection_string_secret_name})"
+    # "STORAGE_CONTAINER_NAME"                                     = "@Microsoft.KeyVault(VaultName=${var.key_vault_name};SecretName=${var.storage_container_secret_name})"
+    # "DOCKER_REGISTRY_SERVER_URL"                                 = azurerm_container_registry.main.login_server
+    # "DOCKER_CUSTOM_IMAGE_NAME"                                   = "DOCKER|${azurerm_container_registry.main.login_server}/${var.IMAGE_NAME}:${var.image_tag}"
+  app_settings = {
+    "AzureWebJobsStorage"                                        = azurerm_storage_account.this.primary_connection_string
+    "AzureWebJobsDashboard"                                      = azurerm_storage_account.this.primary_connection_string
+    "WEBSITE_LOGGING_LOG_LEVEL"                                  = "Information"
+    "AzureFunctionsJobHost__Logging__Console__IsEnabled"         = "true"
+    "AzureFunctionsJobHost__Logging__Console__LogLevel__Default" = "Information"
+    "SCALE_CONTROLLER_LOGGING_ENABLED"                           = "AppInsights:Verbose"
+    "DOCKER_ENABLE_CI"                                           = true
+    "FUNCTIONS_EXTENSION_VERSION"                                = "~4"
+    "DOCKER_REGISTRY_SERVER_USERNAME"                            = null
+    "DOCKER_REGISTRY_SERVER_PASSWORD"                            = null
+    "WEBSITE_WEBDEPLOY_USE_SCM"                                  = true
+    "WEBSITES_ENABLE_APP_SERVICE_STORAGE"                        = false
+  }
 
   private_endpoints = {
     # Use of private endpoints requires Standard SKU
     primary = {
       name                          = "primary-interfaces"
-      # private_dns_zone_resource_ids =  [try(var.private_dns_zones_id, null) != null ? var.private_dns_zones_id : module.private_dns_zones[0].resource.id] 
       private_dns_zone_resource_ids =  [try(local.privatednszone.id, null) == null ? module.private_dns_zones[0].resource.id : local.privatednszone.id ]
 
       subnet_resource_id            = try(local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id, null) != null ? local.remote.networking.virtual_networks.spoke_project.virtual_subnets[var.ingress_subnet_name].resource.id : var.ingress_subnet_id 

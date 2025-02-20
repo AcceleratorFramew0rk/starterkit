@@ -30,11 +30,16 @@ terraform apply -auto-approve \
 
 # deploy a linux function app - publishing model = container
 # mcr.microsoft.com/azure-functions/dotnet:4-appservice-quickstart
+
+# mcr.microsoft.com/azure-functions/dotnet:4-appservice-quickstart
+
 cd /tf/avm/gcc_starter_kit/landingzone/configuration/2-solution_accelerators/project/linux_function_app
 
 # Define the site_config JSON as a HEREDOC
 SITE_CONFIG_JSON=$(cat <<EOF
 {
+  "container_registry_use_managed_identity": true
+  "always_on": true
   "application_stack": {
     "container": {
       "dotnet_version": null,
