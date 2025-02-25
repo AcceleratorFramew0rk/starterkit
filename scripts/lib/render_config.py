@@ -239,7 +239,8 @@ def get_config(input, solution_accelerator, landingzone_type):
             # Retrieve the value of ACR
             count = 1
   
-            current_value = solution_accelerator_data.get("project", {}).get("acr", None)
+            # current_value = solution_accelerator_data.get("project", {}).get("acr", None)
+            current_value = solution_accelerator_data.get("project", {}).get("acr") or solution_accelerator_data.get("project", {}).get("acr_avm")
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if ServiceSubnet_address_prefixes == "":
@@ -266,7 +267,7 @@ def get_config(input, solution_accelerator, landingzone_type):
                     UserNodePoolIntranetSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("apim", None)
+            current_value = solution_accelerator_data.get("project", {}).get("apim", None) or solution_accelerator_data.get("project", {}).get("apim_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if ApiSubnet_address_prefixes == "":
@@ -303,112 +304,112 @@ def get_config(input, solution_accelerator, landingzone_type):
                     WebSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("azure_open_ai", None)
+            current_value = solution_accelerator_data.get("project", {}).get("azure_open_ai", None) or solution_accelerator_data.get("project", {}).get("azure_open_ai_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if AiSubnet_address_prefixes == "":
                     AiSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("container_instance", None)
+            current_value = solution_accelerator_data.get("project", {}).get("container_instance", None) or solution_accelerator_data.get("project", {}).get("container_instance_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if CiSubnet_address_prefixes == "":
                     CiSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("cosmos_db_mongo", None)
+            current_value = solution_accelerator_data.get("project", {}).get("cosmos_db_mongo", None) or solution_accelerator_data.get("project", {}).get("cosmos_db_mongo_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if CosmosDbSubnet_address_prefixes == "":
                     CosmosDbSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("cosmos_db_sql", None)
+            current_value = solution_accelerator_data.get("project", {}).get("cosmos_db_sql", None) or solution_accelerator_data.get("project", {}).get("cosmos_db_sql_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if CosmosDbSubnet_address_prefixes == "":
                     CosmosDbSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("data_explorer", None)
+            current_value = solution_accelerator_data.get("project", {}).get("data_explorer", None) or solution_accelerator_data.get("project", {}).get("data_explorer_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if ServiceSubnet_address_prefixes == "":
                     ServiceSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("event_hubs", None)
+            current_value = solution_accelerator_data.get("project", {}).get("event_hubs", None) or solution_accelerator_data.get("project", {}).get("event_hubs_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if ServiceSubnet_address_prefixes == "":
                     ServiceSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("iot_hub", None)
+            current_value = solution_accelerator_data.get("project", {}).get("iot_hub", None) or solution_accelerator_data.get("project", {}).get("iot_hub_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if ServiceSubnet_address_prefixes == "":
                     ServiceSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("keyvault", None)
+            current_value = solution_accelerator_data.get("project", {}).get("keyvault", None) or solution_accelerator_data.get("project", {}).get("keyvault_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if ServiceSubnet_address_prefixes == "":
                     ServiceSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("linux_function_app", None)
+            current_value = solution_accelerator_data.get("project", {}).get("linux_function_app", None) or solution_accelerator_data.get("project", {}).get("linux_function_app_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if FunctionAppSubnet_address_prefixes == "":
                     FunctionAppSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("logic_app", None)
+            current_value = solution_accelerator_data.get("project", {}).get("logic_app", None) or solution_accelerator_data.get("project", {}).get("logic_app_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if LogicAppSubnet_address_prefixes == "":
                     LogicAppSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("mssql", None)
+            current_value = solution_accelerator_data.get("project", {}).get("mssql", None) or solution_accelerator_data.get("project", {}).get("mssql_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if DbSubnet_address_prefixes == "":
                     DbSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("redis_cache", None)
+            current_value = solution_accelerator_data.get("project", {}).get("redis_cache", None) or solution_accelerator_data.get("project", {}).get("redis_cache_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if RedisCacheSubnet_address_prefixes == "":
                     RedisCacheSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("search_service", None)
+            current_value = solution_accelerator_data.get("project", {}).get("search_service", None) or solution_accelerator_data.get("project", {}).get("search_service_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if ServiceSubnet_address_prefixes == "":
                     ServiceSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("service_bus", None)
+            current_value = solution_accelerator_data.get("project", {}).get("service_bus", None) or solution_accelerator_data.get("project", {}).get("service_bus_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if ServiceBusSubnet_address_prefixes == "":
                     ServiceBusSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("storage_account", None)
+            current_value = solution_accelerator_data.get("project", {}).get("storage_account", None) or solution_accelerator_data.get("project", {}).get("storage_account_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if ServiceSubnet_address_prefixes == "":
                     ServiceSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("stream_analytics", None)
+            current_value = solution_accelerator_data.get("project", {}).get("stream_analytics", None) or solution_accelerator_data.get("project", {}).get("stream_analytics_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if ServiceSubnet_address_prefixes == "":
@@ -422,7 +423,7 @@ def get_config(input, solution_accelerator, landingzone_type):
                     AppSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("container_app", None)
+            current_value = solution_accelerator_data.get("project", {}).get("container_app", None) or solution_accelerator_data.get("project", {}).get("container_app_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if ContainerAppSubnet_address_prefixes == "":
@@ -432,7 +433,7 @@ def get_config(input, solution_accelerator, landingzone_type):
                     WebSubnet_address_prefixes = str(subnets[count])
                     count = count + 1
 
-            current_value = solution_accelerator_data.get("project", {}).get("container_app_intranet", None)
+            current_value = solution_accelerator_data.get("project", {}).get("container_app_intranet", None) or solution_accelerator_data.get("project", {}).get("container_app_intranet_avm", None)
             print(current_value)
             if current_value == 'True' or current_value is True or current_value == 'true' :
                 if ContainerAppIntranetSubnet_address_prefixes == "":
@@ -440,7 +441,22 @@ def get_config(input, solution_accelerator, landingzone_type):
                     count = count + 1  
                 if WebIntranetSubnet_address_prefixes == "":
                     WebIntranetSubnet_address_prefixes = str(subnets[count])
-                    count = count + 1                  
+                    count = count + 1
+
+            current_value = solution_accelerator_data.get("project", {}).get("vmss_linux", None)
+            print(current_value)
+            if current_value == 'True' or current_value is True or current_value == 'true' :
+                if AppSubnet_address_prefixes == "":
+                    AppSubnet_address_prefixes = str(subnets[count])
+                    count = count + 1
+
+            current_value = solution_accelerator_data.get("project", {}).get("vmss_windows", None)
+            print(current_value)
+            if current_value == 'True' or current_value is True or current_value == 'true' :
+                if AppSubnet_address_prefixes == "":
+                    AppSubnet_address_prefixes = str(subnets[count])
+                    count = count + 1
+
         # devops
         RunnerSubnet_address_prefixes = str(devops_subnets[0]) 
             

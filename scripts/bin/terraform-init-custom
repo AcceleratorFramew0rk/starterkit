@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# Extract the value of 'prefix' using yq and assign it to the PREFIX variable and generate resource group name to store state file
+
+PREFIX=$(yq  -r '.prefix' /tf/avm/templates/landingzone/configuration/0-launchpad/scripts/config.yaml)
+RG_NAME="${PREFIX}-rg-launchpad"
+STG_NAME=$(az storage account list --resource-group $RG_NAME --query "[?contains(name, '${PREFIX//-/}stgtfstate')].[name]" -o tsv 2>/dev/null | head -n 1)
+echo "Resource Group name: ${RG_NAME}"
+echo "Storage Account name: ${STG_NAME}"
+
+# Get the folder name from the current directory
+
+PATH_STRING="$(pwd)"
+
+
+if [[ "$PATH_STRING" == *"2-solution_accelerators"* ]]; then
+  # solution accelerators
+  PATH_STRING=$(echo "$(pwd)" | tr -d '_')
+  EXTRACTED_NAME=$(echo "$PATH_STRING" | awk -F'/' '{print $(NF-1) "-" $NF}')
+  CONTAINER_NAME="1-landingzones"
+  KEY="solution_accelerators-${EXTRACTED_NAME}.tfstate"
+  echo "Container name: ${CONTAINER_NAME}"
+  echo "Key: ${KEY}"
+else 
+  # 1-landingzones
+  PATH_STRING=$(echo "$(pwd)" | tr -d '_')
+  EXTRACTED_NAME=$(echo "$PATH_STRING" | awk -F'/' '{print $(NF-1) "-" $NF}')
+  CONTAINER_NAME="1-landingzones"
+  KEY="landingzones-${EXTRACTED_NAME}.tfstate"
+  echo "Container name: ${CONTAINER_NAME}"
+  echo "Key: ${KEY}"
+fi
+
+# Store the command in a variable
+cmdexecute="terraform init -reconfigure \
+  -backend-config=\"resource_group_name=${RG_NAME}\" \
+  -backend-config=\"storage_account_name=${STG_NAME}\" \
+  -backend-config=\"container_name=${CONTAINER_NAME}\" \
+  -backend-config=\"key=${KEY}\""
+
+# Print the command (for debugging)
+echo "Executing..."
+echo $cmdexecute
+
+# deploy the solution accelerator
+terraform init  -reconfigure \
+-backend-config="resource_group_name=${RG_NAME}" \
+-backend-config="storage_account_name=${STG_NAME}" \
+-backend-config="container_name=${CONTAINER_NAME}" \
+-backend-config="key=${KEY}"
+
+if [ $? -ne 0 ]; then
+  echo -e "     "
+  echo -e "\e[31mTerraform init failed for ${EXTRACTED_NAME}. Exiting.\e[0m"
+  exit 1
+else
+  echo -e "     "
+  echo -e "\e[32mTerraform init succeeded for ${EXTRACTED_NAME}!\e[0m"
+fi

@@ -64,41 +64,48 @@ subnets:
   project: 
 # -----------------   
 {% if WebInternetSubnet_address_prefixes | trim != 'None' and WebInternetSubnet_address_prefixes | trim != '' -%} 
+# app service pep, container app pep, linux function app pep
     WebInternetSubnet: # DO NOT CHANGE subnet name
       name: "WebInternetSubnet"
       address_prefixes: ["{{ WebInternetSubnet_address_prefixes }}"]
 {% endif -%}
 {% if WebIntranetSubnet_address_prefixes | trim != 'None' and WebIntranetSubnet_address_prefixes | trim != '' -%} 
+# app service pep, container app pep, linux function app pep
 # -----------------
     WebIntranetSubnet: # DO NOT CHANGE subnet name
       name: "WebIntranetSubnet"
       address_prefixes: ["{{ WebIntranetSubnet_address_prefixes }}"]
 {% endif -%}
 {% if WebSubnet_address_prefixes | trim != 'None' and WebSubnet_address_prefixes | trim != '' -%} 
+# app service pep, container app pep, linux function app pep
 # -----------------
     WebSubnet: # DO NOT CHANGE subnet name
      name: "WebSubnet"
      address_prefixes: ["{{WebSubnet_address_prefixes}}"]
 {% endif -%}
 {% if AppSubnet_address_prefixes | trim != 'None' and AppSubnet_address_prefixes | trim != '' -%}  
+# vm, vmss_linux, vmss_windows
 # -----------------
     AppSubnet: # DO NOT CHANGE subnet name
       name: "AppSubnet"    
       address_prefixes: ["{{AppSubnet_address_prefixes}}"]
 {% endif -%}
 {% if DbSubnet_address_prefixes | trim != 'None' and DbSubnet_address_prefixes | trim != '' -%}  
+# mssql pep, postgresql pep, redis cache pep, storage account pep
 # ----------------- 
     DbSubnet: # DO NOT CHANGE subnet name
       name: "DbSubnet"    
       address_prefixes: ["{{DbSubnet_address_prefixes}}"]
 {% endif -%}
 {% if ServiceSubnet_address_prefixes | trim != 'None' and ServiceSubnet_address_prefixes | trim != '' -%}  
+# keyvault pep, acr pep, logic app pep
 # -----------------
     ServiceSubnet: # DO NOT CHANGE subnet name
       name: "ServiceSubnet"
       address_prefixes: ["{{ServiceSubnet_address_prefixes}}"]
 {% endif -%}
 {% if FunctionAppSubnet_address_prefixes | trim != 'None' and FunctionAppSubnet_address_prefixes | trim != '' -%} 
+# linux function app vnet integration
 # ----------------- 
     FunctionAppSubnet: # DO NOT CHANGE subnet name
       name: "FunctionAppSubnet"        
@@ -114,42 +121,49 @@ subnets:
       ]
 {% endif -%}
 {% if ApiSubnet_address_prefixes | trim != 'None' and ApiSubnet_address_prefixes | trim != '' -%} 
+# apim
 # -----------------               
     ApiSubnet: # DO NOT CHANGE subnet name
       name: "ApiSubnet"    
       address_prefixes: ["{{ApiSubnet_address_prefixes}}"]
 {% endif -%}
 {% if SystemNodePoolSubnet_address_prefixes | trim != 'None' and SystemNodePoolSubnet_address_prefixes | trim != '' -%} 
+# aks
 # -----------------
     SystemNodePoolSubnet: # DO NOT CHANGE subnet name
       name: "SystemNodePoolSubnet"    
       address_prefixes: ["{{SystemNodePoolSubnet_address_prefixes}}"]
 {% endif -%}
 {% if UserNodePoolSubnet_address_prefixes | trim != 'None' and UserNodePoolSubnet_address_prefixes | trim != '' -%} 
+# aks
 # -----------------
     UserNodePoolSubnet: # DO NOT CHANGE subnet name
       name: "UserNodePoolSubnet"    
       address_prefixes: ["{{UserNodePoolSubnet_address_prefixes}}"]
 {% endif -%}
 {% if UserNodePoolIntranetSubnet_address_prefixes | trim != 'None' and UserNodePoolIntranetSubnet_address_prefixes | trim != '' -%} 
+# aks
 # -----------------
     UserNodePoolIntranetSubnet: # DO NOT CHANGE subnet name
       name: "UserNodePoolIntranetSubnet"    
       address_prefixes: ["{{UserNodePoolIntranetSubnet_address_prefixes}}"] 
 {% endif -%}  
 {% if UserNodePoolWindowsSubnet_address_prefixes | trim != 'None' and UserNodePoolWindowsSubnet_address_prefixes | trim != '' -%}   
+# aks
 # -----------------    
     UserNodePoolWindowsSubnet: # DO NOT CHANGE subnet name
       name: "UserNodePoolWindowsSubnet"    
       address_prefixes: ["{{UserNodePoolWindowsSubnet_address_prefixes}}"]  
 {% endif -%}   
 {% if AiSubnet_address_prefixes | trim != 'None' and AiSubnet_address_prefixes | trim != '' -%}  
+# ai, search service, ai_foundary
 # -----------------
     AiSubnet: # DO NOT CHANGE subnet name
       name: "AiSubnet"    
       address_prefixes: ["{{AiSubnet_address_prefixes}}"]   
 {% endif -%}
 {% if LogicAppSubnet_address_prefixes | trim != 'None' and LogicAppSubnet_address_prefixes | trim != '' -%} 
+# logic app vnet integration
 # -----------------
     LogicAppSubnet: # DO NOT CHANGE subnet name
       name: "LogicAppSubnet"
@@ -165,6 +179,7 @@ subnets:
       ]  
 {% endif -%}
 {% if CiSubnet_address_prefixes | trim != 'None' and CiSubnet_address_prefixes | trim != '' -%} 
+# container instance
 # -----------------
     CiSubnet: # DO NOT CHANGE subnet name 
       name: "CiSubnet"    
@@ -180,18 +195,21 @@ subnets:
       ]  
 {% endif -%}
 {% if ServiceBusSubnet_address_prefixes | trim != 'None' and ServiceBusSubnet_address_prefixes | trim != '' -%} 
+# service bus
 # -----------------
     ServiceBusSubnet: # DO NOT CHANGE subnet name
       name: "ServiceBusSubnet"    
       address_prefixes: ["{{ServiceBusSubnet_address_prefixes}}"]   
 {% endif -%}  
 {% if CosmosDbSubnet_address_prefixes | trim != 'None' and CosmosDbSubnet_address_prefixes | trim != '' -%} 
+# cosmos db
 # -----------------    
     CosmosDbSubnet: # DO NOT CHANGE subnet name 
       name: "CosmosDbSubnet"
       address_prefixes: ["{{CosmosDbSubnet_address_prefixes}}"]    
 {% endif -%}
 {% if AppServiceSubnet_address_prefixes | trim != 'None' and AppServiceSubnet_address_prefixes | trim != '' -%} 
+# app service vnet integration
 # -----------------
     AppServiceSubnet: # DO NOT CHANGE subnet name
       name: "AppServiceSubnet"
@@ -207,6 +225,7 @@ subnets:
       ] 
 {% endif -%}
 {% if AppServiceIntranetSubnet_address_prefixes | trim != 'None' and AppServiceIntranetSubnet_address_prefixes | trim != '' -%} 
+# app service intranet vnet integration
 # -----------------
     AppServiceIntranetSubnet: # DO NOT CHANGE subnet name
       name: "AppServiceIntranetSubnet"
@@ -222,6 +241,7 @@ subnets:
       ] 
 {% endif -%}
 {% if ContainerAppSubnet_address_prefixes | trim != 'None' and ContainerAppSubnet_address_prefixes | trim != '' -%} 
+# container app vnet integration
 # -----------------
     ContainerAppSubnet: # DO NOT CHANGE subnet name
       name: "ContainerAppSubnet"    
@@ -237,6 +257,7 @@ subnets:
       ]
 {% endif -%}
 {% if ContainerAppIntranetSubnet_address_prefixes | trim != 'None' and ContainerAppIntranetSubnet_address_prefixes | trim != '' -%} 
+# container app intranet vnet integration
 # -----------------
     ContainerAppIntranetSubnet: # DO NOT CHANGE subnet name
       name: "ContainerAppIntranetSubnet"    
