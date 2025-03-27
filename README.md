@@ -9,7 +9,7 @@ In order to start deploying your landing zones, you need an Azure subscription (
 - [Docker Desktop](https://docs.docker.com/docker-for-windows/install/).
 - [Git](https://git-scm.com/downloads)
 
-Once installed, open **Visual Studio Code** and install "**Remote Development**" extension
+Once installed, open **Visual Studio Code** and install "**Dev Containers**" extension
 
 # Cloning the starter repository
 
