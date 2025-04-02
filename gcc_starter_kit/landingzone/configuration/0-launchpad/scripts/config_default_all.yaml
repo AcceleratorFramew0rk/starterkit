@@ -1,6 +1,6 @@
-resource_group_name: "gcci-platform" # DO NOT CHANGE
-log_analytics_workspace_resource_group_name: "gcci-agency-law"  # DO NOT CHANGE
-log_analytics_workspace_name: "gcci-agency-workspace"  # DO NOT CHANGE
+resource_group_name: "gcci-platform" 
+log_analytics_workspace_resource_group_name: "gcci-agency-law"  
+log_analytics_workspace_name: "gcci-agency-workspace"  
 # # virtual network - leave empty if there is no such virtual network  
 prefix: "wx2-dev-sea"
 is_prefix: true
