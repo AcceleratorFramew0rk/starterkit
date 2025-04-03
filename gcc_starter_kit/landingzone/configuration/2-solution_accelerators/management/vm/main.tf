@@ -1,9 +1,9 @@
 module "avm_res_keyvault_vault" {
   source              = "Azure/avm-res-keyvault-vault/azurerm"
-  version             = ">= 0.5.0"
+  version             = "0.6.1"
 
   tenant_id           = data.azurerm_client_config.current.tenant_id
-  name                = "${module.naming.key_vault.name}-toolingvm-${random_string.this.result}"   
+  name                = "${module.naming.key_vault.name}-vm-${random_string.this.result}"   
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name 
   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
   network_acls = {

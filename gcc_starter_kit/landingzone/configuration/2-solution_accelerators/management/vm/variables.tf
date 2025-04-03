@@ -36,6 +36,6 @@ variable "source_image_resource_id" {
 
 variable "subnet_name" {
   type        = string  
-  default = "ServiceSubnet"
+  default = "InfraSubnet"
 }
 

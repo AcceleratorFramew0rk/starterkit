@@ -4,7 +4,7 @@ module "public_ip_firewall1" {
   
   enable_telemetry    = var.enable_telemetry
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
-  name                = "${module.naming.public_ip.name_unique}-1-fwez"
+  name                = "${module.naming.public_ip.name_unique}-1-fweez"
   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
 }
 
@@ -14,7 +14,7 @@ module "public_ip_firewall2" {
 
   enable_telemetry    = var.enable_telemetry
   resource_group_name = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.name : local.global_settings.resource_group_name
-  name                = "${module.naming.public_ip.name}-2-fwegressez"
+  name                = "${module.naming.public_ip.name}-2-fweez"
   location            = try(local.global_settings.resource_group_name, null) == null ? azurerm_resource_group.this.0.location : local.global_settings.location 
 }
 
